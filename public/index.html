@@ -1,0 +1,59 @@
+<% const page = htmlWebpackPlugin.options.pageData || {}; %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maxinum-scale=1,width=device-width">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="applicable-device" content="mobile">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <script src="https://www.ship88.cn/hk/jquery.js"></script>
+    <script src="https://www.ship88.cn/hk/jsencrypt.js"></script>
+    <script src="https://www.ship88.cn/hk/jsWebControl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title><%= page.title %></title>
+    <style>
+      html,body{
+        height: 100%;
+        overflow: auto;
+      }
+      body{
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+<!--    腾讯地图位置api,
+要申请key：NIEBZ-46CCF-DPMJ5-NVS6P-WJUJ6-5LB6C
+geolocation.js是生产代码，不要去更改
+-->
+
+<!--    自适应rem-->
+    <script src="es/rem.js"></script>
+
+    <script src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js "></script>
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=SECBZ-KMY66-ZV6SA-MGTGU-XJVIO-APBOQ"></script>
+  </head>
+
+
+
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but plastic-machine doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+    <!--<div id="app"></div>-->
+    <div id="<%= page.code %>"></div>
+    <!-- built files will be auto injected -->
+<!--    统计代码-->
+<!--    <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1278902410'%3E%3C/span%3E%3Cscript src='https://v1.cnzz.com/z_stat.php%3Fid%3D1278902410%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>-->
+  </body>
+
+
+
+</html>

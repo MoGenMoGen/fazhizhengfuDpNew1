@@ -1,0 +1,60 @@
+
+
+/**
+1、自己定义一个文件夹，放入下载好的.ttf文件
+2、先自己定义一个font.css文件，将下载好的字体文件的路径引入
+
+3、在App.vue中的style里引入
+<style lang="less" rel="stylesheet/less">
+  @import "./common/font/font.css";
+</style>
+
+4、直接在引入font.css的vue文件中设置字体即可
+例如：font-family: "华文行楷";
+font-family: "青瓜石头体";
+
+
+
+注意：在vue-cli2版本需再在webpack的配置文件里要加上解析.ttf文件的规则,
+
+（vue-cli3不需要设置解析规则）
+
+
+ */
+
+
+/*可以同时引入多个字体文件
+可以在一个页面中同时使用多种字体
+
+
+*/
+
+@font-face {
+
+    font-family: "华文行楷"; /*设置字体名称，css引用的字体名称*/
+    src: url('STXINGKA.ttf'); /*设置字体文件*/
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "青瓜石头体";
+    src: url('qgstt.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "楷体";
+    src: url('kt.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "黑体";
+    src: url('heiti.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html{
+    font-size:calc(100vw * 24 / 1920);
+}
