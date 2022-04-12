@@ -54,6 +54,12 @@ font-family: "青瓜石头体";
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Agency FB';  /* project id 1286275 */
+    src: url('../../../../static/AGENCYB.TTF');
+    src: url('../../../../static/AGENCYB.TTF') format('embedded-opentype'),
+    url('../../../../static/AGENCYB.TTF') format('truetype'),
+  }
 
 html{
     font-size:calc(100vw * 24 / 1920);
