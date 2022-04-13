@@ -1,5 +1,3 @@
-
-
 /**
 1、自己定义一个文件夹，放入下载好的.ttf文件
 2、先自己定义一个font.css文件，将下载好的字体文件的路径引入
@@ -31,36 +29,53 @@ font-family: "青瓜石头体";
 
 @font-face {
 
-    font-family: "华文行楷"; /*设置字体名称，css引用的字体名称*/
-    src: url('STXINGKA.ttf'); /*设置字体文件*/
+    font-family: "华文行楷";
+    /*设置字体名称，css引用的字体名称*/
+    src: url('STXINGKA.ttf');
+    /*设置字体文件*/
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: "青瓜石头体";
     src: url('qgstt.ttf');
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: "楷体";
     src: url('kt.ttf');
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: "黑体";
     src: url('heiti.ttf');
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
-    font-family: 'Agency FB';  /* project id 1286275 */
+    font-family: 'Agency FB';
+    /* project id 1286275 */
     src: url('../../../../static/AGENCYB.TTF');
     src: url('../../../../static/AGENCYB.TTF') format('embedded-opentype'),
-    url('../../../../static/AGENCYB.TTF') format('truetype'),
-  }
+        url('../../../../static/AGENCYB.TTF') format('truetype'),
+}
 
-html{
-    font-size:calc(100vw * 24 / 1920);
+html {
+    font-size: calc(100vw * 24 / 1920);
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: url(~@/images/bg.png) top center;
+    background-attachment: fixed;
+    background-size: 100% 100vh;
 }

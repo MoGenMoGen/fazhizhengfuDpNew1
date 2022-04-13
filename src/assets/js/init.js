@@ -11,8 +11,10 @@ import * as echarts from 'echarts';
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import vueSeamlessScroll from 'vue-seamless-scroll'
 
 Vue.use(ElementUI);
+Vue.use(vueSeamlessScroll);
 
 // @import url('https://www.ship88.cn/hk/jquery.js')
 // import 'https://www.ship88.cn/hk/jsencrypt.js'

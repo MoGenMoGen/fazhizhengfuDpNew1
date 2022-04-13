@@ -1,16 +1,22 @@
 <template>
-  <div>123</div>
+  <div @click="topf">普法调节</div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    topf() {
+      window.location.href = "/pftj";
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
 @import "../../assets/css/font/font.css";
-div {
-  font-family: Agency FB;
-  color: #ffc650;
-  font-size: 48px;
+#page_pftj {
+  width: 100vw;
+  min-height: 100vh;
+  background: url(~@/images/bg.png) top center;
 }
 </style>
