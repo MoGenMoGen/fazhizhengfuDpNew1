@@ -1,7 +1,7 @@
 <template>
   <div id="page_pftj" :style="{ transform: `scale(${percentX},${percentY})` }">
     <MyHeader cur="1"></MyHeader>
-   
+
     <div class="container">
       <div class="left">
         <div class="titlebox">
@@ -125,7 +125,155 @@
           <img src="~@/images/map.png" alt="" class="map" />
         </div>
       </div>
-      <div class="right"></div>
+      <div class="right">
+        <div class="titlebox">
+          <img src="~@/images/subtitle.png" alt="" />
+          <div class="title">共享法庭</div>
+        </div>
+        <div class="subtitle">河头村民事纠纷案</div>
+        <div class="ftbox">
+          <div class="leftbox">
+            <div class="fg">法官：摩根</div>
+            <img
+              src="https://s.cn.bing.net/th?id=OIP-C.Jj3IR8UTuF55Zv9EL9IKWwHaFh&w=289&h=215&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+              alt=""
+            />
+          </div>
+          <div class="rightbox">
+            <div class="people">
+              <div class="bg">被告：姚峰</div>
+              <div class="bg">原告:张昕</div>
+            </div>
+            <img
+              src="https://tse2-mm.cn.bing.net/th/id/OIP-C.xDrJBt3iAwa7pY-SgmK5pQHaE7?w=281&h=187&c=7&r=0&o=5&pid=1.7"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="titlebox">
+          <img src="~@/images/subtitle.png" alt="" />
+          <div class="title">法律宝典</div>
+        </div>
+        <div class="flbd_box">
+          <div class="itembox" @click="chooseTab3(0)">
+            <div class="title">法律文书</div>
+            <div class="num">45</div>
+            <div class="data">
+              <img src="~@/images/download.png" alt="" />
+              <div class="val">45</div>
+            </div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex3 == 0"
+            />
+          </div>
+          <div class="itembox" @click="chooseTab3(1)">
+            <div class="title">法律故事</div>
+            <div class="num">35</div>
+            <div class="data">
+              <img src="~@/images/browse.png" alt="" />
+              <div class="val">45</div>
+            </div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex3 == 1"
+            />
+          </div>
+          <div class="itembox" @click="chooseTab3(2)">
+            <div class="title">普法宣传</div>
+            <div class="num">15</div>
+            <div class="data">
+              <img src="~@/images/browse.png" alt="" />
+              <div class="val">45</div>
+            </div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex3 == 2"
+            />
+          </div>
+        </div>
+        <div class="list3">
+          <div class="itembox" v-for="(item, index) in list3" :key="index">
+            <img src="~@/images/wenshu.png" alt="" />
+            <div class="nm">{{ item.nm }}</div>
+          </div>
+        </div>
+        <div class="titlebox">
+          <img src="~@/images/subtitle.png" alt="" />
+          <div class="title">法治队伍</div>
+        </div>
+        <div class="fzdw_box">
+          <div class="itembox" @click="chooseTab4(0)">
+            <div class="title">法治带头人</div>
+            <div class="num">15</div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex4 == 0"
+            />
+          </div>
+          <div class="itembox" @click="chooseTab4(1)">
+            <div class="title">法律明白人</div>
+            <div class="num">65</div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex4 == 1"
+            />
+          </div>
+          <div class="itembox" @click="chooseTab4(2)">
+            <div class="title">片区民警</div>
+            <div class="num">55</div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex4 == 2"
+            />
+          </div>
+          <div class="itembox" @click="chooseTab4(3)">
+            <div class="title">律师</div>
+            <div class="num">34</div>
+            <img
+              src="~@/images/upArrow.png"
+              class="select"
+              alt=""
+              v-show="currentIndex4 == 3"
+            />
+          </div>
+        </div>
+        <!-- 表格列 -->
+        <div class="table">
+          <div class="top">
+            <div style="width: 77px">村、社区</div>
+            <div style="width: 110px;">姓名</div>
+            <div style="width: 72px">职务</div>
+            <div style="width: 109px">手机</div>
+          </div>
+          <div class="bottom">
+            <vue-seamless-scroll :data="list4" :class-option="defaultOption">
+              <div class="blist" v-for="(item, index) in list4" :key="index">
+                <div class="row" style="width: 77px">{{ item.val1 }}</div>
+                <div class="row" style="width: 110px;">
+                  {{ item.val2 }}
+                </div>
+                <div class="row" style="width: 72px">{{ item.val3 }}</div>
+                <div class="row" style="width: 109px">
+                  {{ item.val4 }}
+                </div>
+              </div>
+            </vue-seamless-scroll>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -177,9 +325,54 @@ export default {
         { content: "九龙湖村" },
         { content: "思源社区" },
       ],
+      currentIndex3: 0, //法律宝典下标
+      list3: [
+        { nm: "民间借贷起诉状" },
+        { nm: "借条" },
+        { nm: "追索劳动报酬仲裁申多好多好东方红" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "民间借贷起诉状" },
+        { nm: "民间借贷起诉状" },
+        { nm: "借条" },
+        { nm: "追索劳动报酬仲裁申多好多好东方红" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "民间借贷起诉状" },
+      ],
+      currentIndex4: 0, //法治队伍下标
+      // 法治队伍列表
+      list4: [
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+        },
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+        },
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+        },
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+        },
+      ],
     };
   },
-  components:{MyHeader},
+  components: { MyHeader },
   computed: {
     //滚动配置
     defaultOption() {
@@ -205,13 +398,12 @@ export default {
       },
     },
     percentY: {
-      get(){
-         let y =
-        document.body.clientHeight || document.documentElement.clientHeight;
-      return y / 1080;
+      get() {
+        let y =
+          document.body.clientHeight || document.documentElement.clientHeight;
+        return y / 1080;
       },
-      set(){}
-     
+      set() {},
     },
   },
   methods: {
@@ -227,8 +419,13 @@ export default {
     chooseTab22(index) {
       this.currentIndex22 = index;
     },
-    topage() {
-      window.location.href = "/pftj";
+    // 右侧-法律宝典
+    chooseTab3(index) {
+      this.currentIndex3 = index;
+    },
+    // 右侧-法治宝典
+    chooseTab4(index) {
+      this.currentIndex4 = index;
     },
   },
   created() {
@@ -260,34 +457,37 @@ export default {
   transform-origin: top left;
   // overflow: hidden scroll;
   .container {
-    padding-top: 119px;
+    // padding-top: 119px;
     box-sizing: border-box;
     min-height: 100%;
     padding-bottom: 50px;
     display: flex;
     justify-content: space-between;
+    .titlebox {
+      width: 442px;
+      img {
+        width: 100%;
+        height: auto;
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #13ecff;
+        margin-top: -20px;
+      }
+    }
     .left {
       width: 442px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      .titlebox {
-        width: 313px;
-        img {
-          width: 100%;
-          height: auto;
-        }
-        .title {
-          width: 100%;
-          text-align: center;
-          font-size: 18px;
-          font-weight: bold;
-          color: #13ecff;
-        }
-      }
+
       .servicebox {
         margin-top: 25px;
-        width: 313px;
+        // width: 313px;
+        width: 362px;
         padding-bottom: 25px;
         display: flex;
         justify-content: space-between;
@@ -332,7 +532,8 @@ export default {
         }
       }
       .list1 {
-        width: 313px;
+        // width: 313px;
+        width: 362px;
         height: 330px;
         margin: 20px 0 40px;
         overflow: hidden;
@@ -346,7 +547,7 @@ export default {
           }
           .rightbox {
             padding: 0px 12px;
-            width: 223px;
+            width: 270px;
             height: 95px;
             box-sizing: border-box;
             position: relative;
@@ -395,11 +596,13 @@ export default {
       }
       .fzxcbox {
         display: flex;
-        width: 313px;
+        width: 362px;
+        padding-bottom: 10px;
         border-bottom: 1px solid #0088ff;
         .itembox {
           width: 50%;
-          height: 193px;
+          // height: 193px;
+          height: 174px;
           background: url(~@/images/bg2.png) center center;
           background-repeat: no-repeat;
           background-size: 117px 94px;
@@ -428,7 +631,7 @@ export default {
           }
           .select {
             position: absolute;
-            bottom: 0px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
           }
@@ -542,7 +745,231 @@ export default {
     }
     .right {
       width: 442px;
-      background: red;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .subtitle {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 49px;
+      }
+      .ftbox {
+        width: 364px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        .leftbox {
+          width: 172px;
+          .fg {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 32px;
+          }
+          img {
+            width: 172px;
+            height: 102px;
+            object-fit: cover;
+          }
+        }
+        .rightbox {
+          width: 172px;
+          .people {
+            padding: 0 4px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            .bg {
+              font-size: 14px;
+              font-weight: 400;
+              color: #ffffff;
+              line-height: 32px;
+            }
+          }
+          img {
+            width: 172px;
+            height: 102px;
+            object-fit: cover;
+          }
+        }
+      }
+      .flbd_box {
+        width: 361px;
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #0088ff;
+        margin-top: 20px;
+        .itembox {
+          position: relative;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #ffffff;
+          }
+          .num {
+            font-size: 26px;
+            font-family: Agency FB;
+            font-weight: bold;
+            color: #2efdfb;
+            line-height: 70px;
+          }
+          .data {
+            width: 72px;
+            height: 33px;
+            background: rgba(0, 48, 149, 0);
+            border: 1px solid #ffffff;
+            opacity: 0.4;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            img {
+              width: 13px;
+              height: 13px;
+            }
+            .val {
+              font-size: 14px;
+              font-weight: 400;
+              color: #ffffff;
+            }
+          }
+          .select {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+      .list3 {
+        margin-bottom: 30px;
+        width: 362px;
+        height: 210px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 5px 17px;
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        .itembox {
+          width: 25%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 15px;
+          cursor: pointer;
+          img {
+            width: 37px;
+            height: 42px;
+            margin-bottom: 15px;
+          }
+          .nm {
+            width: 70px;
+            height: 40px;
+            font-size: 14px;
+            font-weight: 400;
+            text-align: center;
+            color: #ffffff;
+            line-height: 20px;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            &:hover {
+              color: #0088ff;
+            }
+          }
+        }
+      }
+      .fzdw_box {
+        width: 361px;
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #0088ff;
+        margin-top: 30px;
+        .itembox {
+          position: relative;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #ffffff;
+            text-align: center;
+            // margin-bottom: 25px;
+          }
+          .num {
+            font-size: 26px;
+            font-family: Agency FB;
+            font-weight: bold;
+            color: #2efdfb;
+            line-height: 64px;
+          }
+          .select {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+      .table {
+        width: 372px;
+        font-size: 12px;
+        margin: 20px 0;
+        .top {
+          display: flex;
+          justify-content: space-between;
+          color: rgba(255, 255, 255, 0.3);
+          background: rgba(255, 255, 255, 0.05);
+          height: 28px;
+          line-height: 28px;
+          text-align: center;
+        }
+        .bottom {
+          height: 140px;
+          overflow: hidden;
+          .blist {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            height: 28px;
+            line-height: 28px;
+            color: #fff;
+            cursor: pointer;
+            &:nth-child(2n + 1) {
+              background: rgba(255, 255, 255, 0.3);
+            }
+            &:nth-child(2n) {
+              background: rgba(255, 255, 255, 0.2);
+            }
+            .row {
+              font-size: 12px;
+              font-weight: 400;
+              color: #ffffff;
+              line-height: 28px;
+              text-align: center;
+            }
+          }
+        }
+      }
     }
   }
 }

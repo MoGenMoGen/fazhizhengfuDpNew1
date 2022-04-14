@@ -1,86 +1,100 @@
 <template>
-    <!-- 内容 -->
-    <div class="main" :style="{ transform: `scale(${percentX},${percentY})` }">
-      <!-- 头 -->
-      <MyHeader cur="2"></MyHeader>
+  <!-- 内容 -->
+  <div class="main" :style="{ transform: `scale(${percentX},${percentY})` }">
+    <!-- 头 -->
+    <MyHeader cur="2"></MyHeader>
 
-      <div class="content">
-        <!-- 合法性审查left -->
-        <div class="hfsc">
-          <div class="title">合法性审查</div>
-          <div class="gaugecontent">
-            <!-- 绘制仪表盘 -->
-            <div id="gauge"></div>
-            <!-- 合同总数 -->
-            <div class="number">
-              <p>150<span>份</span></p>
-              <div class="ht">合同总数</div>
-            </div>
-          </div>
-          <!-- 时间选择 -->
-          <div class="bltime">
-            <el-date-picker
-              v-model="value1"
-              type="daterange"
-              range-separator="~"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            >
-            </el-date-picker>
-            <span class="el-icon-arrow-up el-input__icon jt"></span>
-          </div>
-          <!-- 审查列表 -->
-          <div class="sclist">
-            <ul>
-              <li
-                v-for="(item, index) in sclist"
-                :key="index"
-                :class="{'active':index==0?true:flase}"
-                @click="handleclick"
-              >
-                <h3>{{ item.nm }}</h3>
-                <b
-                  :class="{'color1':item.color ==1,'color2':item.color ==2,'color3':item.color ==3,'color4':item.color ==4}"
-                  >{{item.number}}</b>
-              </li>
-             
-            </ul>
-            <!-- 表格列 -->
-            <div class="table">
-                <div class="top">
-                  <div style="width:53px">序号</div>
-                  <div style="width:150px;text-align:left">合同名称</div>
-                  <div style="width:90px">上传时间</div>
-                  <div style="width:89px">审查状态</div>
-                </div>
-                <div class="bottom">
-                   <vue-seamless-scroll :data="tableList" :class-option="defaultOption" >
-                    <div class="blist" v-for="item in tableList" :key="item.num">
-                      <div style="width:53px">{{item.num}}</div>
-                      <div style="width:150px;text-align:left">{{item.ht}}</div>
-                      <div style="width:90px">{{item.time}}</div>
-                      <div style="width:89px">{{item.sc}} 
-                         <img src="../../images/wsc.png" alt="" 
-                         v-if="item.sc=='未审查'? show1:show2">
-                         <img src="../../images/ysc.png" alt=""
-                         v-if="item.sc=='已审查'? show1:show2">
-                         <img src="../../images/yq.png" alt=""
-                         v-if="item.sc=='逾期'? show1:show2">
-                      </div>
-                     
-                    </div>
-                  </vue-seamless-scroll>
-                </div>
-            </div>
-          </div>
-          <!-- 重点人员 -->
-          <div class="title">重点人员</div>
-          <!-- 饼图 -->
-          <div id="pople">
-              
+    <div class="content">
+      <!-- 合法性审查left -->
+      <div class="hfsc">
+        <div class="title">合法性审查</div>
+        <div class="gaugecontent">
+          <!-- 绘制仪表盘 -->
+          <div id="gauge"></div>
+          <!-- 合同总数 -->
+          <div class="number">
+            <p>150<span>份</span></p>
+            <div class="ht">合同总数</div>
           </div>
         </div>
-        <!-- 中间 -->
+        <!-- 时间选择 -->
+        <div class="bltime">
+          <el-date-picker
+            v-model="value1"
+            type="daterange"
+            range-separator="~"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          >
+          </el-date-picker>
+          <span class="el-icon-arrow-up el-input__icon jt"></span>
+        </div>
+        <!-- 审查列表 -->
+        <div class="sclist">
+          <ul>
+            <li
+              v-for="(item, index) in sclist"
+              :key="index"
+              :class="{ active: index == 0 ? true : flase }"
+              @click="handleclick"
+            >
+              <h3>{{ item.nm }}</h3>
+              <b
+                :class="{
+                  color1: item.color == 1,
+                  color2: item.color == 2,
+                  color3: item.color == 3,
+                  color4: item.color == 4,
+                }"
+                >{{ item.number }}</b
+              >
+            </li>
+          </ul>
+          <!-- 表格列 -->
+          <div class="table">
+            <div class="top">
+              <div style="width: 53px">序号</div>
+              <div style="width: 150px; text-align: left">合同名称</div>
+              <div style="width: 90px">上传时间</div>
+              <div style="width: 89px">审查状态</div>
+            </div>
+            <div class="bottom">
+              <vue-seamless-scroll :data="tableList" :class-option="defaultOption">
+                <div class="blist" v-for="item in tableList" :key="item.num">
+                  <div style="width: 53px">{{ item.num }}</div>
+                  <div style="width: 150px; text-align: left">
+                    {{ item.ht }}
+                  </div>
+                  <div style="width: 90px">{{ item.time }}</div>
+                  <div style="width: 89px">
+                    {{ item.sc }}
+                    <img
+                      src="../../images/wsc.png"
+                      alt=""
+                      v-if="item.sc == '未审查' ? show1 : show2"
+                    />
+                    <img
+                      src="../../images/ysc.png"
+                      alt=""
+                      v-if="item.sc == '已审查' ? show1 : show2"
+                    />
+                    <img
+                      src="../../images/yq.png"
+                      alt=""
+                      v-if="item.sc == '逾期' ? show1 : show2"
+                    />
+                  </div>
+                </div>
+              </vue-seamless-scroll>
+            </div>
+          </div>
+        </div>
+        <!-- 重点人员 -->
+        <div class="title">重点人员</div>
+        <!-- 饼图 -->
+        <div id="pople"></div>
+      </div>
+      <!-- 中间 -->
       <div class="center">
         <div class="title">
           <img src="~@/images/servicePoint.png" alt="" />
@@ -93,13 +107,13 @@
           <img src="~@/images/map.png" alt="" class="map" />
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </template>
 
 <script>
 import MyHeader from "../../components/MyHeader";
-import vueSeamlessScroll from 'vue-seamless-scroll'
+import vueSeamlessScroll from "vue-seamless-scroll";
 
 export default {
   data() {
@@ -144,34 +158,52 @@ export default {
         { nm: "逾期", number: 38, color: "4" },
       ],
       //
-      active:true,
+      active: true,
       // 审查列表
-      tableList:[
+      tableList: [
         {
-          num:1,ht:"股权质押反担保合同",time:"2021-01-05",sc:"未审查",
-        },
-         {
-          num:2,ht:"股权质押反担保合同",time:"2021-01-05",sc:"已审查"
-        },
-         {
-          num:3,ht:"股权质押反担保合同",time:"2021-01-05",sc:"逾期"
-        },
-         {
-          num:4,ht:"股权质押反担保合同",time:"2021-01-05",sc:"未审查"
-        },
-         {
-          num:5,ht:"股权质押反担保合同",time:"2021-01-05",sc:"未审查"
+          num: 1,
+          ht: "股权质押反担保合同",
+          time: "2021-01-05",
+          sc: "未审查",
         },
         {
-          num:6,ht:"股权质押反担保合同",time:"2021-01-05",sc:"未审查"
+          num: 2,
+          ht: "股权质押反担保合同",
+          time: "2021-01-05",
+          sc: "已审查",
+        },
+        {
+          num: 3,
+          ht: "股权质押反担保合同",
+          time: "2021-01-05",
+          sc: "逾期",
+        },
+        {
+          num: 4,
+          ht: "股权质押反担保合同",
+          time: "2021-01-05",
+          sc: "未审查",
+        },
+        {
+          num: 5,
+          ht: "股权质押反担保合同",
+          time: "2021-01-05",
+          sc: "未审查",
+        },
+        {
+          num: 6,
+          ht: "股权质押反担保合同",
+          time: "2021-01-05",
+          sc: "未审查",
         },
       ],
       // 判断状态
-      show1:true,
-      show2:false,
+      show1: true,
+      show2: false,
     };
   },
- computed: {
+  computed: {
     //滚动配置
     defaultOption() {
       return {
@@ -196,17 +228,17 @@ export default {
       },
     },
     percentY: {
-      get(){
-         let y =
-        document.body.clientHeight || document.documentElement.clientHeight;
-      return y / 1080;
+      get() {
+        let y =
+          document.body.clientHeight || document.documentElement.clientHeight;
+        return y / 1080;
       },
-      set(){}
-     
+      set() {},
     },
   },
   components: {
-    MyHeader,vueSeamlessScroll,
+    MyHeader,
+    vueSeamlessScroll,
   },
   methods: {
     // 仪表
@@ -323,16 +355,13 @@ export default {
     },
     // 饼图
     drawChart() {
-				//基于准备好的dom，初始化echarts实例
-      var myChart = this.$echarts.init(document.getElementById('main'));
+      //基于准备好的dom，初始化echarts实例
+      var myChart = this.$echarts.init(document.getElementById("main"));
 
       // 绘制图表
-      myChart.setOption({
-      
-      });
-           
-		},
-    handleclick(){}
+      myChart.setOption({});
+    },
+    handleclick() {},
   },
   mounted() {
     this.gauge();
@@ -492,37 +521,40 @@ export default {
           }
           margin-bottom: 22px;
         }
-        .table{
+        .table {
           font-size: 12px;
-          .top{
+          .top {
             display: flex;
             justify-content: space-between;
-            color: rgba(255, 255, 255, .3);
-            background: rgba(255, 255, 255, .05);
+            color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
             height: 28px;
             line-height: 28px;
             text-align: center;
           }
-          .bottom{
+          .bottom {
             height: 140px;
             overflow: hidden;
-          .blist{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-            height: 28px;
-            line-height: 28px;
-            color: #fff;
-            cursor: pointer;
-            img{display: inline-block;padding-left: 5px;}
-            &:nth-child(2n+1){
-              background: rgba(255, 255, 255, .3);
+            .blist {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              text-align: center;
+              height: 28px;
+              line-height: 28px;
+              color: #fff;
+              cursor: pointer;
+              img {
+                display: inline-block;
+                padding-left: 5px;
+              }
+              &:nth-child(2n + 1) {
+                background: rgba(255, 255, 255, 0.3);
+              }
+              &:nth-child(2n) {
+                background: rgba(255, 255, 255, 0.2);
+              }
             }
-             &:nth-child(2n){
-              background: rgba(255, 255, 255, .2);
-            }
-          }
           }
         }
       }
@@ -571,5 +603,4 @@ export default {
     }
   }
 }
-
 </style>
