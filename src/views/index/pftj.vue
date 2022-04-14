@@ -1,5 +1,7 @@
 <template>
   <div id="page_pftj" :style="{ transform: `scale(${percentX},${percentY})` }">
+    <MyHeader cur="1"></MyHeader>
+   
     <div class="container">
       <div class="left">
         <div class="titlebox">
@@ -129,6 +131,7 @@
 </template>
 
 <script>
+import MyHeader from "../../components/MyHeader";
 export default {
   data() {
     return {
@@ -176,6 +179,7 @@ export default {
       ],
     };
   },
+  components:{MyHeader},
   computed: {
     //滚动配置
     defaultOption() {

@@ -1,14 +1,18 @@
 <template>
-  <div @click="topf">普法调节</div>
+<div>
+    <!-- <div @click="topf">普法调节</div>
+  <div @click="topr" style="color:#fff">数字执法</div> -->
+  <MyHeader></MyHeader>
+</div>
+
+
 </template>
 
 <script>
+import MyHeader from '../../components/MyHeader'
 export default {
-  methods: {
-    topf() {
-      window.location.href = "/pftj";
-    },
-  },
+  components:{MyHeader}
+ 
 };
 </script>
 
@@ -19,4 +23,5 @@ export default {
   min-height: 100vh;
   background: url(~@/images/bg.png) top center;
 }
+  
 </style>
