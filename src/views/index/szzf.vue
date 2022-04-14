@@ -35,8 +35,8 @@
             <li
               v-for="(item, index) in sclist"
               :key="index"
-              :class="{ active: index == 0 ? true : flase }"
-              @click="handleclick"
+              :class="{ active: index == currIndex ? true : false }"
+              @click="handleclick(index)"
             >
               <h3>{{ item.nm }}</h3>
               <b
@@ -46,8 +46,7 @@
                   color3: item.color == 3,
                   color4: item.color == 4,
                 }"
-                >{{ item.number }}</b
-              >
+              >{{ item.number }}</b>
             </li>
           </ul>
           <!-- 表格列 -->
@@ -59,7 +58,10 @@
               <div style="width: 89px">审查状态</div>
             </div>
             <div class="bottom">
-              <vue-seamless-scroll :data="tableList" :class-option="defaultOption">
+              <vue-seamless-scroll
+                :data="tableList"
+                :class-option="defaultOption"
+              >
                 <div class="blist" v-for="item in tableList" :key="item.num">
                   <div style="width: 53px">{{ item.num }}</div>
                   <div style="width: 150px; text-align: left">
@@ -89,11 +91,58 @@
             </div>
           </div>
         </div>
-        <!-- 重点人员 -->
-        <div class="title">重点人员</div>
-        <!-- 饼图 -->
-        <div id="pople"></div>
+
+        <div class="scpople">
+          <!-- 重点人员 -->
+          <div class="title">重点人员</div>
+          <!-- 饼图 -->
+          <div id="pople"></div>
+          <!-- 审查人员列表 -->
+          <div class="sclist">
+            <ul>
+              <li
+                v-for="(item, index) in sclist2"
+                :key="index"
+                :class="{ active: index == currIndex ? true : false }"
+                @click="handleclick2(index)"
+              >
+                <h3>{{ item.nm }}</h3>
+                <b>{{ item.number }}</b>
+              </li>
+            </ul>
+            <!-- 审查人员列表 -->
+            <div class="table">
+              <div class="top">
+                <div style="width: 70px">姓名</div>
+                <div style="width: 80px">性别</div>
+                <div style="width: 80px">村社</div>
+                <div style="width: 132px">
+                  联系方式
+                  <span class="el-icon-arrow-up el-input__icon jt"></span>
+                </div>
+              </div>
+              <div class="bottom">
+                <vue-seamless-scroll
+                  :data="tableList2"
+                  :class-option="defaultOption2"
+                >
+                  <div class="blist" v-for="item in tableList2" :key="item.num">
+                    <div style="width: 70px">{{ item.nm }}</div>
+                    <div style="width: 80px">
+                      {{ item.maxl }}
+                    </div>
+                    <div style="width: 80px">{{ item.sc }}</div>
+                    <div style="width: 132px">
+                      {{ item.lx }}
+                    </div>
+                  </div>
+                </vue-seamless-scroll>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <!-- 中间 -->
       <div class="center">
         <div class="title">
@@ -107,6 +156,146 @@
           <img src="~@/images/map.png" alt="" class="map" />
         </div>
       </div>
+
+      <!-- 右边 -->
+       <div class="hfsc">
+        <div class="title">合法性审查</div>
+        <div class="gaugecontent">
+          <!-- 绘制仪表盘 -->
+          <div id="gauge"></div>
+          <!-- 合同总数 -->
+          <div class="number">
+            <p>150<span>份</span></p>
+            <div class="ht">合同总数</div>
+          </div>
+        </div>
+        <!-- 时间选择 -->
+        <div class="bltime">
+          <el-date-picker
+            v-model="value1"
+            type="daterange"
+            range-separator="~"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          >
+          </el-date-picker>
+          <span class="el-icon-arrow-up el-input__icon jt"></span>
+        </div>
+        <!-- 审查列表 -->
+        <div class="sclist">
+          <ul>
+            <li
+              v-for="(item, index) in sclist"
+              :key="index"
+              :class="{ active: index == currIndex ? true : false }"
+              @click="handleclick(index)"
+            >
+              <h3>{{ item.nm }}</h3>
+              <b
+                :class="{
+                  color1: item.color == 1,
+                  color2: item.color == 2,
+                  color3: item.color == 3,
+                  color4: item.color == 4,
+                }"
+                >{{ item.number }}</b
+              >
+            </li>
+          </ul>
+          <!-- 表格列 -->
+          <div class="table">
+            <div class="top">
+              <div style="width: 53px">序号</div>
+              <div style="width: 150px; text-align: left">合同名称</div>
+              <div style="width: 90px">上传时间</div>
+              <div style="width: 89px">审查状态</div>
+            </div>
+            <div class="bottom">
+              <vue-seamless-scroll
+                :data="tableList"
+                :class-option="defaultOption"
+              >
+                <div class="blist" v-for="item in tableList" :key="item.num">
+                  <div style="width: 53px">{{ item.num }}</div>
+                  <div style="width: 150px; text-align: left">
+                    {{ item.ht }}
+                  </div>
+                  <div style="width: 90px">{{ item.time }}</div>
+                  <div style="width: 89px">
+                    {{ item.sc }}
+                    <img
+                      src="../../images/wsc.png"
+                      alt=""
+                      v-if="item.sc == '未审查' ? show1 : show2"
+                    />
+                    <img
+                      src="../../images/ysc.png"
+                      alt=""
+                      v-if="item.sc == '已审查' ? show1 : show2"
+                    />
+                    <img
+                      src="../../images/yq.png"
+                      alt=""
+                      v-if="item.sc == '逾期' ? show1 : show2"
+                    />
+                  </div>
+                </div>
+              </vue-seamless-scroll>
+            </div>
+          </div>
+        </div>
+
+        <div class="scpople">
+          <!-- 重点人员 -->
+          <div class="title">重点人员</div>
+          <!-- 饼图 -->
+          <div id="pople"></div>
+          <!-- 审查人员列表 -->
+          <div class="sclist">
+            <ul>
+              <li
+                v-for="(item, index) in sclist2"
+                :key="index"
+                :class="{ active: index == currIndex ? true : false }"
+                @click="handleclick2(index)"
+              >
+                <h3>{{ item.nm }}</h3>
+                <b>{{ item.number }}</b>
+              </li>
+            </ul>
+            <!-- 审查人员列表 -->
+            <div class="table">
+              <div class="top">
+                <div style="width: 70px">姓名</div>
+                <div style="width: 80px">性别</div>
+                <div style="width: 80px">村社</div>
+                <div style="width: 132px">
+                  联系方式
+                  <span class="el-icon-arrow-up el-input__icon jt"></span>
+                </div>
+              </div>
+              <div class="bottom">
+                <vue-seamless-scroll
+                  :data="tableList2"
+                  :class-option="defaultOption2"
+                >
+                  <div class="blist" v-for="item in tableList2" :key="item.num">
+                    <div style="width: 70px">{{ item.nm }}</div>
+                    <div style="width: 80px">
+                      {{ item.maxl }}
+                    </div>
+                    <div style="width: 80px">{{ item.sc }}</div>
+                    <div style="width: 132px">
+                      {{ item.lx }}
+                    </div>
+                  </div>
+                </vue-seamless-scroll>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -118,6 +307,7 @@ import vueSeamlessScroll from "vue-seamless-scroll";
 export default {
   data() {
     return {
+      currIndex:0, // 审查列表当前选中下标
       pickerOptions: {
         shortcuts: [
           {
@@ -156,6 +346,13 @@ export default {
         { nm: "已审查", number: 15, color: "2" },
         { nm: "未审查", number: 65, color: "3" },
         { nm: "逾期", number: 38, color: "4" },
+      ],
+      // 审查人员列表
+      sclist2: [
+        { nm: "吸毒人员", number: 15 },
+        { nm: "矫正人员", number: 65 },
+        { nm: "刑释解矫人员", number: 38 },
+        { nm: "失信人员", number: 2 },
       ],
       //
       active: true,
@@ -198,6 +395,12 @@ export default {
           sc: "未审查",
         },
       ],
+      tableList2: [
+        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
+        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
+        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
+        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
+      ],
       // 判断状态
       show1: true,
       show2: false,
@@ -209,6 +412,19 @@ export default {
       return {
         step: 0.4, // 数值越大速度滚动越快
         limitMoveNum: 5, // 开始无缝滚动的数据量 this.dataList.length
+        hoverStop: true, // 是否开启鼠标悬停stop
+        direction: 1, // 0向下 1向上 2向左 3向右
+        openWatch: true, // 开启数据实时监控刷新dom
+        singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+        singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+        waitTime: 2000, // 单步运动停止的时间(默认值1000ms)
+      };
+    },
+    //人员滚动配置
+    defaultOption2() {
+      return {
+        step: 0.4, // 数值越大速度滚动越快
+        limitMoveNum: 3, // 开始无缝滚动的数据量 this.dataList.length
         hoverStop: true, // 是否开启鼠标悬停stop
         direction: 1, // 0向下 1向上 2向左 3向右
         openWatch: true, // 开启数据实时监控刷新dom
@@ -355,16 +571,83 @@ export default {
     },
     // 饼图
     drawChart() {
+      let that = this
       //基于准备好的dom，初始化echarts实例
-      var myChart = this.$echarts.init(document.getElementById("main"));
-
-      // 绘制图表
-      myChart.setOption({});
+      var myChart = this.$echarts.init(document.getElementById("pople"));
+      let data1 = [
+        { value: 30, name: "长石村" },
+        { value: 15, name: "九龙湖村 " },
+        { value: 18, name: "汶溪村" },
+        { value: 18, name: "秦山村" },
+        { value: 18, name: "西经堂村" },
+      ];
+      // 绘制饼图
+      myChart.setOption({
+        tooltip: {
+          trigger: "item",
+          formatter: " {b}<br/> 总人数: {c} (%)",
+        },
+        legend: {
+          right: "right",
+          orient: "vertical",
+         itemGap: 18,
+          textStyle: {
+            color: "#fff",
+            fontSize: 14,
+            fontFamily: "Microsoft YaHei",
+          },
+          formatter(name) {
+            const count = that.arrCount(data1);
+            //找到data中name和文本name值相同的对象
+            const val = data1.filter((item) => {
+              return item.name === name;
+            });
+            return name + "  " + (val[0].value / count).toFixed(4) * 100 + "%";
+          },
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+          },
+        },
+        series: [
+          {
+            name: "Nightingale Chart",
+            type: "pie",
+            radius: [20, 100],
+            center: ["22%", "50%"],
+            roseType: "radius",
+            itemStyle: {
+              borderRadius: 5,
+            },
+            label: {
+              show: false,
+            },
+            data: data1,
+          },
+        ],
+      });
     },
-    handleclick() {},
+    arrCount(arr) {
+      let count = 0;
+      arr.forEach((item) => {
+        count = count + item.value;
+      });
+      return count;
+    },
+    // 审查列表
+    handleclick(index) {
+      this.currIndex=index;
+    },
+    // 审查人员
+    handleclick2(index){
+      this.currIndex=index;
+    },
   },
   mounted() {
     this.gauge();
+    this.drawChart();
   },
 };
 </script>
@@ -402,6 +685,7 @@ export default {
           height: 150px;
           //   background-color: red;
         }
+        
         .number {
           p {
             font-size: 48px;
@@ -439,7 +723,7 @@ export default {
           top: 0;
           transform: rotate(180deg);
           height: auto;
-          line-height: 30px;
+          line-height: 32px;
         }
         /deep/.el-input__inner {
           background: rgba(0, 48, 149, 0);
@@ -460,6 +744,7 @@ export default {
         /deep/.el-date-editor .el-range-separator {
           color: #fff;
           padding: 0;
+          line-height: 25px;
         }
         /deep/.el-date-editor .el-range__icon {
           display: none;
@@ -483,6 +768,7 @@ export default {
           justify-content: space-between;
           border-bottom: 1px solid #0088ff;
           width: 365px;
+          margin-bottom: 25px;
           li {
             width: 25%;
             font-family: "Source Han Sans CN";
@@ -519,7 +805,6 @@ export default {
               margin-left: -3px;
             }
           }
-          margin-bottom: 22px;
         }
         .table {
           font-size: 12px;
@@ -556,6 +841,28 @@ export default {
               }
             }
           }
+        }
+      }
+      .scpople {
+        // 饼图
+        #pople {
+          width: 350px;
+          height: 200px;
+          margin: 0 auto;
+          margin-top: 30px;
+          margin-bottom: -20px;
+        }
+        .sclist {
+          b {
+            color: #3affe4;
+          }
+        }
+        .bottom {
+          height: 84px !important;
+        }
+        /deep/.el-input__icon {
+          line-height: 100%;
+          color: #fff;
         }
       }
     }
