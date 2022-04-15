@@ -60,7 +60,7 @@
           <div class="title">法治乡村</div>
         </div>
         <div class="fzxcbox">
-          <div class="itembox" @click="chooseTab2(0)">
+          <div class="itembox" @click="chooseTab21(0)">
             <div class="num">6</div>
             <div class="content">示范村社</div>
             <img
@@ -70,7 +70,7 @@
               v-show="currentIndex21 == 0"
             />
           </div>
-          <div class="itembox" @click="chooseTab2(1)">
+          <div class="itembox" @click="chooseTab21(1)">
             <div class="num">12</div>
             <div class="content">法治阵地</div>
             <img
@@ -548,7 +548,7 @@ export default {
     // padding-top: 119px;
     box-sizing: border-box;
     min-height: 100%;
-    padding-bottom: 50px;
+    // padding-bottom: 50px;
     display: flex;
     justify-content: space-between;
     .titlebox {
@@ -713,7 +713,7 @@ export default {
             color: #ffffff;
             text-align: center;
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
           }
