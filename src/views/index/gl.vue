@@ -287,7 +287,6 @@
         </vue-seamless-scroll>
       </div>
     </div>
-    >>>>>>> Stashed changes
   </div>
 </template>
 
@@ -298,6 +297,7 @@ export default {
     return {
       currentIndex11: 0, //法治乡村标题下标
       currentIndex12: 0, //法治乡村内容下标
+      choose:0,
       // 法治乡村列表
       list1: [
         { content: "汶溪村" },
@@ -454,7 +454,7 @@ export default {
         align-items: center;
         .num {
           font-size: 36px;
-          font-family: Agency FB;
+          font-family:" Agency FB";
           font-weight: bold;
           color: #3affe4;
           line-height: 74px;
@@ -482,7 +482,7 @@ export default {
       .itembox {
         width: 50%;
         // height: 193px;
-        height: 174px;
+        height: 168px;
         background: url(~@/images/bg2.png) center center;
         background-repeat: no-repeat;
         background-size: 117px 94px;
@@ -490,7 +490,7 @@ export default {
         cursor: pointer;
         .num {
           font-size: 43px;
-          font-family: Agency FB;
+          font-family: "Agency FB";
           font-weight: bold;
           color: #ffffff;
           text-align: center;
@@ -528,6 +528,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-top: 30px;
         margin-bottom: 40px;
         .intro_video {
           width: 180px;
@@ -769,7 +770,7 @@ export default {
           }
           .num {
             font-size: 26px;
-            font-family: Agency FB;
+            font-family: "Agency FB";
             font-weight: bold;
             color: #2efdfb;
             line-height: 60px;
