@@ -123,6 +123,91 @@
         </div>
         <div class="mapbox">
           <img src="~@/images/map.png" alt="" class="map" />
+          <!-- 汶溪村 -->
+          <div class="wxc" v-show="choose==0">
+            <img src="~@/images/map/wx.png" alt="" class="wxmap">
+            <div class="mapicon">
+              汶溪村
+            </div>
+          </div>
+          <!-- 田顾村 -->
+          <div class="wxc left1" v-show="choose==1">
+            <img src="~@/images/map/tg.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              田顾村
+            </div>
+          </div>
+          <!-- 河头村 -->
+          <div class="wxc left2" v-show="choose==2">
+            <img src="~@/images/map/ht.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              河头村
+            </div>
+          </div>
+           <!-- 长石村 -->
+          <div class="wxc left3" v-show="choose==3">
+            <img src="~@/images/map/cs.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              长石村
+            </div>
+          </div>
+          <!-- 九龙湖村 -->
+          <div class="wxc left4" v-show="choose==4">
+            <img src="~@/images/map/jlh.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              九龙湖村
+            </div>
+          </div>
+           <!-- 长石村 -->
+          <div class="wxc left3" v-show="choose==5">
+            <img src="~@/images/map/cs.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              思源社区
+            </div>
+          </div>
+          <!-- 杜夹岙村 -->
+          <div class="wxc left5" v-show="choose==6">
+            <img src="~@/images/map/sj.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              杜夹岙村
+            </div>
+          </div>
+           <!-- 田杨陈村 -->
+          <div class="wxc left6" v-show="choose==7">
+            <img src="~@/images/map/tyc.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              田杨陈村
+            </div>
+          </div>
+          <!-- 西河村 -->
+          <div class="wxc left7" v-show="choose==8">
+            <img src="~@/images/map/sh.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              西河村
+            </div>
+          </div>
+          <!-- 西经堂村 -->
+          <div class="wxc left8" v-show="choose==9">
+            <img src="~@/images/map/xjt.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              西经堂村
+            </div>
+          </div>
+           <!-- 长宏村 -->
+          <div class="wxc left9" v-show="choose==10">
+            <img src="~@/images/map/ch.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              长宏村
+            </div>
+          </div>
+           <!-- 中心村 -->
+          <div class="wxc left10" v-show="choose==11">
+            <img src="~@/images/map/zx.png" alt="" class=" wxmap">
+            <div class="mapicon">
+              中心村
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="right">
@@ -286,6 +371,7 @@ export default {
       // percentX: 1, //缩放比列
       // percentY: 1, //缩放比列
       currentIndex1: 0, //法律服务下标
+      choose:0,
       //法律服务列表
       list1: [
         {
@@ -418,6 +504,8 @@ export default {
     // 左侧-村庄选择
     chooseTab22(index) {
       this.currentIndex22 = index;
+      this.choose=index;
+      console.log(this.choose)
     },
     // 右侧-法律宝典
     chooseTab3(index) {
@@ -733,13 +821,91 @@ export default {
         }
       }
       .mapbox {
-        position: absolute;
-        z-index: 100;
-        top: 97px;
-        left: 28px;
+        margin-top: 97px;
+        margin-left: 28px;
+        position: relative;
         .map {
-          width: 983px;
-          height: 802px;
+          width: auto;
+          height: auto;
+          display: block;
+        }
+        .wxc{
+          position: absolute;
+          left: 17px;
+          top: 175px;
+          // height: 482px;
+          font-family: "Source Han Sans CN";
+          .wxmap{
+            height: 100%;
+          }
+          .mapicon{
+            background: url("~@/images/map/icon1.png") no-repeat center center;
+            height: 120px;
+            width: 67px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #EA0015;
+            // margin-left: -33px;
+            
+          }
+          &.left1{
+            right: 168px;
+            top: 251px;
+            left: auto;
+            .mapicon{margin-top: -100px;}
+          }
+          &.left2{
+            right: 40px;
+            top: 52px;
+            left: auto;
+            .mapicon{margin-left: -30px;}
+          }
+          &.left3{
+            bottom: 19px;
+            right: 173px;
+            top: auto;
+            left: auto;
+          }
+          &.left4{
+            top: 24px;
+            left: 195px;
+          }
+          &.left5{
+            top: 274px;
+            left: 425px;
+          }
+          &.left6{
+            right: 24px;
+            top: 283px;
+            left: auto;
+            .mapicon{margin-left: -16px;}
+          }
+          &.left7{
+            top: 414px;
+            left: 568px;
+            .mapicon{margin-left: -30px;}
+          }
+          &.left8{
+            top: 373px;
+            left: 676px;
+            .mapicon{margin-left: -30px;}
+          }
+           &.left9{
+            top: 477px;
+            left: 688px;
+            .mapicon{margin-left: -30px;}
+          }
+           &.left10{
+            top: 411px;
+            left: 384px;
+            .mapicon{margin-left: -30px;}
+          }
         }
       }
     }

@@ -1,11 +1,14 @@
 <template>
-  <div>概览</div>
+  <!-- 内容 -->
+  <div class="main" :style="{ transform: `scale(${percentX},${percentY})` }">
+  </div>
 </template>
 
 <script>
-export default {
+  export default {
+    
 
-}
+  }
 </script>
 
 <style>
