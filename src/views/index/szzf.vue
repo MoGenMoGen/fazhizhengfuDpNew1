@@ -46,7 +46,8 @@
                   color3: item.color == 3,
                   color4: item.color == 4,
                 }"
-              >{{ item.number }}</b>
+                >{{ item.number }}</b
+              >
             </li>
           </ul>
           <!-- 表格列 -->
@@ -62,14 +63,16 @@
                 :data="tableList"
                 :class-option="defaultOption"
               >
-                <div class="blist" v-for="item in tableList" :key="item.num">
+                <div class="blist" v-for="(item,index) in tableList" :key="index"
+                  @click="handleTable(index)"
+                >
                   <div style="width: 53px">{{ item.num }}</div>
                   <div style="width: 150px; text-align: left">
                     {{ item.ht }}
                   </div>
                   <div style="width: 90px">{{ item.time }}</div>
                   <div style="width: 89px">
-                    {{ item.sc }}
+                    <span>{{ item.sc }}</span>
                     <img
                       src="../../images/wsc.png"
                       alt=""
@@ -88,6 +91,57 @@
                   </div>
                 </div>
               </vue-seamless-scroll>
+              <!-- 弹窗详情 -->
+              <div class="details" v-if="ifShow2">
+                <div class="detailsList">
+                  <h2>合法性审查详情</h2>
+                  <div class="details2">
+                    <div>
+                      <span>合同名称：</span>
+                      <p>股权质押反担保合同</p>
+                    </div>
+                    <div>
+                      <span>上传部门：</span>
+                      <p>综治</p>
+                    </div>
+                    <div>
+                      <span>上传时间：</span>
+                      <p>2021-01-05</p>
+                    </div>
+                    <div>
+                      <span>审查结果：</span>
+                      <p>审查通过</p>
+                    </div>
+                    <div>
+                      <span>审查状态：</span>
+                      <p>
+                        已审查
+                      <img
+                        src="../../images/ysc.png"
+                        alt=""
+                      />
+                      </p>
+                    </div>
+                    <div>
+                      <span>审核时间：</span>
+                      <p>2021-02-05</p>
+                    </div>
+                    <div>
+                      <span>律师意见/司法所意见：</span>
+                      <p>
+                        企业所得税汇算清缴纳税申报鉴证报告说明 我们接受委托,对被鉴证单位
+                      </p>
+                    </div>
+                    <div>
+                      <span>所属律师：</span>
+                      <p>王小毛</p>
+                    </div>
+                  </div>
+                  <div class="close" @click="handleClose">
+                    <img src="../../images/close1.png" alt="">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -158,7 +212,7 @@
       </div>
 
       <!-- 右边 -->
-       <div class="hfsc">
+      <div class="hfsc">
         <div class="title">合法性审查</div>
         <div class="gaugecontent">
           <!-- 绘制仪表盘 -->
@@ -295,7 +349,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -307,7 +360,7 @@ import vueSeamlessScroll from "vue-seamless-scroll";
 export default {
   data() {
     return {
-      currIndex:0, // 审查列表当前选中下标
+      currIndex: 0, // 审查列表当前选中下标
       pickerOptions: {
         shortcuts: [
           {
@@ -317,7 +370,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
-            },
+            }
           },
           {
             text: "最近一个月",
@@ -326,7 +379,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
               picker.$emit("pick", [start, end]);
-            },
+            }
           },
           {
             text: "最近三个月",
@@ -335,7 +388,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit("pick", [start, end]);
-            },
+            }
           },
         ],
       },
@@ -395,6 +448,10 @@ export default {
           sc: "未审查",
         },
       ],
+      // 弹窗内容
+      // 默认弹窗隐藏
+      ifShow2:false,
+      
       tableList2: [
         { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
         { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
@@ -517,8 +574,8 @@ export default {
                       color: "#4631F8", // 100%处的颜色为蓝
                     },
                   ],
-                },
-              },
+                }
+              }
             },
             axisLine: {
               lineStyle: {
@@ -571,7 +628,7 @@ export default {
     },
     // 饼图
     drawChart() {
-      let that = this
+      let that = this;
       //基于准备好的dom，初始化echarts实例
       var myChart = this.$echarts.init(document.getElementById("pople"));
       let data1 = [
@@ -590,7 +647,7 @@ export default {
         legend: {
           right: "right",
           orient: "vertical",
-         itemGap: 18,
+          itemGap: 18,
           textStyle: {
             color: "#fff",
             fontSize: 14,
@@ -638,11 +695,21 @@ export default {
     },
     // 审查列表
     handleclick(index) {
-      this.currIndex=index;
+      this.currIndex = index;
+    },
+    handleTable(index){
+      this.ifShow2=true
+      console.log("555");
+      // this.ifShow2=index
+
+    },
+    handleClose(){
+      this.ifShow2=false;
+      console.log("ccccc");
     },
     // 审查人员
-    handleclick2(index){
-      this.currIndex=index;
+    handleclick2(index) {
+      this.currIndex = index;
     },
   },
   mounted() {
@@ -685,7 +752,7 @@ export default {
           height: 150px;
           //   background-color: red;
         }
-        
+
         .number {
           p {
             font-size: 48px;
@@ -829,6 +896,10 @@ export default {
               line-height: 28px;
               color: #fff;
               cursor: pointer;
+              span{
+                width: 38px;
+                display: inline-block;
+              }
               img {
                 display: inline-block;
                 padding-left: 5px;
@@ -839,6 +910,72 @@ export default {
               &:nth-child(2n) {
                 background: rgba(255, 255, 255, 0.2);
               }
+            }
+          }
+          // 弹窗详情
+          .details {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            .detailsList {
+              width: 783px;
+              height: 535px;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              margin-left: -391.5px;
+              margin-top: -267.5px;
+              background: url("../../images/hfscxq.png") no-repeat;
+              background-size: 100%;
+              padding-top: 42px;
+              padding-left: 70px;
+              padding-right: 55px;
+              box-sizing: border-box;
+              h2 {
+                font-weight: bold;
+                font-size: 29px;
+                text-align: center;
+                color: #6cfcff;
+                line-height: 29px;
+                background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 38px;
+              }
+              .details2 {
+                font-size: 17px;
+                font-family: "PingFang SC";
+                font-weight: 500;
+                color: #ffffff;
+                line-height: 35px;
+                div {
+                  display: flex;
+                  // justify-content: space-between;
+                  flex: 1;
+                  flex-wrap: nowrap;
+                  margin-top: 10px;
+                  span {
+                    min-width: 70px;
+                    display: block;
+                  }
+                  img{width: 18px;height: 15px;}
+                }
+                div:nth-child(7){
+                  span{width: 200px;}
+                }
+              }
+            }
+            .close{
+              position: absolute;
+              right: 60px;
+              top: 40px;
+              cursor: pointer;
             }
           }
         }
@@ -910,4 +1047,5 @@ export default {
     }
   }
 }
+
 </style>

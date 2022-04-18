@@ -18,10 +18,7 @@
           <!-- 右 -->
           <div class="header-right">
               <div class="time">
-                  <b>13:24:13</b>
-                  <span class="line"></span>
-                  <span>2022年04月03日</span>
-                  <span>星期日</span>
+                  {{nowTime}}
               </div>
               <div class="home">
                 <div class="home2">
@@ -35,14 +32,23 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
     data(){
         return{
-
+            nowTime:''
         }
     },
     props:{
         cur:{default:3}
+    },
+    mounted(){
+        moment.locale("zh-cn");
+        // this.nowTimes();
+        setInterval(()=>{
+          this.nowTime= moment().format("HH:mm:ss | dddd YYYY-MM-DD")   
+        //  this.until.formatDate()
+        },1000)
     },
     methods:{
         //页面跳转
@@ -55,7 +61,9 @@ export default {
         topr() {
         window.location.href = "/szzf";
         },
-        toPage(){}
+        toPage(){},
+        
+  
     }
 }
 </script>
@@ -118,14 +126,12 @@ export default {
             // float: right;
             display: flex;
             box-sizing: border-box;
+            font-family: "Source Han Sans CN";
             .time{
                 line-height: 96px;
                 color: #fff;
                 margin-top: 20px;
-                b{font-size: 20px;}
-                .line{width: 1px;height:18px;background-color: #fff;margin-left:17px;}
-                span{font-size: 18px; display: inline-block;}
-                span+span{margin-left: 17px;}
+                font-size: 18px;
             }
             .home{
                 padding-top: 19px;
