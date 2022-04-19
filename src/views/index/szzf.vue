@@ -63,7 +63,10 @@
                 :data="tableList"
                 :class-option="defaultOption"
               >
-                <div class="blist" v-for="(item,index) in tableList" :key="index"
+                <div
+                  class="blist"
+                  v-for="(item, index) in tableList"
+                  :key="index"
                   @click="handleTable(index)"
                 >
                   <div style="width: 53px">{{ item.num }}</div>
@@ -116,10 +119,7 @@
                       <span>审查状态：</span>
                       <p>
                         已审查
-                      <img
-                        src="../../images/ysc.png"
-                        alt=""
-                      />
+                        <img src="../../images/ysc.png" alt="" />
                       </p>
                     </div>
                     <div>
@@ -129,7 +129,8 @@
                     <div>
                       <span>律师意见/司法所意见：</span>
                       <p>
-                        企业所得税汇算清缴纳税申报鉴证报告说明 我们接受委托,对被鉴证单位
+                        企业所得税汇算清缴纳税申报鉴证报告说明
+                        我们接受委托,对被鉴证单位
                       </p>
                     </div>
                     <div>
@@ -138,7 +139,7 @@
                     </div>
                   </div>
                   <div class="close" @click="handleClose">
-                    <img src="../../images/close1.png" alt="">
+                    <img src="../../images/close1.png" alt="" />
                   </div>
                 </div>
               </div>
@@ -152,7 +153,7 @@
           <!-- 饼图 -->
           <div id="pople"></div>
           <!-- 审查人员列表 -->
-          <div class="sclist">
+          <div class="sclist sclist2">
             <ul>
               <li
                 v-for="(item, index) in sclist2"
@@ -269,7 +270,10 @@
                 :data="tableList"
                 :class-option="defaultOption"
               >
-                <div class="blist" v-for="(item,index) in tableList" :key="index"
+                <div
+                  class="blist"
+                  v-for="(item, index) in tableList"
+                  :key="index"
                   @click="handleTable(index)"
                 >
                   <div style="width: 53px">{{ item.num }}</div>
@@ -322,10 +326,7 @@
                       <span>审查状态：</span>
                       <p>
                         已审查
-                      <img
-                        src="../../images/ysc.png"
-                        alt=""
-                      />
+                        <img src="../../images/ysc.png" alt="" />
                       </p>
                     </div>
                     <div>
@@ -335,7 +336,8 @@
                     <div>
                       <span>律师意见/司法所意见：</span>
                       <p>
-                        企业所得税汇算清缴纳税申报鉴证报告说明 我们接受委托,对被鉴证单位
+                        企业所得税汇算清缴纳税申报鉴证报告说明
+                        我们接受委托,对被鉴证单位
                       </p>
                     </div>
                     <div>
@@ -344,7 +346,7 @@
                     </div>
                   </div>
                   <div class="close" @click="handleClose">
-                    <img src="../../images/close1.png" alt="">
+                    <img src="../../images/close1.png" alt="" />
                   </div>
                 </div>
               </div>
@@ -358,7 +360,7 @@
           <!-- 饼图 -->
           <div id="pople2"></div>
           <!-- 审查人员列表 -->
-          <div class="sclist">
+          <div class="sclist sclist2">
             <ul>
               <li
                 v-for="(item, index) in sclist2"
@@ -423,7 +425,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
-            }
+            },
           },
           {
             text: "最近一个月",
@@ -432,7 +434,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
               picker.$emit("pick", [start, end]);
-            }
+            },
           },
           {
             text: "最近三个月",
@@ -441,7 +443,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit("pick", [start, end]);
-            }
+            },
           },
         ],
       },
@@ -503,8 +505,8 @@ export default {
       ],
       // 弹窗内容
       // 默认弹窗隐藏
-      ifShow2:false,
-      
+      ifShow2: false,
+
       tableList2: [
         { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
         { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
@@ -576,13 +578,13 @@ export default {
           value: 45,
           name: "审查率",
           title: {
-            offsetCenter: ["0%", "30%"],
+            offsetCenter: ["0%", "34%"],
             fontSize: 17,
             color: "#fff",
           },
           detail: {
             valueAnimation: true,
-            offsetCenter: ["0%", "-20%"],
+            offsetCenter: ["0%", "-22%"],
           },
         },
       ];
@@ -606,7 +608,6 @@ export default {
                 borderColor: "#4631F8",
                 color: {
                   type: "linear", // 线性渐变
-
                   x: 0,
 
                   y: 0,
@@ -619,20 +620,46 @@ export default {
                     {
                       offset: 0,
 
-                      color: "#54FFF1", // 0%处的颜色为红色
+                      color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
+                    },
+                     {
+                      offset: 0.5,
+
+                      color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
                     },
                     {
                       offset: 1,
-
-                      color: "#4631F8", // 100%处的颜色为蓝
+                      color: "rgba(70, 49, 248, 1)", // 100%处的颜色为蓝
                     },
                   ],
-                }
-              }
+                },
+              },
             },
             axisLine: {
               lineStyle: {
-                width: 7,
+                width: 6,
+                 color: [
+                  [
+                    1,
+                    this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                      {
+                        offset: 0,
+                        // 起始颜色
+                        color: "rgba(70, 49, 248, .2)",
+                      },
+                      {
+                        offset: 0.5,
+                        // 起始颜色
+                        color: "rgba(84, 255, 241, .2)",
+                      },
+                      {
+                        offset: 1,
+                        // 结束颜色
+                        color: "rgba(70, 49, 248, .2)"
+                      },
+                    ]),
+                  ],
+                ],
               },
             },
             splitLine: {
@@ -645,7 +672,7 @@ export default {
             },
             axisLabel: {
               show: false,
-              distance: 50,
+              distance: 30,
             },
             data: gaugeData,
             title: {
@@ -653,8 +680,8 @@ export default {
             },
             detail: {
               // 里面的文字样式
-              width: 50,
-              height: 25,
+              width: 55,
+              height: 28,
               fontSize: 28,
               color: "#fff",
               borderColor: "none",
@@ -756,13 +783,13 @@ export default {
           value: 45,
           name: "审查率",
           title: {
-            offsetCenter: ["0%", "30%"],
+            offsetCenter: ["0%", "34%"],
             fontSize: 17,
             color: "#fff",
           },
           detail: {
             valueAnimation: true,
-            offsetCenter: ["0%", "-20%"],
+            offsetCenter: ["0%", "-22%"],
           },
         },
       ];
@@ -796,23 +823,49 @@ export default {
                   y2: 1,
 
                   colorStops: [
-                    {
+                   {
                       offset: 0,
 
-                      color: "#54FFF1", // 0%处的颜色为红色
+                      color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
+                    },
+                     {
+                      offset: 0.5,
+
+                      color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
                     },
                     {
                       offset: 1,
-
-                      color: "#4631F8", // 100%处的颜色为蓝
+                      color: "rgba(70, 49, 248, 1)", // 100%处的颜色为蓝
                     },
                   ],
-                }
-              }
+                },
+              },
             },
             axisLine: {
               lineStyle: {
-                width: 7,
+                width: 6,
+                color: [
+                  [
+                    1,
+                    this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                      {
+                        offset: 0,
+                        // 起始颜色
+                        color: "rgba(70, 49, 248, .2)",
+                      },
+                      {
+                        offset: 0.5,
+                        // 起始颜色
+                        color: "rgba(84, 255, 241, .2)",
+                      },
+                      {
+                        offset: 1,
+                        // 结束颜色
+                        color: "rgba(70, 49, 248, .2)"
+                      },
+                    ]),
+                  ],
+                ],
               },
             },
             splitLine: {
@@ -825,7 +878,7 @@ export default {
             },
             axisLabel: {
               show: false,
-              distance: 50,
+              distance: 30,
             },
             data: gaugeData,
             title: {
@@ -833,7 +886,7 @@ export default {
             },
             detail: {
               // 里面的文字样式
-              width: 50,
+              width: 55,
               height: 25,
               fontSize: 28,
               color: "#fff",
@@ -927,19 +980,18 @@ export default {
       });
       return count;
     },
-    
+
     // 审查列表
     handleclick(index) {
       this.currIndex = index;
     },
-    handleTable(index){
-      this.ifShow2=true
+    handleTable(index) {
+      this.ifShow2 = true;
       console.log("555");
       // this.ifShow2=index
-
     },
-    handleClose(){
-      this.ifShow2=false;
+    handleClose() {
+      this.ifShow2 = false;
       console.log("ccccc");
     },
     // 审查人员
@@ -963,7 +1015,7 @@ export default {
   height: 1080px;
   transform-origin: top left;
   .content {
-    padding-top: 10px;
+    padding-top: 5px;
     display: flex;
     .hfsc {
       width: 442px;
@@ -983,15 +1035,16 @@ export default {
         justify-content: center;
         align-items: center;
         font-family: "Source Han Sans CN";
+        margin-top: -15px;
         //
         #gauge {
           width: 135px;
-          height: 150px;
+          height: 155px;
           //   background-color: red;
         }
         #gauge2 {
           width: 135px;
-          height: 150px;
+          height: 155px;
           //   background-color: red;
         }
 
@@ -1024,6 +1077,7 @@ export default {
         margin: 0 auto;
         box-sizing: border-box;
         position: relative;
+        margin-top: -10px;
         cursor: pointer;
         .jt {
           position: absolute;
@@ -1070,14 +1124,14 @@ export default {
         color: #ffffff;
         width: 372px;
         margin: 0 auto;
-        margin-top: 22px;
-        margin-bottom: 40px;
+        margin-top: 12px;
+        margin-bottom: 28px;
         ul {
           display: flex;
           justify-content: space-between;
           border-bottom: 1px solid #0088ff;
           width: 365px;
-          margin-bottom: 25px;
+          margin-bottom: 17px;
           li {
             width: 25%;
             font-family: "Source Han Sans CN";
@@ -1088,7 +1142,7 @@ export default {
               font-size: 26px;
               font-family: "Agency FB";
               font-weight: bold;
-              line-height: 60px;
+              line-height: 50px;
               &.color1 {
                 color: #3affe4;
               }
@@ -1138,7 +1192,7 @@ export default {
               line-height: 28px;
               color: #fff;
               cursor: pointer;
-              span{
+              span {
                 width: 38px;
                 display: inline-block;
               }
@@ -1206,14 +1260,19 @@ export default {
                     min-width: 70px;
                     display: block;
                   }
-                  img{width: 18px;height: 15px;}
+                  img {
+                    width: 18px;
+                    height: 15px;
+                  }
                 }
-                div:nth-child(7){
-                  span{width: 200px;}
+                div:nth-child(7) {
+                  span {
+                    width: 200px;
+                  }
                 }
               }
             }
-            .close{
+            .close {
               position: absolute;
               right: 60px;
               top: 40px;
@@ -1221,6 +1280,9 @@ export default {
             }
           }
         }
+      }
+      .sclist2{
+        margin-bottom: 0;
       }
       .scpople {
         // 饼图
@@ -1231,7 +1293,7 @@ export default {
           margin-top: 30px;
           margin-bottom: -20px;
         }
-         #pople2{
+        #pople2 {
           width: 350px;
           height: 200px;
           margin: 0 auto;
@@ -1296,5 +1358,4 @@ export default {
     }
   }
 }
-
 </style>

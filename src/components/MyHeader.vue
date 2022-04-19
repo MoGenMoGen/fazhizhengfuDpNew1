@@ -46,7 +46,7 @@ export default {
         moment.locale("zh-cn");
         // this.nowTimes();
         setInterval(()=>{
-          this.nowTime= moment().format("HH:mm:ss | dddd YYYY-MM-DD")   
+          this.nowTime= moment().format("HH:mm:ss | YYYY-MM-DD dddd ")   
         //  this.until.formatDate()
         },1000)
     },
@@ -75,7 +75,7 @@ export default {
     // position: fixed;
     // top: 0;
     // z-index: 9999;
-    height: 119px;
+    height: 110px;
     transform-origin: top left;
     .headertop{
         display: flex;
