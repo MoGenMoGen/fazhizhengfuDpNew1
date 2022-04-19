@@ -860,7 +860,7 @@ export default {
       }, 2000);
     },
 
-    // 饼图
+    // 右侧饼图
     drawChart2() {
       let that = this;
       //基于准备好的dom，初始化echarts实例

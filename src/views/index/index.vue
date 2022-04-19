@@ -218,22 +218,65 @@
           </div>
         </div>
         <!-- 法律文书列表 -->
-        <div class="list2" v-show="s=false">
-          <div class="itembox" v-for="(item, index) in list2" :key="index">
+        <div class="list2" v-show="currentIndex2 == 0">
+          <div
+            class="itembox"
+            v-for="(item, index) in list2"
+            :key="index"
+            @click="hanldeClickf(item)"
+          >
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.nm }}</div>
           </div>
+          <!-- 法律文书详情 -->
+          <div class="details" v-show="fws">
+            <div class="detailsList wenshu">
+              <h2>法律文书详情</h2>
+              <!-- pdf文件 -->
+              <div id="iframe">
+                <div class="pdf" :id="pdfId">
+                  <!--使用ifram 显示 pdf文件 获取文件地址 -->
+                  <!-- <iframe :src="url"></iframe> -->
+                </div>
+              </div>
+              <div class="close" @click="handleClose">
+                <img src="../../images/close1.png" alt="" />
+              </div>
+            </div>
+          </div>
         </div>
         <!-- 法律故事列表 -->
-        <div class="list2 list22">
-          <div class="itembox item2"
-            v-for="(item,index) in list22" :key="index"
-           @click="bofang()"> 
-            <!-- <video width="100%" controls loop id="videoplay" poster="~@/images/fzgs.png"  class="video-src">
-              <source :src="item.video" type="video/mp4" data-filtered="filtered">
-            </video> -->
-            <div class="img"><img src="~@/images/fzgs.png" alt=""></div>
-            <div class="title">{{item.nm}}</div>
+        <div class="list2 list22" v-show="currentIndex2 == 1">
+          <div
+            class="itembox item2"
+            v-for="(item, index) in list22"
+            :key="index"
+            @click="bofang(index)"
+          >
+            <div class="img"><img src="~@/images/fzgs.png" alt="" /></div>
+            <div class="title">{{ item.nm }}</div>
+          </div>
+          <!-- 法律故事视频详情 -->
+          <div class="details viodebox" v-show="isVideo">
+            <div class="detailsList videoList">
+              <h2>法律故事详情</h2>
+              <video
+                width="100%"
+                controls
+                loop
+                id="videoplay"
+                class="video-src"
+              >
+                <source
+                  src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
+                  type="video/mp4"
+                  data-filtered="filtered"
+                />
+              </video>
+              <div class="close" @click="handleClose">
+                <img src="../../images/close1.png" alt="" />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -294,7 +337,10 @@
           class="list3"
           :class-option="defaultOption"
         >
-          <div class="item3" v-for="(item, index) in list3" :key="index"
+          <div
+            class="item3"
+            v-for="(item, index) in list3"
+            :key="index"
             @click="handleChanges(index)"
           >
             <div class="leftbox">{{ item.content }}</div>
@@ -325,7 +371,9 @@
                   答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律
                   解答九龙湖法律解答九龙湖
                 </div>
-                <div class="fbimg"><img src="../../images/pope.png" alt=""></div>
+                <div class="fbimg">
+                  <img src="../../images/pope.png" alt="" />
+                </div>
               </div>
             </div>
             <div class="close" @click="handleClose">
@@ -356,33 +404,67 @@ export default {
         { content: "思源社区" },
       ],
       currentIndex2: 0, //法律宝典下标
+      fws:false,
       // 法律宝典列表
       list2: [
-        { nm: "民间借贷起诉状" },
-        { nm: "借条" },
-        { nm: "追索劳动报酬仲裁申多好多好东方红" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "民间借贷起诉状" },
-        { nm: "民间借贷起诉状" },
-        { nm: "借条" },
-        { nm: "追索劳动报酬仲裁申多好多好东方红" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "民间借贷起诉状" },
+        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        {
+          nm: "追索劳动报酬仲裁申多好多好东方红",
+          to: "../../images/11.pdf",
+          type: "pdf",
+        },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        {
+          nm: "追索劳动报酬仲裁申多好多好东方红",
+          to: "../../images/11.pdf",
+          type: "pdf",
+        },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
       ],
       currentIndex3: 0, //法律咨询下标
       // 法律故事列表
-      list22:[
-        {video:"https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",nm:"大成律所新农大成律所新农"},
-        {video:"https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",nm:"大成律所新农"},
-        {video:"https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",nm:"大成律所新农"},
-        {video:"https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",nm:"大成律所新农"},
-        {video:"https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",nm:"大成律所新农"},
-        {video:"https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",nm:"大成律所新农"},
+      list22: [
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
       ],
+      isVideo: false,
       // 法律咨询列表
       list3: [
         {
@@ -406,7 +488,7 @@ export default {
           date: "2021.02.03",
         },
       ],
-      isShow2:false,
+      isShow2: false,
     };
   },
   components: { MyHeader },
@@ -457,17 +539,27 @@ export default {
     chooseTab2(index) {
       this.currentIndex2 = index;
     },
+    // 法律文书pdf
+    hanldeClickf(item) {
+      this.fws=true;
+    },
+    // 法律故事弹窗
+    bofang(index) {
+      this.isVideo = true;
+    },
     // 右侧-法律咨询
     chooseTab3(index) {
       this.currentIndex3 = index;
     },
     // 法律咨询详情
-    handleChanges(index){
-      this.isShow2=true
+    handleChanges(index) {
+      this.isShow2 = true;
     },
-    handleClose(){
-      this.isShow2=false
-    }
+    handleClose() {
+      this.isShow2 = false;
+      this.isVideo = false;
+      this.fws=false;
+    },
   },
 };
 </script>
@@ -913,35 +1005,56 @@ export default {
             }
           }
         }
+        .wenshu {
+          width: 683px !important;
+          height: 850px !important;
+          background: url("../../images/flws.png") no-repeat !important;
+          background-size: 100% 100% !important;
+        }
       }
-      .list22{
+      .list22 {
         padding-left: 0;
         padding-right: 0;
         margin-bottom: 20px;
         height: 218px;
-        .item2{
+        .item2 {
           width: 30.33%;
           margin-top: 8px;
           flex: 1;
           cursor: pointer;
-          &+.item2{margin-left: 3%;}
-           .video-src{
-            object-fit: fill;
-            height: 67px;
-            width: 109px;
-            background: url("../../images/fzgs.png");
+          & + .item2 {
+            margin-left: 3%;
           }
-          .img{
+          .img {
             height: 65px;
-            img{width: 100%;height: 100%;display: block;}
+            img {
+              width: 100%;
+              height: 100%;
+              display: block;
+            }
           }
         }
-        
-        .title{
+        .viodebox {
+          .videoList {
+            width: 783px;
+            height: 689px;
+            margin-left: -391.5px;
+            margin-top: -340px;
+            background: url("../../images/video.png") no-repeat;
+            background-size: 100% 100%;
+            .video-src {
+              object-fit: fill;
+              width: 97%;
+              height: 82%;
+            }
+          }
+        }
+
+        .title {
           font-size: 16px;
           font-family: "Source Han Sans CN";
           font-weight: 400;
-          color: #FFFFFF;
+          color: #ffffff;
           line-height: 24px;
           margin-top: 10px;
           width: 96%;
@@ -951,10 +1064,9 @@ export default {
           display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示
           -webkit-line-clamp: 1; // 将对象作为弹性伸缩盒子模型显示。
           -webkit-box-orient: vertical; // 从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
-          
         }
       }
-      
+
       .list3 {
         width: 376px;
         height: 180px;
@@ -1054,14 +1166,14 @@ export default {
               }
             }
           }
-          .flBottom{
+          .flBottom {
             font-size: 16px;
             color: #fff;
             line-height: 26px;
-            .fb2{
+            .fb2 {
               margin: 16px 0;
             }
-            .fbimg{
+            .fbimg {
               height: 341px;
             }
           }
