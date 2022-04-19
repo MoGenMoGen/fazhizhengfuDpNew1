@@ -217,12 +217,20 @@
             />
           </div>
         </div>
-        <div class="list2">
+        <!-- 法律文书列表 -->
+        <div class="list2" v-show="s=false">
           <div class="itembox" v-for="(item, index) in list2" :key="index">
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.nm }}</div>
           </div>
         </div>
+        <!-- 法律故事列表 -->
+        <div class="list2">
+          <div class="itembox">
+          
+          </div>
+        </div>
+
         <div class="titlebox">
           <img src="~@/images/subtitle.png" alt="" />
           <div class="title">重点人员</div>
@@ -280,14 +288,47 @@
           class="list3"
           :class-option="defaultOption"
         >
-          <div class="item3" v-for="(item, index) in list3" :key="index">
+          <div class="item3" v-for="(item, index) in list3" :key="index"
+            @click="handleChanges(index)"
+          >
             <div class="leftbox">{{ item.content }}</div>
             <div class="rightbox">{{ item.date }}</div>
           </div>
         </vue-seamless-scroll>
+        <!-- 弹窗详情 -->
+        <div class="details" v-show="isShow2">
+          <div class="detailsList">
+            <h2>法律咨询详情</h2>
+            <div class="flxq">
+              <div class="ft">
+                九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙解答九龙解答解湖法律解答
+              </div>
+              <div class="fl3">
+                <div class="autor">
+                  <div>发起人：胡月华</div>
+                  <div class="ftime3">2021.02.02</div>
+                </div>
+                <div class="ftime1">
+                  <img src="../../images/aixin.png" alt="" />
+                  <div class="ic2">155</div>
+                </div>
+              </div>
+              <div class="flBottom">
+                <div class="fb2">
+                  九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解
+                  答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律
+                  解答九龙湖法律解答九龙湖
+                </div>
+                <div class="fbimg"><img src="../../images/pope.png" alt=""></div>
+              </div>
+            </div>
+            <div class="close" @click="handleClose">
+              <img src="../../images/close1.png" alt="" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    >>>>>>> Stashed changes
   </div>
 </template>
 
@@ -298,6 +339,7 @@ export default {
     return {
       currentIndex11: 0, //法治乡村标题下标
       currentIndex12: 0, //法治乡村内容下标
+      choose: 0,
       // 法治乡村列表
       list1: [
         { content: "汶溪村" },
@@ -349,6 +391,7 @@ export default {
           date: "2021.02.03",
         },
       ],
+      isShow2:false,
     };
   },
   components: { MyHeader },
@@ -403,6 +446,13 @@ export default {
     chooseTab3(index) {
       this.currentIndex3 = index;
     },
+    // 法律咨询详情
+    handleChanges(index){
+      this.isShow2=true
+    },
+    handleClose(){
+      this.isShow2=false
+    }
   },
 };
 </script>
@@ -454,7 +504,7 @@ export default {
         align-items: center;
         .num {
           font-size: 36px;
-          font-family: Agency FB;
+          font-family: "Agency FB";
           font-weight: bold;
           color: #3affe4;
           line-height: 74px;
@@ -482,7 +532,7 @@ export default {
       .itembox {
         width: 50%;
         // height: 193px;
-        height: 174px;
+        height: 168px;
         background: url(~@/images/bg2.png) center center;
         background-repeat: no-repeat;
         background-size: 117px 94px;
@@ -490,7 +540,7 @@ export default {
         cursor: pointer;
         .num {
           font-size: 43px;
-          font-family: Agency FB;
+          font-family: "Agency FB";
           font-weight: bold;
           color: #ffffff;
           text-align: center;
@@ -528,6 +578,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-top: 30px;
         margin-bottom: 40px;
         .intro_video {
           width: 180px;
@@ -769,7 +820,7 @@ export default {
           }
           .num {
             font-size: 26px;
-            font-family: Agency FB;
+            font-family: "Agency FB";
             font-weight: bold;
             color: #2efdfb;
             line-height: 60px;
@@ -847,6 +898,13 @@ export default {
             }
           }
         }
+        .video_img{
+          .video-src{
+            object-fit: fill;
+            height: 64px;
+            width: 109px;
+          }
+        }
       }
       .list3 {
         width: 376px;
@@ -858,6 +916,7 @@ export default {
           justify-content: space-between;
           align-items: center;
           margin-top: 20px;
+          cursor: pointer;
           .leftbox {
             width: 280px;
             // height: 20px;
@@ -878,6 +937,91 @@ export default {
             line-height: 15px;
             opacity: 0.4;
           }
+        }
+      }
+      // 弹窗详情
+      .details {
+        position: fixed;
+        width: 100%;
+        height: 1080px;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        font-family: "Source Han Sans CN";
+        .detailsList {
+          width: 783px;
+          height: 756px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -391.5px;
+          margin-top: -340px;
+          background: url("../../images/fl.png") no-repeat;
+          background-size: 100% 100%;
+          padding-top: 42px;
+          padding-left: 70px;
+          padding-right: 55px;
+          box-sizing: border-box;
+          h2 {
+            font-weight: bold;
+            font-size: 29px;
+            text-align: center;
+            color: #6cfcff;
+            line-height: 29px;
+            background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+          }
+          .ft {
+            font-size: 22px;
+            color: #fff;
+            line-height: 30px;
+            margin-bottom: 15px;
+          }
+          .fl3 {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            .autor {
+              font-size: 18px;
+              color: #fff;
+              .ftime3 {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.4);
+                margin-top: 8px;
+              }
+            }
+            .ftime1 {
+              color: #fff;
+              font-size: 14px;
+              cursor: pointer;
+              .ic2 {
+                margin-top: 6px;
+              }
+            }
+          }
+          .flBottom{
+            font-size: 16px;
+            color: #fff;
+            line-height: 26px;
+            .fb2{
+              margin: 16px 0;
+            }
+            .fbimg{
+              height: 341px;
+            }
+          }
+        }
+        .close {
+          position: absolute;
+          right: 60px;
+          top: 40px;
+          cursor: pointer;
         }
       }
     }
