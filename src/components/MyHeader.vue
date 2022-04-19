@@ -40,7 +40,7 @@ export default {
         }
     },
     props:{
-        cur:{default:3}
+        cur:{default:0}
     },
     mounted(){
         moment.locale("zh-cn");
@@ -53,7 +53,7 @@ export default {
     methods:{
         //页面跳转
         topf() {
-        window.location.href = "/gl";
+        window.location.href = "/";
         },
         topc() {
         window.location.href = "/pftj";

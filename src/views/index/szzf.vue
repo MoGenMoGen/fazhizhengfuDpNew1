@@ -216,7 +216,7 @@
         <div class="title">合法性审查</div>
         <div class="gaugecontent">
           <!-- 绘制仪表盘 -->
-          <div id="gauge"></div>
+          <div id="gauge2"></div>
           <!-- 合同总数 -->
           <div class="number">
             <p>150<span>份</span></p>
@@ -269,14 +269,16 @@
                 :data="tableList"
                 :class-option="defaultOption"
               >
-                <div class="blist" v-for="item in tableList" :key="item.num">
+                <div class="blist" v-for="(item,index) in tableList" :key="index"
+                  @click="handleTable(index)"
+                >
                   <div style="width: 53px">{{ item.num }}</div>
                   <div style="width: 150px; text-align: left">
                     {{ item.ht }}
                   </div>
                   <div style="width: 90px">{{ item.time }}</div>
                   <div style="width: 89px">
-                    {{ item.sc }}
+                    <span>{{ item.sc }}</span>
                     <img
                       src="../../images/wsc.png"
                       alt=""
@@ -295,6 +297,57 @@
                   </div>
                 </div>
               </vue-seamless-scroll>
+              <!-- 弹窗详情 -->
+              <div class="details" v-if="ifShow2">
+                <div class="detailsList">
+                  <h2>合法性审查详情</h2>
+                  <div class="details2">
+                    <div>
+                      <span>合同名称：</span>
+                      <p>股权质押反担保合同</p>
+                    </div>
+                    <div>
+                      <span>上传部门：</span>
+                      <p>综治</p>
+                    </div>
+                    <div>
+                      <span>上传时间：</span>
+                      <p>2021-01-05</p>
+                    </div>
+                    <div>
+                      <span>审查结果：</span>
+                      <p>审查通过</p>
+                    </div>
+                    <div>
+                      <span>审查状态：</span>
+                      <p>
+                        已审查
+                      <img
+                        src="../../images/ysc.png"
+                        alt=""
+                      />
+                      </p>
+                    </div>
+                    <div>
+                      <span>审核时间：</span>
+                      <p>2021-02-05</p>
+                    </div>
+                    <div>
+                      <span>律师意见/司法所意见：</span>
+                      <p>
+                        企业所得税汇算清缴纳税申报鉴证报告说明 我们接受委托,对被鉴证单位
+                      </p>
+                    </div>
+                    <div>
+                      <span>所属律师：</span>
+                      <p>王小毛</p>
+                    </div>
+                  </div>
+                  <div class="close" @click="handleClose">
+                    <img src="../../images/close1.png" alt="">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -303,7 +356,7 @@
           <!-- 重点人员 -->
           <div class="title">重点人员</div>
           <!-- 饼图 -->
-          <div id="pople"></div>
+          <div id="pople2"></div>
           <!-- 审查人员列表 -->
           <div class="sclist">
             <ul>
@@ -693,6 +746,188 @@ export default {
       });
       return count;
     },
+
+    // 右侧仪表
+    gauge2() {
+      //基于准备好的dom，初始化echarts实例
+      var myChart = this.$echarts.init(document.getElementById("gauge2"));
+      const gaugeData = [
+        {
+          value: 45,
+          name: "审查率",
+          title: {
+            offsetCenter: ["0%", "30%"],
+            fontSize: 17,
+            color: "#fff",
+          },
+          detail: {
+            valueAnimation: true,
+            offsetCenter: ["0%", "-20%"],
+          },
+        },
+      ];
+      // 绘制仪表盘
+      myChart.setOption({
+        series: [
+          {
+            type: "gauge",
+            startAngle: 230,
+            endAngle: -50,
+            pointer: {
+              show: false,
+            },
+            progress: {
+              show: true,
+              overlap: false,
+              roundCap: true,
+              clip: false,
+              itemStyle: {
+                borderWidth: 1,
+                borderColor: "#4631F8",
+                color: {
+                  type: "linear", // 线性渐变
+
+                  x: 0,
+
+                  y: 0,
+
+                  x2: 0,
+
+                  y2: 1,
+
+                  colorStops: [
+                    {
+                      offset: 0,
+
+                      color: "#54FFF1", // 0%处的颜色为红色
+                    },
+                    {
+                      offset: 1,
+
+                      color: "#4631F8", // 100%处的颜色为蓝
+                    },
+                  ],
+                }
+              }
+            },
+            axisLine: {
+              lineStyle: {
+                width: 7,
+              },
+            },
+            splitLine: {
+              show: false,
+              distance: 0,
+              length: 10,
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLabel: {
+              show: false,
+              distance: 50,
+            },
+            data: gaugeData,
+            title: {
+              fontSize: 14,
+            },
+            detail: {
+              // 里面的文字样式
+              width: 50,
+              height: 25,
+              fontSize: 28,
+              color: "#fff",
+              borderColor: "none",
+              formatter: "{value}%",
+            },
+          },
+        ],
+      });
+      // 定时器
+      setInterval(function () {
+        gaugeData[1].value = +(Math.random() * 100).toFixed(2);
+
+        myChart.setOption({
+          series: [
+            {
+              data: gaugeData,
+              pointer: {
+                show: false,
+              },
+            },
+          ],
+        });
+      }, 2000);
+    },
+
+    // 饼图
+    drawChart2() {
+      let that = this;
+      //基于准备好的dom，初始化echarts实例
+      var myChart = this.$echarts.init(document.getElementById("pople2"));
+      let data1 = [
+        { value: 30, name: "长石村" },
+        { value: 15, name: "九龙湖村 " },
+        { value: 18, name: "汶溪村" },
+        { value: 18, name: "秦山村" },
+        { value: 18, name: "西经堂村" },
+      ];
+      // 绘制饼图
+      myChart.setOption({
+        tooltip: {
+          trigger: "item",
+          formatter: " {b}<br/> 总人数: {c} (%)",
+        },
+        legend: {
+          right: "right",
+          orient: "vertical",
+          itemGap: 18,
+          textStyle: {
+            color: "#fff",
+            fontSize: 14,
+            fontFamily: "Microsoft YaHei",
+          },
+          formatter(name) {
+            const count = that.arrCount(data1);
+            //找到data中name和文本name值相同的对象
+            const val = data1.filter((item) => {
+              return item.name === name;
+            });
+            return name + "  " + (val[0].value / count).toFixed(4) * 100 + "%";
+          },
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+          },
+        },
+        series: [
+          {
+            name: "Nightingale Chart",
+            type: "pie",
+            radius: [20, 100],
+            center: ["22%", "50%"],
+            roseType: "radius",
+            itemStyle: {
+              borderRadius: 5,
+            },
+            label: {
+              show: false,
+            },
+            data: data1,
+          },
+        ],
+      });
+    },
+    arrCount(arr) {
+      let count = 0;
+      arr.forEach((item) => {
+        count = count + item.value;
+      });
+      return count;
+    },
+    
     // 审查列表
     handleclick(index) {
       this.currIndex = index;
@@ -715,6 +950,8 @@ export default {
   mounted() {
     this.gauge();
     this.drawChart();
+    this.drawChart2();
+    this.gauge2();
   },
 };
 </script>
@@ -748,6 +985,11 @@ export default {
         font-family: "Source Han Sans CN";
         //
         #gauge {
+          width: 135px;
+          height: 150px;
+          //   background-color: red;
+        }
+        #gauge2 {
           width: 135px;
           height: 150px;
           //   background-color: red;
@@ -983,6 +1225,13 @@ export default {
       .scpople {
         // 饼图
         #pople {
+          width: 350px;
+          height: 200px;
+          margin: 0 auto;
+          margin-top: 30px;
+          margin-bottom: -20px;
+        }
+         #pople2{
           width: 350px;
           height: 200px;
           margin: 0 auto;
