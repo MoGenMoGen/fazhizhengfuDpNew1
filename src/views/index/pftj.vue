@@ -1504,7 +1504,7 @@ export default {
             line-height: 55px;
           }
           .data {
-            width: 72px;
+            width: 72px;  
             height: 33px;
             background: rgba(0, 48, 149, 0);
             border: 1px solid #ffffff;
