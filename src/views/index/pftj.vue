@@ -325,7 +325,7 @@
                 <div class="pdf" :id="pdfId">
                   <!--使用ifram 显示 pdf文件 获取文件地址 -->
                   <iframe
-                    style="width: 100%; height: 650px"
+                    style="width: 100%; height: 680px"
                     src="https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf"
                   ></iframe>
                 </div>
@@ -553,15 +553,9 @@ export default {
       // percentX: 1, //缩放比列
       // percentY: 1, //缩放比列
       currentIndex1: 0, //法律服务下标
-<<<<<<< Updated upstream
-      choose:-1,
-      //法律服务列表
-      list1: [
-=======
       choose: -1,
       //法律服务-法制动态列表
       list11: [
->>>>>>> Stashed changes
         {
           pic: "https://tse3-mm.cn.bing.net/th/id/OIP-C.xMJSb4rjACfDQgOX_wliAwHaHa?w=195&h=196&c=7&r=0&o=5&pid=1.7",
           content:
@@ -714,7 +708,6 @@ export default {
           val7: "其他专业本科",
         },
       ],
-<<<<<<< Updated upstream
       // 地图五星图标
       village: false,
       wxList: [
@@ -734,7 +727,6 @@ export default {
         {left: "890px", top: "237px"},
         {left: "901px", top: "349px"},
       ],
-=======
       // 显示片区民警详情
       showMjdDetail: false,
       mjInfo: {
@@ -746,7 +738,6 @@ export default {
         depart: "九龙湖派出所",
         zw: "民警",
       },
->>>>>>> Stashed changes
     };
   },
   components: { MyHeader },
@@ -882,13 +873,12 @@ export default {
       this.isVideo = false;
       this.fws = false;
       this.$refs.gsDtlVideo.pause(); //暂停
+      this.village = false;
+
     },
     // 地图星轮播详情
     handleVill() {
       this.village = true;
-    },
-    handleClose() {
-      this.village = false;
     },
   },
   created() {
@@ -1250,7 +1240,6 @@ export default {
           height: auto;
           display: block;
         }
-<<<<<<< Updated upstream
          // 地图五星
         .xct {
           position: absolute;
@@ -1344,9 +1333,7 @@ export default {
           }
         }
         .wxc{
-=======
-        .wxc {
->>>>>>> Stashed changes
+
           position: absolute;
           left: 17px;
           top: 175px;
@@ -1521,7 +1508,7 @@ export default {
             height: 33px;
             background: rgba(0, 48, 149, 0);
             border: 1px solid #ffffff;
-            opacity: 0.4;
+            // opacity: 0.4;
             border-radius: 16px;
             display: flex;
             align-items: center;

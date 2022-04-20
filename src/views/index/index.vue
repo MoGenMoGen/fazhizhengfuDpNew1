@@ -279,7 +279,6 @@
                 <div class="pdf" id="pdfId">
                   <!--使用ifram 显示 pdf文件 获取文件地址 -->
                   <iframe
-                    style="width: 100%; height: 500px"
                     src="https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf"
                   ></iframe>
                 </div>
