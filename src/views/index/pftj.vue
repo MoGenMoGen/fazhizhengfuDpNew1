@@ -37,11 +37,12 @@
           </div>
         </div>
         <vue-seamless-scroll
-          :data="list1"
-          class="list1"
-          :class-option="defaultOption"
+          :data="list11"
+          class="list11"
+          :class-option="flzxOption"
+          v-if="currentIndex1 == 0"
         >
-          <div class="item1" v-for="(item, index) in list1" :key="index">
+          <div class="item11" v-for="(item, index) in list11" :key="index">
             <img class="cover" :src="item.pic" alt="" />
             <div class="rightbox">
               <div class="topbox">{{ item.content }}</div>
@@ -51,6 +52,28 @@
                   {{ item.num }}
                 </div>
                 <div class="rightcontent">{{ item.date }}</div>
+              </div>
+            </div>
+          </div>
+        </vue-seamless-scroll>
+        <vue-seamless-scroll
+          :data="list12"
+          class="list12"
+          :class-option="flzxOption"
+          v-else-if="currentIndex1 == 1"
+        >
+          <div class="item12" v-for="(item, index) in list12" :key="index">
+            <div class="ft">
+              {{ item.content }}
+            </div>
+            <div class="fl3">
+              <div class="autor">
+                <div>发起人：{{ item.fqr }}</div>
+                <div class="ftime3">{{ item.date }}</div>
+              </div>
+              <div class="ftime1">
+                <img src="../../images/aixin.png" alt="" />
+                <div class="ic2">{{ item.dz }}</div>
               </div>
             </div>
           </div>
@@ -147,90 +170,65 @@
           </div>
           <!-- 地图凸起 -->
           <!-- 汶溪村 -->
-          <div class="wxc" v-show="choose==0">
-            <img src="~@/images/map/wx.png" alt="" class="wxmap">
-            <div class="mapicon">
-              汶溪村
-            </div>
+          <div class="wxc" v-show="choose == 0">
+            <img src="~@/images/map/wx.png" alt="" class="wxmap" />
+            <div class="mapicon">汶溪村</div>
           </div>
           <!-- 田顾村 -->
-          <div class="wxc left1" v-show="choose==1">
-            <img src="~@/images/map/tg.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              田顾村
-            </div>
+          <div class="wxc left1" v-show="choose == 1">
+            <img src="~@/images/map/tg.png" alt="" class="wxmap" />
+            <div class="mapicon">田顾村</div>
           </div>
           <!-- 河头村 -->
-          <div class="wxc left2" v-show="choose==2">
-            <img src="~@/images/map/ht.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              河头村
-            </div>
+          <div class="wxc left2" v-show="choose == 2">
+            <img src="~@/images/map/ht.png" alt="" class="wxmap" />
+            <div class="mapicon">河头村</div>
           </div>
-           <!-- 长石村 -->
-          <div class="wxc left3" v-show="choose==3">
-            <img src="~@/images/map/cs.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              长石村
-            </div>
+          <!-- 长石村 -->
+          <div class="wxc left3" v-show="choose == 3">
+            <img src="~@/images/map/cs.png" alt="" class="wxmap" />
+            <div class="mapicon">长石村</div>
           </div>
           <!-- 九龙湖村 -->
-          <div class="wxc left4" v-show="choose==4">
-            <img src="~@/images/map/jlh.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              九龙湖村
-            </div>
+          <div class="wxc left4" v-show="choose == 4">
+            <img src="~@/images/map/jlh.png" alt="" class="wxmap" />
+            <div class="mapicon">九龙湖村</div>
           </div>
-           <!-- 长石村 -->
-          <div class="wxc left3" v-show="choose==5">
-            <img src="~@/images/map/cs.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              思源社区
-            </div>
+          <!-- 长石村 -->
+          <div class="wxc left3" v-show="choose == 5">
+            <img src="~@/images/map/cs.png" alt="" class="wxmap" />
+            <div class="mapicon">思源社区</div>
           </div>
           <!-- 杜夹岙村 -->
-          <div class="wxc left5" v-show="choose==6">
-            <img src="~@/images/map/sj.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              杜夹岙村
-            </div>
+          <div class="wxc left5" v-show="choose == 6">
+            <img src="~@/images/map/sj.png" alt="" class="wxmap" />
+            <div class="mapicon">杜夹岙村</div>
           </div>
-           <!-- 田杨陈村 -->
-          <div class="wxc left6" v-show="choose==7">
-            <img src="~@/images/map/tyc.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              田杨陈村
-            </div>
+          <!-- 田杨陈村 -->
+          <div class="wxc left6" v-show="choose == 7">
+            <img src="~@/images/map/tyc.png" alt="" class="wxmap" />
+            <div class="mapicon">田杨陈村</div>
           </div>
           <!-- 西河村 -->
-          <div class="wxc left7" v-show="choose==8">
-            <img src="~@/images/map/sh.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              西河村
-            </div>
+          <div class="wxc left7" v-show="choose == 8">
+            <img src="~@/images/map/sh.png" alt="" class="wxmap" />
+            <div class="mapicon">西河村</div>
           </div>
           <!-- 西经堂村 -->
-          <div class="wxc left8" v-show="choose==9">
-            <img src="~@/images/map/xjt.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              西经堂村
-            </div>
+          <div class="wxc left8" v-show="choose == 9">
+            <img src="~@/images/map/xjt.png" alt="" class="wxmap" />
+            <div class="mapicon">西经堂村</div>
           </div>
-           <!-- 长宏村 -->
-          <div class="wxc left9" v-show="choose==10">
-            <img src="~@/images/map/ch.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              长宏村
-            </div>
+          <!-- 长宏村 -->
+          <div class="wxc left9" v-show="choose == 10">
+            <img src="~@/images/map/ch.png" alt="" class="wxmap" />
+            <div class="mapicon">长宏村</div>
           </div>
-           <!-- 中心村 -->
-          <div class="wxc left10" v-show="choose==11">
-            <img src="~@/images/map/zx.png" alt="" class=" wxmap">
-            <div class="mapicon">
-              中心村
-            </div>
+          <!-- 中心村 -->
+          <div class="wxc left10" v-show="choose == 11">
+            <img src="~@/images/map/zx.png" alt="" class="wxmap" />
+            <div class="mapicon">中心村</div>
           </div>
-
         </div>
       </div>
       <div class="right">
@@ -306,10 +304,75 @@
             />
           </div>
         </div>
-        <div class="list3">
-          <div class="itembox" v-for="(item, index) in list3" :key="index">
+        <!-- 法律文书列表 -->
+        <div class="list3" v-show="currentIndex3 == 0">
+          <div
+            class="itembox"
+            v-for="(item, index) in list31"
+            :key="index"
+            @click="hanldeClickf(item)"
+            
+          >
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.nm }}</div>
+          </div>
+          <!-- 法律文书详情 -->
+          <div class="details" v-show="fws">
+            <div class="detailsList wenshu">
+              <h2>法律文书详情</h2>
+              <!-- pdf文件 -->
+              <div id="iframe">
+                <div class="pdf" :id="pdfId">
+                  <!--使用ifram 显示 pdf文件 获取文件地址 -->
+                  <iframe
+                    style="width: 100%; height: 650px"
+                    src="https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf"
+                  ></iframe>
+                </div>
+              </div>
+              <div class="close" @click="handleClose">
+                <img src="../../images/close1.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 法律故事列表 -->
+        <div
+          class="list3 list32"
+          v-show="currentIndex3 == 1 || currentIndex3 == 2"
+        >
+          <div
+            class="itembox item2"
+            v-for="(item, index) in list32"
+            :key="index"
+            @click="bofang(index)"
+          >
+            <div class="img"><img src="~@/images/fzgs.png" alt="" /></div>
+            <div class="title">{{ item.nm }}</div>
+          </div>
+          <!-- 法律故事视频详情 -->
+          <div class="details viodebox" v-if="isVideo">
+            <div class="detailsList videoList">
+              <h2>法律故事详情</h2>
+              <video
+                width="100%"
+                controls
+                loop
+                id="videoplay"
+                class="video-src"
+                ref="gsDtlVideo"
+                src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
+              >
+                <!-- <source
+                  src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
+                  type="video/mp4"
+                  data-filtered="filtered"
+                /> -->
+              </video>
+              <div class="close" @click="handleClose">
+                <img src="../../images/close1.png" alt="" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="titlebox">
@@ -360,25 +423,121 @@
         </div>
         <!-- 表格列 -->
         <div class="table">
-          <div class="top">
+          <div class="top" v-if="currentIndex4 == 0 || currentIndex4 == 1">
             <div style="width: 77px">村、社区</div>
-            <div style="width: 110px;">姓名</div>
+            <div style="width: 110px">姓名</div>
             <div style="width: 72px">职务</div>
+            <div style="width: 109px">手机</div>
+          </div>
+          <div class="top" v-else-if="currentIndex4 == 2">
+            <div style="width: 110px">姓名</div>
+            <div style="width: 109px">手机</div>
+            <div style="width: 109px">部门</div>
+            <div style="width: 109px">职务</div>
+          </div>
+          <div class="top" v-else-if="currentIndex4 == 3">
+            <div style="width: 88px">姓名</div>
+            <div style="width: 60px">性别</div>
+            <div style="width: 109px">学历</div>
             <div style="width: 109px">手机</div>
           </div>
           <div class="bottom">
             <vue-seamless-scroll :data="list4" :class-option="defaultOption">
               <div class="blist" v-for="(item, index) in list4" :key="index">
-                <div class="row" style="width: 77px">{{ item.val1 }}</div>
-                <div class="row" style="width: 110px;">
-                  {{ item.val2 }}
+                <div
+                  class="blistbox"
+                  v-if="currentIndex4 == 1 || currentIndex4 == 0"
+                >
+                  <div class="row" style="width: 77px">
+                    {{ item.val1 }}
+                  </div>
+                  <div class="row" style="width: 110px">
+                    {{ item.val2 }}
+                  </div>
+                  <div class="row" style="width: 72px">
+                    {{ item.val3 }}
+                  </div>
+                  <div class="row" style="width: 109px">
+                    {{ item.val4 }}
+                  </div>
                 </div>
-                <div class="row" style="width: 72px">{{ item.val3 }}</div>
-                <div class="row" style="width: 109px">
-                  {{ item.val4 }}
+
+                <div
+                  class="blistbox"
+                  v-else-if="currentIndex4 == 2"
+                  @click="handleMjdDetail"
+                >
+                  <div class="row" style="width: 110px">
+                    {{ item.val2 }}
+                  </div>
+                  <div class="row" style="width: 109px">
+                    {{ item.val4 }}
+                  </div>
+                  <div class="row" style="width: 109px">
+                    {{ item.val5 }}
+                  </div>
+                  <div class="row" style="width: 109px">
+                    {{ item.val3 }}
+                  </div>
+                </div>
+                <div class="blistbox" v-else-if="currentIndex4 == 3">
+                  <div class="row" style="width: 88px">
+                    {{ item.val2 }}
+                  </div>
+                  <div class="row" style="width: 60px">
+                    {{ item.val6 }}
+                  </div>
+                  <div class="row" style="width: 109px">
+                    {{ item.val7 }}
+                  </div>
+                  <div class="row" style="width: 109px">
+                    {{ item.val4 }}
+                  </div>
                 </div>
               </div>
             </vue-seamless-scroll>
+          </div>
+        </div>
+        <!--片区民警详情 -->
+        <div class="details" v-if="showMjdDetail">
+          <div class="detailsList">
+            <h2>片区民警</h2>
+            <div class="detail">
+              <img src="~@/images/avatar1.jpg" alt="" />
+              <div class="content">
+                <div class="row">
+                  <div class="title">姓名：</div>
+                  <div class="cont">{{ mjInfo.nm }}</div>
+                </div>
+                <div class="row">
+                  <div class="title">手机号：</div>
+                  <div class="cont">{{ mjInfo.phone }}</div>
+                </div>
+                <div class="row">
+                  <div class="title">短号：</div>
+                  <div class="cont">{{ mjInfo.dh }}</div>
+                </div>
+                <div class="row">
+                  <div class="title">办公电话：</div>
+                  <div class="cont">{{ mjInfo.tel }}</div>
+                </div>
+                <div class="row">
+                  <div class="title">单位：</div>
+                  <div class="cont">{{ mjInfo.unit }}</div>
+                </div>
+                <div class="row">
+                  <div class="title">部门：</div>
+                  <div class="cont">{{ mjInfo.depart }}</div>
+                </div>
+                <div class="row">
+                  <div class="title">职务：</div>
+                  <div class="cont">{{ mjInfo.zw }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="close" @click="CloseMjDtl">
+              <img src="../../images/close1.png" alt="" />
+            </div>
           </div>
         </div>
       </div>
@@ -394,9 +553,15 @@ export default {
       // percentX: 1, //缩放比列
       // percentY: 1, //缩放比列
       currentIndex1: 0, //法律服务下标
+<<<<<<< Updated upstream
       choose:-1,
       //法律服务列表
       list1: [
+=======
+      choose: -1,
+      //法律服务-法制动态列表
+      list11: [
+>>>>>>> Stashed changes
         {
           pic: "https://tse3-mm.cn.bing.net/th/id/OIP-C.xMJSb4rjACfDQgOX_wliAwHaHa?w=195&h=196&c=7&r=0&o=5&pid=1.7",
           content:
@@ -423,8 +588,30 @@ export default {
           date: "2021.02.05",
         },
       ],
+      //法律服务-法律咨询列表
+      list12: [
+        {
+          content:
+            "九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答",
+          fqr: "胡月华",
+          date: "2021-05-02",
+          dz: "155",
+        },
+        {
+          content: "九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答",
+          fqr: "胡月华",
+          date: "2021-05-02",
+          dz: "155",
+        },
+        {
+          content: "九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答",
+          fqr: "胡月华",
+          date: "2021-05-02",
+          dz: "155",
+        },
+      ],
       currentIndex21: 0, //法治乡村标题下标
-      currentIndex22: 0, //法治乡村内容下标
+      currentIndex22: -1, //法治乡村内容下标
       // 法治乡村列表
       list2: [
         { content: "汶溪村" },
@@ -435,7 +622,8 @@ export default {
         { content: "思源社区" },
       ],
       currentIndex3: 0, //法律宝典下标
-      list3: [
+      // 法律文书列表
+      list31: [
         { nm: "民间借贷起诉状" },
         { nm: "借条" },
         { nm: "追索劳动报酬仲裁申多好多好东方红" },
@@ -451,6 +639,41 @@ export default {
         { nm: "借条" },
         { nm: "民间借贷起诉状" },
       ],
+      fws: false, //法律文书详情
+      // 法律故事、普法宣传列表
+      list32: [
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+        {
+          video:
+            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
+          nm: "大成律所新农",
+        },
+      ],
+      isVideo: false,
       currentIndex4: 0, //法治队伍下标
       // 法治队伍列表
       list4: [
@@ -459,26 +682,39 @@ export default {
           val2: "王  柯",
           val3: "法律顾问",
           val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "女",
+          val7: "其他专业本科",
         },
         {
           val1: "龙源社区",
           val2: "王  柯",
           val3: "法律顾问",
           val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "男",
+          val7: "其他专业本科",
         },
         {
           val1: "龙源社区",
           val2: "王  柯",
           val3: "法律顾问",
           val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "男",
+          val7: "其他专业本科",
         },
         {
           val1: "龙源社区",
           val2: "王  柯",
           val3: "法律顾问",
           val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "女",
+          val7: "其他专业本科",
         },
       ],
+<<<<<<< Updated upstream
       // 地图五星图标
       village: false,
       wxList: [
@@ -498,6 +734,19 @@ export default {
         {left: "890px", top: "237px"},
         {left: "901px", top: "349px"},
       ],
+=======
+      // 显示片区民警详情
+      showMjdDetail: false,
+      mjInfo: {
+        nm: "张艳云",
+        phone: "13520456642",
+        dh: "456642",
+        tel: "0574-866455615",
+        unit: "镇海区-区政府-镇海区公安分局",
+        depart: "九龙湖派出所",
+        zw: "民警",
+      },
+>>>>>>> Stashed changes
     };
   },
   components: { MyHeader },
@@ -507,6 +756,19 @@ export default {
       return {
         step: 0.2, // 数值越大速度滚动越快
         limitMoveNum: 4, // 开始无缝滚动的数据量 this.dataList.length
+        hoverStop: true, // 是否开启鼠标悬停stop
+        direction: 1, // 0向下 1向上 2向左 3向右
+        openWatch: true, // 开启数据实时监控刷新dom
+        singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+        singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+        waitTime: 1000, // 单步运动停止的时间(默认值1000ms)
+      };
+    },
+    // 法律服务-法律咨询配置
+    flzxOption() {
+      return {
+        step: 0.2, // 数值越大速度滚动越快
+        limitMoveNum: 3, // 开始无缝滚动的数据量 this.dataList.length
         hoverStop: true, // 是否开启鼠标悬停stop
         direction: 1, // 0向下 1向上 2向左 3向右
         openWatch: true, // 开启数据实时监控刷新dom
@@ -546,8 +808,8 @@ export default {
     // 左侧-村庄选择
     chooseTab22(index) {
       this.currentIndex22 = index;
-      this.choose=index;
-      console.log(this.choose)
+      this.choose = index;
+      console.log(this.choose);
     },
     // 右侧-法律宝典
     chooseTab3(index) {
@@ -556,6 +818,70 @@ export default {
     // 右侧-法治宝典
     chooseTab4(index) {
       this.currentIndex4 = index;
+      this.list4 = [
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "女",
+          val7: "其他专业本科",
+        },
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "男",
+          val7: "其他专业本科",
+        },
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "男",
+          val7: "其他专业本科",
+        },
+        {
+          val1: "龙源社区",
+          val2: "王  柯",
+          val3: "法律顾问",
+          val4: "13858269256",
+          val5: "九龙湖派出所",
+          val6: "女",
+          val7: "其他专业本科",
+        },
+      ];
+    },
+    // 民警详情
+    handleMjdDetail() {
+      this.showMjdDetail = true;
+    },
+    // 关闭民警详情
+    CloseMjDtl() {
+      this.showMjdDetail = false;
+    },
+    // 法律文书pdf
+    hanldeClickf(item) {
+      this.fws = true;
+    },
+    // 法律故事弹窗
+    bofang(index) {
+      this.isVideo = true;
+    },
+    // 法律咨询详情
+    handleChanges(index) {
+      this.isShow2 = true;
+    },
+    handleClose() {
+      this.isShow2 = false;
+      this.isVideo = false;
+      this.fws = false;
+      this.$refs.gsDtlVideo.pause(); //暂停
     },
     // 地图星轮播详情
     handleVill() {
@@ -668,13 +994,13 @@ export default {
           }
         }
       }
-      .list1 {
+      .list11 {
         // width: 313px;
         width: 362px;
-        height: 330px;
-        margin: 20px 0 40px;
+        height: 290px;
+        margin: 20px 0 10px;
         overflow: hidden;
-        .item1 {
+        .item11 {
           margin-bottom: 20px;
           display: flex;
           .cover {
@@ -731,6 +1057,51 @@ export default {
           }
         }
       }
+      .list12 {
+        width: 362px;
+        height: 290px;
+        margin: 20px 0 10px;
+        overflow: hidden;
+        .item12 {
+          margin-bottom: 20px;
+          .ft {
+            font-size: 18px;
+            color: #fff;
+            height: 48px;
+            line-height: 24px;
+            margin-bottom: 18px;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+          .fl3 {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            .autor {
+              font-size: 14px;
+              color: #fff;
+              .ftime3 {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.4);
+                margin-top: 8px;
+              }
+            }
+            .ftime1 {
+              color: #fff;
+              font-size: 14px;
+              cursor: pointer;
+              .ic2 {
+                margin-top: 6px;
+              }
+            }
+          }
+        }
+      }
       .fzxcbox {
         display: flex;
         width: 362px;
@@ -740,6 +1111,7 @@ export default {
           width: 50%;
           // height: 193px;
           height: 174px;
+          // height:144px;
           background: url(~@/images/bg2.png) center center;
           background-repeat: no-repeat;
           background-size: 117px 94px;
@@ -878,6 +1250,7 @@ export default {
           height: auto;
           display: block;
         }
+<<<<<<< Updated upstream
          // 地图五星
         .xct {
           position: absolute;
@@ -971,15 +1344,18 @@ export default {
           }
         }
         .wxc{
+=======
+        .wxc {
+>>>>>>> Stashed changes
           position: absolute;
           left: 17px;
           top: 175px;
           // height: 482px;
           font-family: "Source Han Sans CN";
-          .wxmap{
+          .wxmap {
             height: 100%;
           }
-          .mapicon{
+          .mapicon {
             background: url("~@/images/map/icon1.png") no-repeat center center;
             height: 120px;
             width: 67px;
@@ -991,61 +1367,74 @@ export default {
             text-align: center;
             font-size: 14px;
             font-weight: 500;
-            color: #EA0015;
+            color: #ea0015;
             // margin-left: -33px;
-            
           }
-          &.left1{
+          &.left1 {
             right: 168px;
             top: 251px;
             left: auto;
-            .mapicon{margin-top: -100px;}
+            .mapicon {
+              margin-top: -100px;
+            }
           }
-          &.left2{
+          &.left2 {
             right: 40px;
             top: 52px;
             left: auto;
-            .mapicon{margin-left: -30px;}
+            .mapicon {
+              margin-left: -30px;
+            }
           }
-          &.left3{
+          &.left3 {
             bottom: 19px;
             right: 173px;
             top: auto;
             left: auto;
           }
-          &.left4{
+          &.left4 {
             top: 24px;
             left: 195px;
           }
-          &.left5{
+          &.left5 {
             top: 274px;
             left: 425px;
           }
-          &.left6{
+          &.left6 {
             right: 24px;
             top: 283px;
             left: auto;
-            .mapicon{margin-left: -16px;}
+            .mapicon {
+              margin-left: -16px;
+            }
           }
-          &.left7{
+          &.left7 {
             top: 414px;
             left: 568px;
-            .mapicon{margin-left: -30px;}
+            .mapicon {
+              margin-left: -30px;
+            }
           }
-          &.left8{
+          &.left8 {
             top: 373px;
             left: 676px;
-            .mapicon{margin-left: -30px;}
+            .mapicon {
+              margin-left: -30px;
+            }
           }
-           &.left9{
+          &.left9 {
             top: 477px;
             left: 688px;
-            .mapicon{margin-left: -30px;}
+            .mapicon {
+              margin-left: -30px;
+            }
           }
-           &.left10{
+          &.left10 {
             top: 411px;
             left: 384px;
-            .mapicon{margin-left: -30px;}
+            .mapicon {
+              margin-left: -30px;
+            }
           }
         }
       }
@@ -1065,7 +1454,7 @@ export default {
         width: 364px;
         display: flex;
         justify-content: space-between;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         .leftbox {
           width: 172px;
           .fg {
@@ -1125,7 +1514,7 @@ export default {
             font-family: Agency FB;
             font-weight: bold;
             color: #2efdfb;
-            line-height: 70px;
+            line-height: 55px;
           }
           .data {
             width: 72px;
@@ -1156,12 +1545,12 @@ export default {
         }
       }
       .list3 {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         width: 362px;
         height: 210px;
         overflow-y: scroll;
         overflow-x: hidden;
-        padding: 5px 17px;
+        padding: 0px 17px;
         box-sizing: border-box;
         display: flex;
         flex-wrap: wrap;
@@ -1179,7 +1568,7 @@ export default {
           img {
             width: 37px;
             height: 42px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
           }
           .nm {
             width: 70px;
@@ -1200,14 +1589,82 @@ export default {
             }
           }
         }
+        .wenshu {
+          width: 683px !important;
+          height: 850px !important;
+          background: url("../../images/flws.png") no-repeat !important;
+          background-size: 100% 100% !important;
+        }
+        .video_img {
+          .video-src {
+            object-fit: fill;
+            height: 64px;
+            width: 109px;
+          }
+        }
       }
+      .list32 {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 20px;
+        height: 210px;
+        .item2 {
+          width: 30.33%;
+          margin-top: 8px;
+          flex: 1;
+          cursor: pointer;
+          & + .item2 {
+            margin-left: 3%;
+          }
+          .img {
+            height: 65px;
+            img {
+              width: 100%;
+              height: 100%;
+              display: block;
+            }
+          }
+        }
+        .viodebox {
+          .videoList {
+            width: 783px;
+            height: 689px;
+            // margin-left: -391.5px;
+            // margin-top: -340px;
+            background: url("../../images/video.png") no-repeat;
+            background-size: 100% 100%;
+            .video-src {
+              object-fit: fill;
+              width: 97%;
+              height: 82%;
+            }
+          }
+        }
+
+        .title {
+          font-size: 16px;
+          font-family: "Source Han Sans CN";
+          font-weight: 400;
+          color: #ffffff;
+          line-height: 24px;
+          margin-top: 10px;
+          width: 96%;
+          overflow: hidden;
+          white-space: nowrap; // 溢出不换行
+          text-overflow: ellipsis;
+          display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示
+          -webkit-line-clamp: 1; // 将对象作为弹性伸缩盒子模型显示。
+          -webkit-box-orient: vertical; // 从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+        }
+      }
+
       .fzdw_box {
         width: 361px;
         display: flex;
         justify-content: space-around;
         padding-bottom: 15px;
         border-bottom: 1px solid #0088ff;
-        margin-top: 30px;
+        margin-top: 20px;
         .itembox {
           position: relative;
           cursor: pointer;
@@ -1226,7 +1683,7 @@ export default {
             font-family: Agency FB;
             font-weight: bold;
             color: #2efdfb;
-            line-height: 64px;
+            line-height: 58px;
           }
           .select {
             position: absolute;
@@ -1253,28 +1710,100 @@ export default {
           height: 140px;
           overflow: hidden;
           .blist {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-            height: 28px;
-            line-height: 28px;
-            color: #fff;
-            cursor: pointer;
             &:nth-child(2n + 1) {
               background: rgba(255, 255, 255, 0.3);
             }
             &:nth-child(2n) {
               background: rgba(255, 255, 255, 0.2);
             }
-            .row {
-              font-size: 12px;
-              font-weight: 400;
-              color: #ffffff;
-              line-height: 28px;
+            .blistbox {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
               text-align: center;
+              height: 28px;
+              line-height: 28px;
+              color: #fff;
+              cursor: pointer;
+              .row {
+                font-size: 12px;
+                font-weight: 400;
+                color: #ffffff;
+                line-height: 28px;
+                text-align: center;
+              }
             }
           }
+        }
+      }
+      .details {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        .detailsList {
+          width: 783px;
+          height: 445px;
+          position: absolute;
+          z-index: 2000;
+          left: 50%;
+          top: 50%;
+          // margin-left: -391.5px;
+          // margin-top: -267.5px;
+          transform: translate(-50%, -50%);
+          background: url("../../images/tc1.png") no-repeat;
+          background-size: 100%;
+          padding-top: 42px;
+          padding-left: 70px;
+          padding-right: 55px;
+          box-sizing: border-box;
+          h2 {
+            font-weight: bold;
+            font-size: 29px;
+            text-align: center;
+            color: #6cfcff;
+            line-height: 29px;
+            background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 38px;
+          }
+          .detail {
+            margin-top: 45px;
+            display: flex;
+            justify-content: center;
+            img {
+              width: 140px;
+              height: 140px;
+              border-radius: 50%;
+              object-fit: cover;
+              margin-right: 45px;
+            }
+            .content {
+              .row {
+                display: flex;
+                font-size: 17px;
+                font-family: "PingFang SC";
+                font-weight: 500;
+                color: #ffffff;
+                line-height: 40px;
+                .title {
+                  margin-right: 4px;
+                }
+              }
+            }
+          }
+        }
+        .close {
+          position: absolute;
+          right: 60px;
+          top: 40px;
+          cursor: pointer;
         }
       }
     }

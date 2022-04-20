@@ -61,7 +61,7 @@
             <div class="bottom">
               <vue-seamless-scroll
                 :data="tableList"
-                :class-option="defaultOption"
+                :class-option="defaultOption" 
               >
                 <div
                   class="blist"

@@ -72,9 +72,10 @@ html {
 
 body {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
+    /* min-height: 100vh; */
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
     background: url(~@/images/bg.png) top center;
     background-attachment: fixed;
     background-size: 100% 100vh;
