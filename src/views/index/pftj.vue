@@ -123,6 +123,29 @@
         </div>
         <div class="mapbox">
           <img src="~@/images/map.png" alt="" class="map" />
+          <!-- 地图点击五星 -->
+          <div class="xct">
+            <div class="popover" v-for="(item,index) in wxList" :key="index"
+            @click="handleVill(index)"
+            :style="{left:item.left,top:item.top}"
+            >
+              <img src="../../images/wxing.png" alt="" />
+            </div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>汶溪村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 地图凸起 -->
           <!-- 汶溪村 -->
           <div class="wxc" v-show="choose==0">
             <img src="~@/images/map/wx.png" alt="" class="wxmap">
@@ -371,7 +394,7 @@ export default {
       // percentX: 1, //缩放比列
       // percentY: 1, //缩放比列
       currentIndex1: 0, //法律服务下标
-      choose:0,
+      choose:-1,
       //法律服务列表
       list1: [
         {
@@ -456,6 +479,25 @@ export default {
           val4: "13858269256",
         },
       ],
+      // 地图五星图标
+      village: false,
+      wxList: [
+        {left: "371px", top: "487px",},
+        {left: "427px", top: "498px",},
+        {left: "561px", top: "393px",},
+        {left: "647px", top: "501px",},
+        {left: "664px", top: "628px",},
+        {left: "749px", top: "627px",},
+        {left: "712.5px", top: "699.5px"},
+        {left: "815px", top: "468px"},
+        {left: "728px", top: "310px"},
+        {left: "663px", top: "266px"},
+        {left: "747px", top: "243px"},
+        {left: "822px", top: "183px"},
+        {left: "878px", top: "197px"},
+        {left: "890px", top: "237px"},
+        {left: "901px", top: "349px"},
+      ],
     };
   },
   components: { MyHeader },
@@ -514,6 +556,13 @@ export default {
     // 右侧-法治宝典
     chooseTab4(index) {
       this.currentIndex4 = index;
+    },
+    // 地图星轮播详情
+    handleVill() {
+      this.village = true;
+    },
+    handleClose() {
+      this.village = false;
     },
   },
   created() {
@@ -828,6 +877,98 @@ export default {
           width: auto;
           height: auto;
           display: block;
+        }
+         // 地图五星
+        .xct {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          .popover {
+            display: block;
+            position: absolute;
+            left: 371px;
+            top: 487px;
+            z-index: 99;
+            cursor: pointer;
+            &:nth-child(7) {
+              transform: rotate(350deg);
+            }
+          }
+          .carousel {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            .carousel2 {
+              width: 783px;
+              height: 689px;
+              background: url("../../images/cz.png") no-repeat;
+              background-size: 100% 100%;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              margin-left: -391.5px;
+              margin-top: -344.5px;
+              padding-top: 42px;
+              box-sizing: border-box;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+              .close {
+                position: absolute;
+                right: 60px;
+                top: 40px;
+                cursor: pointer;
+              }
+            }
+            h2 {
+              font-weight: bold;
+              font-size: 29px;
+              text-align: center;
+              color: #6cfcff;
+              line-height: 29px;
+              background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              margin-bottom: 30px;
+            }
+            /deep/.el-carousel__container {
+              height: 535px;
+            }
+            /deep/.el-carousel--horizontal {
+              overflow: hidden;
+              height: 530px;
+              padding-left: 55px;
+              padding-right: 55px;
+              margin-left: 24px;
+              margin-right: 24px;
+            }
+            /deep/.el-carousel__indicators {
+              display: none;
+            }
+            /deep/.el-carousel__arrow--left {
+              left: 0;
+              margin-left: -50px;
+            }
+            /deep/.el-carousel__arrow--right {
+              right: 0;
+              margin-right: -50px;
+            }
+            /deep/.el-carousel__arrow {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              border: 1px solid #fff;
+              background-color: none;
+            }
+          }
         }
         .wxc{
           position: absolute;
