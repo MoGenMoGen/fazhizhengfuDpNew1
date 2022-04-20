@@ -108,7 +108,7 @@
           </div>
         </div>
       </div>
-
+      <!-- 中间地图 -->
       <div class="center">
         <div class="title">
           <img src="~@/images/servicePoint.png" alt="" />
@@ -119,6 +119,29 @@
         </div>
         <div class="mapbox">
           <img src="~@/images/map.png" alt="" class="map" />
+          <!-- 地图点击五星 -->
+          <div class="xct">
+            <div class="popover" v-for="(item,index) in wxList" :key="index"
+            @click="handleVill(index)"
+            :style="{left:item.left,top:item.top}"
+            >
+              <img src="../../images/wxing.png" alt="" />
+            </div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>汶溪村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 地图凸起 -->
           <!-- 汶溪村 -->
           <div class="wxc" v-show="choose == 0">
             <img src="~@/images/map/wx.png" alt="" class="wxmap" />
@@ -234,9 +257,12 @@
               <h2>法律文书详情</h2>
               <!-- pdf文件 -->
               <div id="iframe">
-                <div class="pdf" :id="pdfId">
+                <div class="pdf" id="pdfId">
                   <!--使用ifram 显示 pdf文件 获取文件地址 -->
-                  <!-- <iframe :src="url"></iframe> -->
+                  <iframe
+                    type="application/x-google-chrome-pdf"
+                    src="https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf"
+                  ></iframe>
                 </div>
               </div>
               <div class="close" @click="handleClose">
@@ -392,8 +418,8 @@ export default {
   data() {
     return {
       currentIndex11: 0, //法治乡村标题下标
-      currentIndex12: 0, //法治乡村内容下标
-      choose: 0,
+      currentIndex12: -1, //法治乡村内容下标
+      choose: -1, // 乡村默认
       // 法治乡村列表
       list1: [
         { content: "汶溪村" },
@@ -404,31 +430,23 @@ export default {
         { content: "思源社区" },
       ],
       currentIndex2: 0, //法律宝典下标
-      fws:false,
+      fws: false,
       // 法律宝典列表
       list2: [
-        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        {
-          nm: "追索劳动报酬仲裁申多好多好东方红",
-          to: "../../images/11.pdf",
-          type: "pdf",
-        },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        {
-          nm: "追索劳动报酬仲裁申多好多好东方红",
-          to: "../../images/11.pdf",
-          type: "pdf",
-        },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "借条", to: "../../images/11.pdf", type: "pdf" },
-        { nm: "民间借贷起诉状", to: "../../images/11.pdf", type: "pdf" },
+        { nm: "民间借贷起诉状" },
+        { nm: "借条" },
+        { nm: "追索劳动报酬仲裁申多好多好东方红" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "民间借贷起诉状" },
+        { nm: "民间借贷起诉状" },
+        { nm: "借条" },
+        { nm: "追索劳动报酬仲裁申多好多好东方红" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "借条" },
+        { nm: "民间借贷起诉状" },
       ],
       currentIndex3: 0, //法律咨询下标
       // 法律故事列表
@@ -489,6 +507,25 @@ export default {
         },
       ],
       isShow2: false,
+      // 地图五星图标
+      village: false,
+      wxList: [
+        {left: "371px", top: "487px",},
+        {left: "427px", top: "498px",},
+        {left: "561px", top: "393px",},
+        {left: "647px", top: "501px",},
+        {left: "664px", top: "628px",},
+        {left: "749px", top: "627px",},
+        {left: "712.5px", top: "699.5px"},
+        {left: "815px", top: "468px"},
+        {left: "728px", top: "310px"},
+        {left: "663px", top: "266px"},
+        {left: "747px", top: "243px"},
+        {left: "822px", top: "183px"},
+        {left: "878px", top: "197px"},
+        {left: "890px", top: "237px"},
+        {left: "901px", top: "349px"},
+      ],
     };
   },
   components: { MyHeader },
@@ -541,7 +578,7 @@ export default {
     },
     // 法律文书pdf
     hanldeClickf(item) {
-      this.fws=true;
+      this.fws = true;
     },
     // 法律故事弹窗
     bofang(index) {
@@ -555,10 +592,15 @@ export default {
     handleChanges(index) {
       this.isShow2 = true;
     },
+    // 地图星轮播详情
+    handleVill() {
+      this.village = true;
+    },
     handleClose() {
       this.isShow2 = false;
       this.isVideo = false;
-      this.fws=false;
+      this.fws = false;
+      this.village = false;
     },
   },
 };
@@ -809,6 +851,100 @@ export default {
           height: auto;
           display: block;
         }
+        // 地图五星
+        .xct {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          .popover {
+            display: block;
+            position: absolute;
+            left: 371px;
+            top: 487px;
+            z-index: 99;
+            cursor: pointer;
+            &:nth-child(7) {
+              transform: rotate(350deg);
+            }
+          }
+          .carousel {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            .carousel2 {
+              width: 783px;
+              height: 689px;
+              background: url("../../images/cz.png") no-repeat;
+              background-size: 100% 100%;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              margin-left: -391.5px;
+              margin-top: -344.5px;
+              padding-top: 42px;
+              box-sizing: border-box;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+              .close {
+                position: absolute;
+                right: 60px;
+                top: 40px;
+                cursor: pointer;
+              }
+            }
+            h2 {
+              font-weight: bold;
+              font-size: 29px;
+              text-align: center;
+              color: #6cfcff;
+              line-height: 29px;
+              background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              margin-bottom: 30px;
+            }
+            /deep/.el-carousel__container {
+              height: 535px;
+            }
+            /deep/.el-carousel--horizontal {
+              overflow: hidden;
+              height: 530px;
+              padding-left: 55px;
+              padding-right: 55px;
+              margin-left: 24px;
+              margin-right: 24px;
+            }
+            /deep/.el-carousel__indicators {
+              display: none;
+            }
+            /deep/.el-carousel__arrow--left {
+              left: 0;
+              margin-left: -50px;
+            }
+            /deep/.el-carousel__arrow--right {
+              right: 0;
+              margin-right: -50px;
+            }
+            /deep/.el-carousel__arrow {
+              width: 30px;
+              height: 35px;
+              border-radius: 50%;
+              border: 1px solid #fff;
+              background-color: none;
+            }
+          }
+        }
+
+        // 地图突起
         .wxc {
           position: absolute;
           left: 17px;
@@ -1008,8 +1144,18 @@ export default {
         .wenshu {
           width: 683px !important;
           height: 850px !important;
+          margin-top: -425px !important;
+          margin-left: -342.5px !important;
           background: url("../../images/flws.png") no-repeat !important;
           background-size: 100% 100% !important;
+          #iframe {
+            width: 513px;
+            height: 753px;
+            iframe {
+              width: 100%;
+              height: 680px;
+            }
+          }
         }
       }
       .list22 {
@@ -1104,7 +1250,7 @@ export default {
       .details {
         position: fixed;
         width: 100%;
-        height: 1080px;
+        height: 100%;
         z-index: 9999;
         top: 0;
         left: 0;
