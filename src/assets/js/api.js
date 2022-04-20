@@ -59,7 +59,6 @@ function get(url, data, headers) {
             .then(function (res) {
                 // Indicator.close();
                 resolve(res.data)
-                console.log(111111111, res);
                 // if(res.data.code===0){
                 //   resolve(res.data)
                 // }else if(res.data.code==401){
@@ -191,6 +190,15 @@ class api {
             })
 
         })
+        }
+      // 获取法治队伍人数统计
+      getFzdwStatis() {
+        return new Promise((resolve, reject) => {
+            get('/api/open/ranks/ranks/count').then(res => {
+                resolve(res.data)
+            })
+
+        })
     }
     // 审查合同展示列表
     getContractList() {
@@ -199,6 +207,15 @@ class api {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法治队伍分页
+    getFzdwList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/ranks/ranks/page',data).then(res => {
                 resolve(res.data)
             })
 
@@ -216,6 +233,15 @@ class api {
 
         })
     }
+    // 法治队伍详情
+    getFzdwDtl(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/ranks/ranks/detail?id='+data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
     // 重点人员统计
     getStatistics() {
         return new Promise((resolve, reject) => {
@@ -227,6 +253,34 @@ class api {
             })
         })
     }
+    // 法治乡村统计
+    getFzxcStatis() {
+        return new Promise((resolve, reject) => {
+            get('/api/open/village/village/getVillageCount').then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+     // 法治乡村分页
+     getFzxcList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/village/village/list',data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法治乡村详情
+    getFzxcDtl(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/village/village/detail?id='+data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+
 }
 
 export { api };
