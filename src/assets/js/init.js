@@ -26,7 +26,7 @@ export default {
 
       // Vue.use(FileSaver)
     Vue.prototype.axios = axios;
-    Vue.prototype.$api = new api();
+    Vue.prototype.api = new api();
     Vue.prototype.until = new until();
     Vue.prototype.reg = new reg();
       Vue.prototype.query = query;

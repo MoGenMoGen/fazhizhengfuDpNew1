@@ -14,15 +14,17 @@
               ref="video"
               controls
               style="width: 100%; height: 100%; object-fit: fill"
-              src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
+              :src="info1.video"
             ></video>
+            <!-- src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4" -->
           </div>
           <div id="text" ref="text" @click="roll">
             <ul id="ul1" ref="ul1">
               <li>
-                法治政府就是政府在行使权力履行职责过程中坚持法治原则，严格依法行政，政府的各项权力都在法治轨道上运行。
+                <!-- 法治政府就是政府在行使权力履行职责过程中坚持法治原则，严格依法行政，政府的各项权力都在法治轨道上运行。
                 要求各级人民政府从决策到执行及监督的整个过程都纳入法制化轨道，权利与责任紧密相联，集阳光政府，有限政府，诚信政府，责任政府于一身，并用法律加以固定即为法治政府。关键是要推进政府法制建设，建立健全政府行政的法律依据和督促政府依法行政的法律制度。
-                要求政府全面推进依法行政，不断提高政府公信力和执行力，为保障经济又好又快发展和社会和谐稳定发挥更大的作用。
+                要求政府全面推进依法行政，不断提高政府公信力和执行力，为保障经济又好又快发展和社会和谐稳定发挥更大的作用。 -->
+                {{ info1.details }}
               </li>
               <!-- <li>
                 一致性 Consistency
@@ -140,9 +142,12 @@
           <img src="~@/images/map.png" alt="" class="map" />
           <!-- 地图点击五星 -->
           <div class="xct">
-            <div class="popover" v-for="(item,index) in wxList" :key="index"
-            @click="handleVill(index)"
-            :style="{left:item.left,top:item.top}"
+            <div
+              class="popover"
+              v-for="(item, index) in wxList"
+              :key="index"
+              @click="handleVill(index)"
+              :style="{ left: item.left, top: item.top }"
             >
               <img src="../../images/wxing.png" alt="" />
             </div>
@@ -438,6 +443,7 @@ import MyHeader from "../../components/MyHeader";
 export default {
   data() {
     return {
+      info1: {}, //法治政府介绍
       currentIndex11: 0, //法治乡村标题下标
       currentIndex12: -1, //法治乡村内容下标
       choose: -1, // 乡村默认
@@ -533,21 +539,21 @@ export default {
       // 地图五星图标
       village: false,
       wxList: [
-        {left: "371px", top: "487px",},
-        {left: "427px", top: "498px",},
-        {left: "561px", top: "393px",},
-        {left: "647px", top: "501px",},
-        {left: "664px", top: "628px",},
-        {left: "749px", top: "627px",},
-        {left: "712.5px", top: "699.5px"},
-        {left: "815px", top: "468px"},
-        {left: "728px", top: "310px"},
-        {left: "663px", top: "266px"},
-        {left: "747px", top: "243px"},
-        {left: "822px", top: "183px"},
-        {left: "878px", top: "197px"},
-        {left: "890px", top: "237px"},
-        {left: "901px", top: "349px"},
+        { left: "371px", top: "487px" },
+        { left: "427px", top: "498px" },
+        { left: "561px", top: "393px" },
+        { left: "647px", top: "501px" },
+        { left: "664px", top: "628px" },
+        { left: "749px", top: "627px" },
+        { left: "712.5px", top: "699.5px" },
+        { left: "815px", top: "468px" },
+        { left: "728px", top: "310px" },
+        { left: "663px", top: "266px" },
+        { left: "747px", top: "243px" },
+        { left: "822px", top: "183px" },
+        { left: "878px", top: "197px" },
+        { left: "890px", top: "237px" },
+        { left: "901px", top: "349px" },
       ],
     };
   },
@@ -610,10 +616,10 @@ export default {
 
     rollStart(text, ul1, ul2) {
       if (text.scrollTop >= ul1.scrollHeight) {
-        console.log(1111111);
+        // console.log(1111111);
         text.scrollTop = 0;
       } else {
-        console.log(2222222);
+        // console.log(2222222);
         text.scrollTop++;
       }
     },
@@ -657,9 +663,14 @@ export default {
       this.village = false;
       this.$refs.gsDtlVideo.pause(); //暂停
     },
+    // f
   },
   mounted() {
     window.onload = this.roll(80);
+    // 获取法治政府视频、介绍
+    this.api.getFzIntro().then((res) => {
+      this.info1 = res[0];
+    });
   },
 };
 </script>

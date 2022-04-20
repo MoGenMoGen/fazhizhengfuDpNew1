@@ -9,8 +9,8 @@ const fs = require("fs");
 const glob = require("glob");
 const colors = require("colors-console");
 const configObj = require("./src/assets/js/config");
-// const hostUrl = 'http://192.168.0.7'
-const hostUrl = 'https://dceg.zjfld.net'
+const hostUrl = 'http://192.168.0.47:88'
+// const hostUrl = 'https://dceg.zjfld.net'
 // const vConsolePlugin = require("vconsole-webpack-plugin"); // 引入 移动端模拟开发者工具 插件 （另：https://github.com/liriliri/eruda）
 // const CompressionPlugin = require("compression-webpack-plugin"); //Gzip
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
@@ -19,34 +19,42 @@ const hostUrl = 'https://dceg.zjfld.net'
 // 配置选项http://pj.xiaomy.net/，，，http://zjfzol.zj.gov.cn
 const config = {
 
-    devServer: {
-        proxy: {
-          '/gs': {
-            target: hostUrl, //对应自己的接口
-            changeOrigin: true,
-            ws: true,
-            pathRewrite: {
-              '^/gs': '/gs'
-            }
-          },
-		  '/sys': {
-		    target: hostUrl, //对应自己的接口
-		    changeOrigin: true,
-		    ws: true,
-		    pathRewrite: {
-		      '^/sys': '/sys'
-		    }
-		  }
-        },
-        port: 8080,
-
-      //关闭eslint
-      overlay: {
-        warnings: false,
-        errors: false
+  devServer: {
+    proxy: {
+      '/gs': {
+        target: hostUrl, //对应自己的接口
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/gs': '/gs'
+        }
       },
-      // lintOnSave: false
+      '/sys': {
+        target: hostUrl, //对应自己的接口
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/sys': '/sys'
+        }
+      },
+      '/api': {
+        target: hostUrl, //对应自己的接口
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/api': '/api'
+        }
+      },
     },
+    port: 8080,
+
+    //关闭eslint
+    overlay: {
+      warnings: false,
+      errors: false
+    },
+    // lintOnSave: false
+  },
 
   /*
   默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上，例如 https://www.my-app.com/。
@@ -84,11 +92,11 @@ const config = {
 
       new webpack.ProvidePlugin({
 
-        $:"jquery",
+        $: "jquery",
 
-        jQuery:"jquery",
+        jQuery: "jquery",
 
-        "windows.jQuery":"jquery"
+        "windows.jQuery": "jquery"
 
       })
 
@@ -136,7 +144,7 @@ function getPages() {
   const pages = {};
   const pagesJson = require("./config/page.json");
 
-  glob.sync("./src/views/**/*.vue").forEach(function(pageUrl) {
+  glob.sync("./src/views/**/*.vue").forEach(function (pageUrl) {
     const ext = path.extname(pageUrl);
     const pageCode = path.basename(pageUrl, ext);
     // 文件名不能重复的验证（pageCode 在这里取的是文件名）
@@ -146,7 +154,7 @@ function getPages() {
     }
     // 生成入口文件
     const entryFile = `./entry/${pageCode}.js`;
-    fs.exists(entryFile, function(exists) {
+    fs.exists(entryFile, function (exists) {
       // 这里没有对文件目录进行判断，所以需要先建一个'entry'文件夹，否则会报错
       if (exists) return;
       // 创建文件及写入文件内容
@@ -154,7 +162,7 @@ function getPages() {
       //引入init.js文件============
       const entryData = `import Vue from 'vue';\nimport App from '${appTpl}';\nimport init from "../src/assets/js/init";
       \nVue.use(init);\nVue.config.productionTip = false;\nnew Vue({ render: h => h(App) }).$mount('#${pageCode}'); `;
-      fs.writeFile(entryFile, entryData, function(err) {
+      fs.writeFile(entryFile, entryData, function (err) {
         // err.code === 'ENOENT'
         if (err) console.log(err);
       });
