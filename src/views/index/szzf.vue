@@ -209,6 +209,32 @@
         </div>
         <div class="mapbox">
           <img src="~@/images/map.png" alt="" class="map" />
+          <!-- 乡村点击星弹窗 -->
+          <div class="xct">
+            <el-popover
+              placement="right"
+              width="400"
+              trigger="click"
+              class="popover"
+              v-for="(item, index) in xcList"
+              :key="index"
+              :style="{ left: item.left, top: item.top}"
+            >
+              <div class="xcbox">
+                <div class="xcbox-top">
+                  <h2>{{ item.nm }}</h2>
+                  <p>负责人：{{ item.pope }}</p>
+                </div>
+                <div class="xcbox-bottom">
+                  <img src="../../images/erweima.png" alt="" />
+                </div>
+              </div>
+
+              <el-button slot="reference" class="wx">
+                <img src="../../images/wxing.png" alt="" />
+              </el-button>
+            </el-popover>
+          </div>
         </div>
       </div>
 
@@ -358,7 +384,7 @@
           <!-- 重点人员 -->
           <div class="title">重点人员</div>
           <!-- 饼图 -->
-          <div id="pople2"></div>
+          <div id="pople2"><img src="../../images/yuebao.png" alt=""></div>
           <!-- 审查人员列表 -->
           <div class="sclist sclist2">
             <ul>
@@ -516,6 +542,24 @@ export default {
       // 判断状态
       show1: true,
       show2: false,
+      // 查看村庄
+      xcList: [
+        {nm: "汶溪村公共法律服务点", pope: "周月华", left: "352px", top: "475px",},
+        {nm: "中心村公共法律服务点", pope: "周月华", left: "409px", top: "486px",},
+        {nm: "杜夹岙村公共法律服务点", pope: "周月华", left: "540px", top: "381px",},
+        {nm: "河西村公共法律服务点", pope: "周月华", left: "627px", top: "490px",},
+        {nm: "长石村公共法律服务点", pope: "周月华", left: "645px", top: "616px",},
+        {nm: "长宏村公共法律服务点", pope: "周月华", left: "730px", top: "614px",},
+        {nm: "思源社区公共法律服务点", pope: "周月华", left: "690.5px", top: "687.5px"},
+        {nm: "西经堂村公共法律服务点", pope: "周月华", left: "795px", top: "456px"},
+        {nm: "天扬陈村公共法律服务点", pope: "周月华", left: "881px", top: "337px"},
+        {nm: "田顾村公共法律服务点", pope: "周月华", left: "707px", top: "297px"},
+        {nm: "九龙湖村公共法律服务点", pope: "周月华", left: "642px", top: "255px"},
+        {nm: "九龙湖镇人民政府公共法律服务点", pope: "周月华", left: "726px", top: "233px"},
+        {nm: "河头村公共法律服务点", pope: "周月华", left: "802px", top: "172px"},
+        {nm: "河源社区公共法律服务点", pope: "周月华", left: "859px", top: "185px"},
+        {nm: "龙源社区公共法律服务点", pope: "周月华", left: "870px", top: "226px"},
+      ],
     };
   },
   computed: {
@@ -622,7 +666,7 @@ export default {
 
                       color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
                     },
-                     {
+                    {
                       offset: 0.5,
 
                       color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
@@ -638,7 +682,7 @@ export default {
             axisLine: {
               lineStyle: {
                 width: 6,
-                 color: [
+                color: [
                   [
                     1,
                     this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [
@@ -655,7 +699,7 @@ export default {
                       {
                         offset: 1,
                         // 结束颜色
-                        color: "rgba(70, 49, 248, .2)"
+                        color: "rgba(70, 49, 248, .2)",
                       },
                     ]),
                   ],
@@ -823,12 +867,12 @@ export default {
                   y2: 1,
 
                   colorStops: [
-                   {
+                    {
                       offset: 0,
 
                       color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
                     },
-                     {
+                    {
                       offset: 0.5,
 
                       color: "rgba(84, 255, 241, 1)", // 0%处的颜色为红色
@@ -861,7 +905,7 @@ export default {
                       {
                         offset: 1,
                         // 结束颜色
-                        color: "rgba(70, 49, 248, .2)"
+                        color: "rgba(70, 49, 248, .2)",
                       },
                     ]),
                   ],
@@ -913,74 +957,6 @@ export default {
       }, 2000);
     },
 
-    // 右侧饼图
-    drawChart2() {
-      let that = this;
-      //基于准备好的dom，初始化echarts实例
-      var myChart = this.$echarts.init(document.getElementById("pople2"));
-      let data1 = [
-        { value: 30, name: "长石村" },
-        { value: 15, name: "九龙湖村 " },
-        { value: 18, name: "汶溪村" },
-        { value: 18, name: "秦山村" },
-        { value: 18, name: "西经堂村" },
-      ];
-      // 绘制饼图
-      myChart.setOption({
-        tooltip: {
-          trigger: "item",
-          formatter: " {b}<br/> 总人数: {c} (%)",
-        },
-        legend: {
-          right: "right",
-          orient: "vertical",
-          itemGap: 18,
-          textStyle: {
-            color: "#fff",
-            fontSize: 14,
-            fontFamily: "Microsoft YaHei",
-          },
-          formatter(name) {
-            const count = that.arrCount(data1);
-            //找到data中name和文本name值相同的对象
-            const val = data1.filter((item) => {
-              return item.name === name;
-            });
-            return name + "  " + (val[0].value / count).toFixed(4) * 100 + "%";
-          },
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: { show: true },
-          },
-        },
-        series: [
-          {
-            name: "Nightingale Chart",
-            type: "pie",
-            radius: [20, 100],
-            center: ["22%", "50%"],
-            roseType: "radius",
-            itemStyle: {
-              borderRadius: 5,
-            },
-            label: {
-              show: false,
-            },
-            data: data1,
-          },
-        ],
-      });
-    },
-    arrCount(arr) {
-      let count = 0;
-      arr.forEach((item) => {
-        count = count + item.value;
-      });
-      return count;
-    },
-
     // 审查列表
     handleclick(index) {
       this.currIndex = index;
@@ -1002,7 +978,7 @@ export default {
   mounted() {
     this.gauge();
     this.drawChart();
-    this.drawChart2();
+    // this.drawChart2();
     this.gauge2();
   },
 };
@@ -1125,7 +1101,7 @@ export default {
         width: 372px;
         margin: 0 auto;
         margin-top: 12px;
-        margin-bottom: 28px;
+        margin-bottom: 25px;
         ul {
           display: flex;
           justify-content: space-between;
@@ -1188,8 +1164,8 @@ export default {
               justify-content: space-between;
               align-items: center;
               text-align: center;
-              height: 28px;
-              line-height: 28px;
+              height: 26px;
+              line-height: 26px;
               color: #fff;
               cursor: pointer;
               span {
@@ -1281,7 +1257,7 @@ export default {
           }
         }
       }
-      .sclist2{
+      .sclist2 {
         margin-bottom: 0;
       }
       .scpople {
@@ -1294,11 +1270,12 @@ export default {
           margin-bottom: -20px;
         }
         #pople2 {
-          width: 350px;
-          height: 200px;
+          width: 300px;
+          height: 100%;
           margin: 0 auto;
-          margin-top: 30px;
-          margin-bottom: -20px;
+          margin-top: 25px;
+          // margin-bottom: -24px;
+          img{width: 100%;height: 100%;display: block;}
         }
         .sclist {
           b {
@@ -1346,16 +1323,86 @@ export default {
         }
       }
       .mapbox {
-        position: absolute;
-        z-index: 100;
-        top: 97px;
-        left: 28px;
+        margin-top: 97px;
+        margin-left: 28px;
+        position: relative;
         .map {
-          width: 983px;
-          height: 802px;
+          width: auto;
+          height: auto;
+          display: block;
+        }
+        .xct {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          .popover {
+            display: block;
+            position: absolute;
+            left: 352px;
+            top: 475px;
+            &:nth-child(7){
+              transform: rotate(350deg);
+            }
+          }
+          .fl1 {
+            left: 409px;
+            top: 486px;
+          }
+
+          /deep/.el-button {
+            cursor: pointer;
+            background: none;
+            border: none;
+          }
         }
       }
     }
   }
+}
+.xcbox {
+  width: 262px;
+  min-height: 249px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  position: absolute;
+  top: -130px;
+  left: -15px;
+  font-family: "Source Han Sans CN";
+  .xcbox-top {
+    font-size: 14px;
+    color: #fff;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    h2 {
+      font-size: 19px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }
+  .xcbox-bottom {
+    width: 110px;
+    height: 110px;
+    padding: 20px;
+    img {
+      border: 3px solid #ffffff;
+      border-radius: 5px;
+    }
+  }
+}
+</style>
+
+<style lang="less">
+.el-popover {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  min-width: auto;
+  padding: 0;
+}
+.el-popper .popper__arrow {
+  display: none !important;
 }
 </style>
