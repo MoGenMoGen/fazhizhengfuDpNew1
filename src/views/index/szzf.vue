@@ -13,7 +13,7 @@
           <div id="gauge"></div>
           <!-- 合同总数 -->
           <div class="number">
-            <p>150<span>份</span></p>
+            <p>{{ info1.total }}<span>份</span></p>
             <div class="ht">合同总数</div>
           </div>
         </div>
@@ -53,15 +53,15 @@
           <!-- 表格列 -->
           <div class="table">
             <div class="top">
-              <div style="width: 53px">序号</div>
-              <div style="width: 150px; text-align: left">合同名称</div>
+              <div style="width: 56px">序号</div>
+              <div style="width: 140px" class="listName">合同名称</div>
               <div style="width: 90px">上传时间</div>
               <div style="width: 89px">审查状态</div>
             </div>
             <div class="bottom">
               <vue-seamless-scroll
                 :data="tableList"
-                :class-option="defaultOption" 
+                :class-option="defaultOption"
               >
                 <div
                   class="blist"
@@ -69,27 +69,33 @@
                   :key="index"
                   @click="handleTable(index)"
                 >
-                  <div style="width: 53px">{{ item.num }}</div>
-                  <div style="width: 150px; text-align: left">
-                    {{ item.ht }}
+                  <div style="width: 56px">{{ index + 1 }}</div>
+                  <div style="width: 140px" class="listName">
+                    {{ item.name }}
                   </div>
-                  <div style="width: 90px">{{ item.time }}</div>
+                  <div style="width: 90px">{{ item.upTime }}</div>
                   <div style="width: 89px">
-                    <span>{{ item.sc }}</span>
+                    <span>{{
+                      item.status == 1
+                        ? "已审查"
+                        : item.status == 2
+                        ? "未审查"
+                        : "逾期"
+                    }}</span>
                     <img
                       src="../../images/wsc.png"
                       alt=""
-                      v-if="item.sc == '未审查' ? show1 : show2"
+                      v-if="item.status == 2 ? show1 : show2"
                     />
                     <img
                       src="../../images/ysc.png"
                       alt=""
-                      v-if="item.sc == '已审查' ? show1 : show2"
+                      v-if="item.status == 1 ? show1 : show2"
                     />
                     <img
                       src="../../images/yq.png"
                       alt=""
-                      v-if="item.sc == '逾期' ? show1 : show2"
+                      v-if="item.status == 3 ? show1 : show2"
                     />
                   </div>
                 </div>
@@ -155,14 +161,45 @@
           <!-- 审查人员列表 -->
           <div class="sclist sclist2">
             <ul>
-              <li
-                v-for="(item, index) in sclist2"
-                :key="index"
-                :class="{ active: index == currIndex ? true : false }"
-                @click="handleclick2(index)"
-              >
-                <h3>{{ item.nm }}</h3>
-                <b>{{ item.number }}</b>
+              <li :class="{ active: 0 == currIndex }" @click="handleclick2(0)">
+                <h3>吸毒人员</h3>
+                <b>{{ info2.drugNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 0"
+                />
+              </li>
+              <li @click="handleclick2(1)">
+                <h3>矫正人员</h3>
+                <b>{{ info2.corNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 1"
+                />
+              </li>
+              <li @click="handleclick2(2)">
+                <h3>刑释解矫人员</h3>
+                <b>{{ info2.releaseNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 2"
+                />
+              </li>
+              <li @click="handleclick2(3)">
+                <h3>失信人员</h3>
+                <b>{{ info2.untrustworthyNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 3"
+                />
               </li>
             </ul>
             <!-- 审查人员列表 -->
@@ -182,13 +219,20 @@
                   :class-option="defaultOption2"
                 >
                   <div class="blist" v-for="item in tableList2" :key="item.num">
-                    <div style="width: 70px">{{ item.nm }}</div>
+                    <div style="width: 70px">{{ item.name }}</div>
                     <div style="width: 80px">
-                      {{ item.maxl }}
+                      {{ item.sex }}
                     </div>
-                    <div style="width: 80px">{{ item.sc }}</div>
+                    <div style="width: 80px">{{ item.village }}</div>
                     <div style="width: 132px">
-                      {{ item.lx }}
+                      {{
+                        item.phone
+                          ? item.phone.replace(
+                              /(\d{3})(\d{4})(\d{4})/,
+                              "$1****$3"
+                            )
+                          : ""
+                      }}
                     </div>
                   </div>
                 </vue-seamless-scroll>
@@ -218,7 +262,7 @@
               class="popover"
               v-for="(item, index) in xcList"
               :key="index"
-              :style="{ left: item.left, top: item.top}"
+              :style="{ left: item.left, top: item.top }"
             >
               <div class="xcbox">
                 <div class="xcbox-top">
@@ -237,16 +281,15 @@
           </div>
         </div>
       </div>
-
       <!-- 右边 -->
-      <div class="hfsc">
+     <div class="hfsc">
         <div class="title">合法性审查</div>
         <div class="gaugecontent">
           <!-- 绘制仪表盘 -->
-          <div id="gauge2"></div>
+          <div id="gauge"></div>
           <!-- 合同总数 -->
           <div class="number">
-            <p>150<span>份</span></p>
+            <p>{{ info1.total }}<span>份</span></p>
             <div class="ht">合同总数</div>
           </div>
         </div>
@@ -286,8 +329,8 @@
           <!-- 表格列 -->
           <div class="table">
             <div class="top">
-              <div style="width: 53px">序号</div>
-              <div style="width: 150px; text-align: left">合同名称</div>
+              <div style="width: 56px">序号</div>
+              <div style="width: 140px" class="listName">合同名称</div>
               <div style="width: 90px">上传时间</div>
               <div style="width: 89px">审查状态</div>
             </div>
@@ -302,27 +345,33 @@
                   :key="index"
                   @click="handleTable(index)"
                 >
-                  <div style="width: 53px">{{ item.num }}</div>
-                  <div style="width: 150px; text-align: left">
-                    {{ item.ht }}
+                  <div style="width: 56px">{{ index + 1 }}</div>
+                  <div style="width: 140px" class="listName">
+                    {{ item.name }}
                   </div>
-                  <div style="width: 90px">{{ item.time }}</div>
+                  <div style="width: 90px">{{ item.upTime }}</div>
                   <div style="width: 89px">
-                    <span>{{ item.sc }}</span>
+                    <span>{{
+                      item.status == 1
+                        ? "已审查"
+                        : item.status == 2
+                        ? "未审查"
+                        : "逾期"
+                    }}</span>
                     <img
                       src="../../images/wsc.png"
                       alt=""
-                      v-if="item.sc == '未审查' ? show1 : show2"
+                      v-if="item.status == 2 ? show1 : show2"
                     />
                     <img
                       src="../../images/ysc.png"
                       alt=""
-                      v-if="item.sc == '已审查' ? show1 : show2"
+                      v-if="item.status == 1 ? show1 : show2"
                     />
                     <img
                       src="../../images/yq.png"
                       alt=""
-                      v-if="item.sc == '逾期' ? show1 : show2"
+                      v-if="item.status == 3 ? show1 : show2"
                     />
                   </div>
                 </div>
@@ -384,18 +433,49 @@
           <!-- 重点人员 -->
           <div class="title">重点人员</div>
           <!-- 饼图 -->
-          <div id="pople2"><img src="../../images/yuebao.png" alt=""></div>
+          <div id="pople2"><img src="../../images/yuebao.png" alt="" /></div>
           <!-- 审查人员列表 -->
           <div class="sclist sclist2">
             <ul>
-              <li
-                v-for="(item, index) in sclist2"
-                :key="index"
-                :class="{ active: index == currIndex ? true : false }"
-                @click="handleclick2(index)"
-              >
-                <h3>{{ item.nm }}</h3>
-                <b>{{ item.number }}</b>
+              <li :class="{ active: 0 == currIndex }" @click="handleclick2(0)">
+                <h3>吸毒人员</h3>
+                <b>{{ info2.drugNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 0"
+                />
+              </li>
+              <li @click="handleclick2(1)">
+                <h3>矫正人员</h3>
+                <b>{{ info2.corNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 1"
+                />
+              </li>
+              <li @click="handleclick2(2)">
+                <h3>刑释解矫人员</h3>
+                <b>{{ info2.releaseNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 2"
+                />
+              </li>
+              <li @click="handleclick2(3)">
+                <h3>失信人员</h3>
+                <b>{{ info2.untrustworthyNum }}</b>
+                <img
+                  src="~@/images/upArrow.png"
+                  alt=""
+                  class="select"
+                  v-show="currIndex == 3"
+                />
               </li>
             </ul>
             <!-- 审查人员列表 -->
@@ -415,13 +495,20 @@
                   :class-option="defaultOption2"
                 >
                   <div class="blist" v-for="item in tableList2" :key="item.num">
-                    <div style="width: 70px">{{ item.nm }}</div>
+                    <div style="width: 70px">{{ item.name }}</div>
                     <div style="width: 80px">
-                      {{ item.maxl }}
+                      {{ item.sex }}
                     </div>
-                    <div style="width: 80px">{{ item.sc }}</div>
+                    <div style="width: 80px">{{ item.village }}</div>
                     <div style="width: 132px">
-                      {{ item.lx }}
+                      {{
+                        item.phone
+                          ? item.phone.replace(
+                              /(\d{3})(\d{4})(\d{4})/,
+                              "$1****$3"
+                            )
+                          : ""
+                      }}
                     </div>
                   </div>
                 </vue-seamless-scroll>
@@ -441,6 +528,8 @@ import vueSeamlessScroll from "vue-seamless-scroll";
 export default {
   data() {
     return {
+      info1: {}, //审查统计
+      info2: {}, //重点人员统计
       currIndex: 0, // 审查列表当前选中下标
       pickerOptions: {
         shortcuts: [
@@ -492,73 +581,143 @@ export default {
       active: true,
       // 审查列表
       tableList: [
-        {
-          num: 1,
-          ht: "股权质押反担保合同",
-          time: "2021-01-05",
-          sc: "未审查",
-        },
-        {
-          num: 2,
-          ht: "股权质押反担保合同",
-          time: "2021-01-05",
-          sc: "已审查",
-        },
-        {
-          num: 3,
-          ht: "股权质押反担保合同",
-          time: "2021-01-05",
-          sc: "逾期",
-        },
-        {
-          num: 4,
-          ht: "股权质押反担保合同",
-          time: "2021-01-05",
-          sc: "未审查",
-        },
-        {
-          num: 5,
-          ht: "股权质押反担保合同",
-          time: "2021-01-05",
-          sc: "未审查",
-        },
-        {
-          num: 6,
-          ht: "股权质押反担保合同",
-          time: "2021-01-05",
-          sc: "未审查",
-        },
+        // {
+        //   num: 1,
+        //   ht: "股权质押反担保合同",
+        //   time: "2021-01-05",
+        //   sc: "未审查",
+        // },
+        // {
+        //   num: 2,
+        //   ht: "股权质押反担保合同",
+        //   time: "2021-01-05",
+        //   sc: "已审查",
+        // },
+        // {
+        //   num: 3,
+        //   ht: "股权质押反担保合同",
+        //   time: "2021-01-05",
+        //   sc: "逾期",
+        // },
+        // {
+        //   num: 4,
+        //   ht: "股权质押反担保合同",
+        //   time: "2021-01-05",
+        //   sc: "未审查",
+        // },
+        // {
+        //   num: 5,
+        //   ht: "股权质押反担保合同",
+        //   time: "2021-01-05",
+        //   sc: "未审查",
+        // },
+        // {
+        //   num: 6,
+        //   ht: "股权质押反担保合同",
+        //   time: "2021-01-05",
+        //   sc: "未审查",
+        // },
       ],
       // 弹窗内容
       // 默认弹窗隐藏
       ifShow2: false,
 
-      tableList2: [
-        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
-        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
-        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
-        { nm: "王小宝", maxl: "男", sc: "长石村", lx: "135****1254" },
-      ],
+      tableList2: [],
       // 判断状态
       show1: true,
       show2: false,
       // 查看村庄
       xcList: [
-        {nm: "汶溪村公共法律服务点", pope: "周月华", left: "352px", top: "475px",},
-        {nm: "中心村公共法律服务点", pope: "周月华", left: "409px", top: "486px",},
-        {nm: "杜夹岙村公共法律服务点", pope: "周月华", left: "540px", top: "381px",},
-        {nm: "河西村公共法律服务点", pope: "周月华", left: "627px", top: "490px",},
-        {nm: "长石村公共法律服务点", pope: "周月华", left: "645px", top: "616px",},
-        {nm: "长宏村公共法律服务点", pope: "周月华", left: "730px", top: "614px",},
-        {nm: "思源社区公共法律服务点", pope: "周月华", left: "690.5px", top: "687.5px"},
-        {nm: "西经堂村公共法律服务点", pope: "周月华", left: "795px", top: "456px"},
-        {nm: "天扬陈村公共法律服务点", pope: "周月华", left: "881px", top: "337px"},
-        {nm: "田顾村公共法律服务点", pope: "周月华", left: "707px", top: "297px"},
-        {nm: "九龙湖村公共法律服务点", pope: "周月华", left: "642px", top: "255px"},
-        {nm: "九龙湖镇人民政府公共法律服务点", pope: "周月华", left: "726px", top: "233px"},
-        {nm: "河头村公共法律服务点", pope: "周月华", left: "802px", top: "172px"},
-        {nm: "河源社区公共法律服务点", pope: "周月华", left: "859px", top: "185px"},
-        {nm: "龙源社区公共法律服务点", pope: "周月华", left: "870px", top: "226px"},
+        {
+          nm: "汶溪村公共法律服务点",
+          pope: "周月华",
+          left: "352px",
+          top: "475px",
+        },
+        {
+          nm: "中心村公共法律服务点",
+          pope: "周月华",
+          left: "409px",
+          top: "486px",
+        },
+        {
+          nm: "杜夹岙村公共法律服务点",
+          pope: "周月华",
+          left: "540px",
+          top: "381px",
+        },
+        {
+          nm: "河西村公共法律服务点",
+          pope: "周月华",
+          left: "627px",
+          top: "490px",
+        },
+        {
+          nm: "长石村公共法律服务点",
+          pope: "周月华",
+          left: "645px",
+          top: "616px",
+        },
+        {
+          nm: "长宏村公共法律服务点",
+          pope: "周月华",
+          left: "730px",
+          top: "614px",
+        },
+        {
+          nm: "思源社区公共法律服务点",
+          pope: "周月华",
+          left: "690.5px",
+          top: "687.5px",
+        },
+        {
+          nm: "西经堂村公共法律服务点",
+          pope: "周月华",
+          left: "795px",
+          top: "456px",
+        },
+        {
+          nm: "天扬陈村公共法律服务点",
+          pope: "周月华",
+          left: "881px",
+          top: "337px",
+        },
+        {
+          nm: "田顾村公共法律服务点",
+          pope: "周月华",
+          left: "707px",
+          top: "297px",
+        },
+        {
+          nm: "九龙湖村公共法律服务点",
+          pope: "周月华",
+          left: "642px",
+          top: "255px",
+        },
+        {
+          nm: "九龙湖镇人民政府公共法律服务点",
+          pope: "周月华",
+          left: "726px",
+          top: "233px",
+        },
+        {
+          nm: "河头村公共法律服务点",
+          pope: "周月华",
+          left: "802px",
+          top: "172px",
+        },
+        {
+          nm: "河源社区公共法律服务点",
+          pope: "周月华",
+          left: "859px",
+          top: "185px",
+        },
+        {
+          nm: "龙源社区公共法律服务点",
+          pope: "周月华",
+          left: "870px",
+          top: "226px",
+        },
       ],
     };
   },
@@ -619,7 +778,7 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("gauge"));
       const gaugeData = [
         {
-          value: 45,
+          value: 33,
           name: "审查率",
           title: {
             offsetCenter: ["0%", "34%"],
@@ -632,6 +791,7 @@ export default {
           },
         },
       ];
+      gaugeData[0].value = this.info1.passRate;
       // 绘制仪表盘
       myChart.setOption({
         series: [
@@ -726,7 +886,7 @@ export default {
               // 里面的文字样式
               width: 55,
               height: 28,
-              fontSize: 28,
+              fontSize: 20,
               color: "#fff",
               borderColor: "none",
               formatter: "{value}%",
@@ -735,20 +895,20 @@ export default {
         ],
       });
       // 定时器
-      setInterval(function () {
-        gaugeData[1].value = +(Math.random() * 100).toFixed(2);
+      // setInterval(function () {
+      //   gaugeData[1].value = +(Math.random() * 100).toFixed(2);
 
-        myChart.setOption({
-          series: [
-            {
-              data: gaugeData,
-              pointer: {
-                show: false,
-              },
-            },
-          ],
-        });
-      }, 2000);
+      //   myChart.setOption({
+      //     series: [
+      //       {
+      //         data: gaugeData,
+      //         pointer: {
+      //           show: false,
+      //         },
+      //       },
+      //     ],
+      //   });
+      // }, 2000);
     },
     // 饼图
     drawChart() {
@@ -941,20 +1101,20 @@ export default {
         ],
       });
       // 定时器
-      setInterval(function () {
-        gaugeData[1].value = +(Math.random() * 100).toFixed(2);
+      // setInterval(function () {
+      //   gaugeData[1].value = +(Math.random() * 100).toFixed(2);
 
-        myChart.setOption({
-          series: [
-            {
-              data: gaugeData,
-              pointer: {
-                show: false,
-              },
-            },
-          ],
-        });
-      }, 2000);
+      //   myChart.setOption({
+      //     series: [
+      //       {
+      //         data: gaugeData,
+      //         pointer: {
+      //           show: false,
+      //         },
+      //       },
+      //     ],
+      //   });
+      // }, 2000);
     },
 
     // 审查列表
@@ -975,8 +1135,27 @@ export default {
       this.currIndex = index;
     },
   },
+  created() {},
   mounted() {
-    this.gauge();
+    // 获取法治政府视频、介绍
+    this.api.getCensorshipRate().then((res) => {
+      this.info1 = res;
+      this.gauge();
+    });
+    this.api.getContractList().then((res) => {
+      this.tableList = res;
+      console.log("2222", this.tableList);
+    });
+    this.api.getKeyPersonnel().then((res) => {
+      this.tableList2 = res;
+      console.log("33333", res);
+    });
+    // 重点人员统计
+    this.api.getStatistics().then((res) => {
+      this.info2 = res;
+      console.log("4444", res);
+    });
+
     this.drawChart();
     // this.drawChart2();
     this.gauge2();
@@ -1112,6 +1291,8 @@ export default {
             width: 25%;
             font-family: "Source Han Sans CN";
             text-align: center;
+            position: relative;
+            padding-bottom: 12px;
             cursor: pointer;
             b {
               font-size: 26px;
@@ -1132,19 +1313,26 @@ export default {
                 color: #ff2c2c;
               }
             }
-            &.active::after {
-              content: "";
-              display: block;
-              width: 0;
-              border-left: 6px solid transparent;
-              border-right: 6px solid transparent;
-              border-bottom: 6px solid #0088ff;
-              position: relative;
+            .select {
+              position: absolute;
+              bottom: 0px;
               left: 50%;
-              margin-left: -3px;
+              transform: translateX(-50%);
             }
+            // &.active::after {
+            //   content: "";
+            //   display: block;
+            //   width: 0;
+            //   border-left: 6px solid transparent;
+            //   border-right: 6px solid transparent;
+            //   border-bottom: 6px solid #0088ff;
+            //   position: relative;
+            //   left: 50%;
+            //   margin-left: -3px;
+            // }
           }
         }
+
         .table {
           font-size: 12px;
           .top {
@@ -1157,7 +1345,7 @@ export default {
             text-align: center;
           }
           .bottom {
-            height: 140px;
+            max-height: 140px;
             overflow: hidden;
             .blist {
               display: flex;
@@ -1183,6 +1371,13 @@ export default {
                 background: rgba(255, 255, 255, 0.2);
               }
             }
+          }
+          .listName {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            padding-left: 5px;
+            text-align: left;
           }
           // 弹窗详情
           .details {
@@ -1275,7 +1470,11 @@ export default {
           margin: 0 auto;
           margin-top: 25px;
           // margin-bottom: -24px;
-          img{width: 100%;height: 100%;display: block;}
+          img {
+            width: 100%;
+            height: 100%;
+            display: block;
+          }
         }
         .sclist {
           b {
@@ -1341,7 +1540,7 @@ export default {
             position: absolute;
             left: 352px;
             top: 475px;
-            &:nth-child(7){
+            &:nth-child(7) {
               transform: rotate(350deg);
             }
           }

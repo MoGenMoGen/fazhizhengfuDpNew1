@@ -4,8 +4,9 @@
 import query from "./query";
 import qs from 'qs';
 import {
-	MessageBox,Loading
+    MessageBox, Loading
 } from 'element-ui'
+
 const axios = require('axios');
 /*
 api 即vue.config.js 中配置的地址
@@ -34,7 +35,7 @@ const instance = axios.create({
         'Cache-Control': 'no-store',
     }
 })
-function get(url, data) {
+function get(url, data, headers) {
 
     let myData = {};
     if (data) {
@@ -46,17 +47,19 @@ function get(url, data) {
         }
     }
 
-    let promise = new Promise((resolve,reject) => {
+    let promise = new Promise((resolve, reject) => {
         // Indicator.open()
         instance.get(url,
 
             {
                 params: data,
+                headers
+
             })
             .then(function (res) {
                 // Indicator.close();
                 resolve(res.data)
-                console.log(111111111,res);
+                console.log(111111111, res);
                 // if(res.data.code===0){
                 //   resolve(res.data)
                 // }else if(res.data.code==401){
@@ -100,45 +103,49 @@ function get(url, data) {
             })
             .catch(function (error) {
                 reject(error)
-				MessageBox({
-					message: JSON.stringify(error),
-					type: 'warning'
-				});
+                MessageBox({
+                    message: JSON.stringify(error),
+                    type: 'warning'
+                });
             })
 
     });
     return promise;
 }
 
-function post(url, data, tips) {
+function post(url, data, headers, tips) {
     // Indicator.open()
-    let promise = new Promise((resolve,reject) => {
-        instance.post(url, data)
+    let promise = new Promise((resolve, reject) => {
+        instance.post(url, {
+            params: data,
+            headers
+
+        })
             .then(function (res) {
                 // Indicator.close();
                 if (res.data.code === 0) {
                     resolve(res.data)
                 } else if (!tips) {
                     MessageBox({
-						message: res.data.msg || res.data.message,
-						type: 'warning'
-					});
-                } 
+                        message: res.data.msg || res.data.message,
+                        type: 'warning'
+                    });
+                }
                 // else if (res.data.code == 401) {
                 //     MessageBox.confirm('您未登录，立即登录?', '提示', {
-				// 		confirmButtonText: '确定',
-				// 		cancelButtonText: '取消',
-				// 		type: 'warning'
-				// 	}).then(() => {
-				// 	})
+                // 		confirmButtonText: '确定',
+                // 		cancelButtonText: '取消',
+                // 		type: 'warning'
+                // 	}).then(() => {
+                // 	})
                 // }
             })
             .catch(function (error) {
                 reject(error)
-				MessageBox({
-					message: JSON.stringify(error),
-					type: 'warning'
-				});
+                MessageBox({
+                    message: JSON.stringify(error),
+                    type: 'warning'
+                });
             });
     });
     return promise;
@@ -171,6 +178,53 @@ class api {
                 resolve(res.data)
             })
 
+        })
+    }
+    // 获取审查统计
+    getCensorshipRate() {
+        return new Promise((resolve, reject) => {
+            get('/api/examination/examination/compute', {}, {
+                'Content-Type': 'multipart/form-data',
+                'Connection': 'keep-alive',
+            }).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 审查合同展示列表
+    getContractList() {
+        return new Promise((resolve, reject) => {
+            get('/api/examination/examination/frontShow', {}, {
+                'Content-Type': 'multipart/form-data',
+                'Connection': 'keep-alive',
+            }).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 重点人员列表展示
+    getKeyPersonnel() {
+        return new Promise((resolve, reject) => {
+            get('/api/keyuser/keyuser/frontShow', {}, {
+                'Content-Type': 'multipart/form-data',
+                'Connection': 'keep-alive',
+            }).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 重点人员统计
+    getStatistics() {
+        return new Promise((resolve, reject) => {
+            get('/api/keyuser/keyuser/compute', {}, {
+                'Content-Type': 'multipart/form-data',
+                'Connection': 'keep-alive',
+            }).then(res => {
+                resolve(res.data)
+            })
         })
     }
 }
