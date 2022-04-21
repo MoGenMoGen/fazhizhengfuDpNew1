@@ -16,34 +16,15 @@
               style="width: 100%; height: 100%; object-fit: fill"
               :src="info1.video"
             ></video>
-            <!-- src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4" -->
           </div>
           <div id="text" ref="text" @click="roll">
             <ul id="ul1" ref="ul1">
               <li>
-                <!-- 法治政府就是政府在行使权力履行职责过程中坚持法治原则，严格依法行政，政府的各项权力都在法治轨道上运行。
-                要求各级人民政府从决策到执行及监督的整个过程都纳入法制化轨道，权利与责任紧密相联，集阳光政府，有限政府，诚信政府，责任政府于一身，并用法律加以固定即为法治政府。关键是要推进政府法制建设，建立健全政府行政的法律依据和督促政府依法行政的法律制度。
-                要求政府全面推进依法行政，不断提高政府公信力和执行力，为保障经济又好又快发展和社会和谐稳定发挥更大的作用。 -->
                 {{ info1.details }}
               </li>
-              <!-- <li>
-                一致性 Consistency
-                与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
-                在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
-                反馈 Feedback
-                控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；
-                页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。 效率
-                Efficiency 简化流程：设计简洁直观的操作流程；
-                清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；
-                帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。
-                可控 Controllability
-                用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；
-                结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。
-              </li> -->
             </ul>
             <ul id="ul2" ref="ul2"></ul>
           </div>
-          <!-- <div class="text"></div> -->
         </div>
         <div class="titlebox">
           <img src="~@/images/subtitle.png" alt="" />
@@ -51,22 +32,22 @@
         </div>
         <div class="gsinfo">
           <div class="itembox">
-            <div class="num">15</div>
+            <div class="num">{{ info2.leader }}</div>
             <img src="~@/images/fzdtr.png" alt="" />
             <div class="desc">法治带头人</div>
           </div>
           <div class="itembox">
-            <div class="num">65</div>
+            <div class="num">{{ info2.person }}</div>
             <img src="~@/images/flmbr.png" alt="" />
             <div class="desc">法律明白人</div>
           </div>
           <div class="itembox">
-            <div class="num">38</div>
+            <div class="num">{{ info2.police }}</div>
             <img src="~@/images/pqmj.png" alt="" />
             <div class="desc">片区民警</div>
           </div>
           <div class="itembox">
-            <div class="num">2</div>
+            <div class="num">{{ info2.lawyer }}</div>
             <img src="~@/images/ls.png" alt="" />
             <div class="desc">律师</div>
           </div>
@@ -77,7 +58,7 @@
         </div>
         <div class="fzxcbox">
           <div class="itembox" @click="chooseTab11(0)">
-            <div class="num">6</div>
+            <div class="num">{{ info3.demonstration }}</div>
             <div class="content">示范村社</div>
             <img
               src="~@/images/upArrow.png"
@@ -87,7 +68,7 @@
             />
           </div>
           <div class="itembox" @click="chooseTab11(1)">
-            <div class="num">12</div>
+            <div class="num">{{ info3.position }}</div>
             <div class="content">法治阵地</div>
             <img
               src="~@/images/upArrow.png"
@@ -123,7 +104,7 @@
                 class="text"
                 :class="{ active_text: currentIndex12 == index }"
               >
-                {{ item.content }}
+                {{ item.name }}
               </div>
             </div>
           </div>
@@ -184,8 +165,17 @@
               </div>
             </div>
           </div>
+<<<<<<< HEAD
+=======
+          <!-- 地图凸起 -->
+          <!-- 汶溪村 -->
+          <div class="wxc" v-show="currentIndex12 == 0">
+            <img src="~@/images/map/wx.png" alt="" class="wxmap" />
+            <div class="mapicon">汶溪村</div>
+          </div>
+>>>>>>> 2e77dae0c8dfc069a0d92908baa6be4a00bf55be
           <!-- 田顾村 -->
-          <div class="wxc left1" v-show="choose == 1">
+          <div class="wxc left1" v-show="currentIndex12 == 1">
             <img src="~@/images/map/tg.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">田顾村</div>
             <div class="carousel" v-show="village">
@@ -203,7 +193,7 @@
             </div>
           </div>
           <!-- 河头村 -->
-          <div class="wxc left2" v-show="choose == 2">
+          <div class="wxc left2" v-show="currentIndex12 == 2">
             <img src="~@/images/map/ht.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">河头村</div>
             <div class="carousel" v-show="village">
@@ -221,7 +211,7 @@
             </div>
           </div>
           <!-- 长石村 -->
-          <div class="wxc left3" v-show="choose == 3">
+          <div class="wxc left3" v-show="currentIndex12 == 3">
             <img src="~@/images/map/cs.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">长石村</div>
             <div class="carousel" v-show="village">
@@ -239,7 +229,7 @@
             </div>
           </div>
           <!-- 九龙湖村 -->
-          <div class="wxc left4" v-show="choose == 4">
+          <div class="wxc left4" v-show="currentIndex12 == 4">
             <img src="~@/images/map/jlh.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">九龙湖村</div>
             <div class="carousel" v-show="village">
@@ -257,7 +247,7 @@
             </div>
           </div>
           <!-- 长石村 -->
-          <div class="wxc left3" v-show="choose == 5">
+          <div class="wxc left3" v-show="currentIndex12 == 5">
             <img src="~@/images/map/cs.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">思源社区</div>
             <div class="carousel" v-show="village">
@@ -275,7 +265,7 @@
             </div>
           </div>
           <!-- 杜夹岙村 -->
-          <div class="wxc left5" v-show="choose == 6">
+          <div class="wxc left5" v-show="currentIndex12 == 6">
             <img src="~@/images/map/sj.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">杜夹岙村</div>
             <div class="carousel" v-show="village">
@@ -293,7 +283,7 @@
             </div>
           </div>
           <!-- 田杨陈村 -->
-          <div class="wxc left6" v-show="choose == 7">
+          <div class="wxc left6" v-show="currentIndex12 == 7">
             <img src="~@/images/map/tyc.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">田杨陈村</div>
             <div class="carousel" v-show="village">
@@ -311,7 +301,7 @@
             </div>
           </div>
           <!-- 西河村 -->
-          <div class="wxc left7" v-show="choose == 8">
+          <div class="wxc left7" v-show="currentIndex12 == 8">
             <img src="~@/images/map/sh.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">西河村</div>
             <div class="carousel" v-show="village">
@@ -329,7 +319,7 @@
             </div>
           </div>
           <!-- 西经堂村 -->
-          <div class="wxc left8" v-show="choose == 9">
+          <div class="wxc left8" v-show="currentIndex12 == 9">
             <img src="~@/images/map/xjt.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">西经堂村</div>
             <div class="carousel" v-show="village">
@@ -347,7 +337,7 @@
             </div>
           </div>
           <!-- 长宏村 -->
-          <div class="wxc left9" v-show="choose == 10">
+          <div class="wxc left9" v-show="currentIndex12 == 10">
             <img src="~@/images/map/ch.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">长宏村</div>
             <div class="carousel" v-show="village">
@@ -365,7 +355,7 @@
             </div>
           </div>
           <!-- 中心村 -->
-          <div class="wxc left10" v-show="choose == 11">
+          <div class="wxc left10" v-show="currentIndex12 == 11">
             <img src="~@/images/map/zx.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">中心村</div>
             <div class="carousel" v-show="village">
@@ -595,6 +585,8 @@ export default {
   data() {
     return {
       info1: {}, //法治政府介绍
+      info2: {}, //法治队伍人数统计
+      info3: {}, //法治乡村统计
       currentIndex11: 0, //法治乡村标题下标
       currentIndex12: -1, //法治乡村内容下标
       choose: -1, // 乡村默认
@@ -843,7 +835,7 @@ export default {
     // 左侧-村庄选择
     chooseTab12(index) {
       this.currentIndex12 = index;
-      this.choose = index;
+      // this.choose = index;
     },
     // 右侧-法律宝典
     chooseTab2(index) {
@@ -876,13 +868,20 @@ export default {
       this.village = false;
       this.$refs.gsDtlVideo.pause(); //暂停
     },
-    // f
   },
-  mounted() {
+  async mounted() {
     window.onload = this.roll(80);
     // 获取法治政府视频、介绍
     this.api.getFzIntro().then((res) => {
       this.info1 = res[0];
+    });
+    // 法治队伍人数统计
+    this.info2 = await this.api.getFzdwStatis();
+    // 法治乡村统计
+    this.info3 = await this.api.getFzxcStatis();
+    // 法治乡村列表
+    this.api.getFzxcList({ current: 1, size: 10 }).then((res) => {
+     this.list1=res.records;
     });
   },
 };
