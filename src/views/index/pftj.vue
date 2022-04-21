@@ -1214,6 +1214,7 @@ export default {
         margin: 20px 0 10px;
         overflow: hidden;
         .item11 {
+        cursor: pointer;
           margin-bottom: 20px;
           display: flex;
           .cover {
