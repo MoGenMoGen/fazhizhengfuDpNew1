@@ -190,9 +190,9 @@ class api {
             })
 
         })
-        }
-      // 获取法治队伍人数统计
-      getFzdwStatis() {
+    }
+    // 获取法治队伍人数统计
+    getFzdwStatis() {
         return new Promise((resolve, reject) => {
             get('/api/open/ranks/ranks/count').then(res => {
                 resolve(res.data)
@@ -226,7 +226,7 @@ class api {
     // 法治队伍分页
     getFzdwList(data) {
         return new Promise((resolve, reject) => {
-            get('/api/open/ranks/ranks/page',data).then(res => {
+            get('/api/open/ranks/ranks/page', data).then(res => {
                 resolve(res.data)
             })
 
@@ -247,7 +247,7 @@ class api {
     // 法治队伍详情
     getFzdwDtl(data) {
         return new Promise((resolve, reject) => {
-            get('/api/open/ranks/ranks/detail?id='+data).then(res => {
+            get('/api/open/ranks/ranks/detail?id=' + data).then(res => {
                 resolve(res.data)
             })
 
@@ -273,10 +273,10 @@ class api {
 
         })
     }
-     // 法治乡村分页
-     getFzxcList(data) {
+    // 法治乡村分页
+    getFzxcList(data) {
         return new Promise((resolve, reject) => {
-            get('/api/open/village/village/list',data).then(res => {
+            get('/api/open/village/village/list', data).then(res => {
                 resolve(res.data)
             })
 
@@ -285,7 +285,97 @@ class api {
     // 法治乡村详情
     getFzxcDtl(data) {
         return new Promise((resolve, reject) => {
-            get('/api/open/village/village/detail?id='+data).then(res => {
+            get('/api/open/village/village/detail?id=' + data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法律宝典统计
+    getFlbdStatis() {
+        return new Promise((resolve, reject) => {
+            get('/api/open/bible/bible/getBibleCount').then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法律宝典分页
+    getFlbdList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/bible/bible/list', data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法律宝典详情
+    getFlbdDtl(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/bible/bible/detail?id=' + data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法律宝典浏览量+1
+    AddPageview(data) {
+        return new Promise((resolve, reject) => {
+            post('/api/open/bible/bible/read?id=', data).then(res => {
+                resolve(res)
+            })
+
+        })
+    }
+    // 法律宝典下载量+1
+    AddDownloads(data) {
+        return new Promise((resolve, reject) => {
+            post('/api/open/bible/bible/download?id=', data).then(res => {
+                resolve(res)
+            })
+
+        })
+    }
+    // 法律咨询统计
+    getFlbdStatis() {
+        return new Promise((resolve, reject) => {
+            get('/api/open/consult/consult/getConsultCount').then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 法律咨询分页
+    getFlzxList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/consult/consult/list', data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+     // 法律咨询详情
+     getFlzxDtl(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/consult/consult/detail?id=' + data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+     // 法制动态分页
+     getFzdtList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/dynamic/dynamic/list', data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+      // 法制动态详情
+      getFzdtDtl(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/dynamic/dynamic/detail?id=' + data).then(res => {
                 resolve(res.data)
             })
 

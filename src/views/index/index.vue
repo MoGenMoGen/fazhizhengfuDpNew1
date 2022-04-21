@@ -153,10 +153,15 @@
             <div class="mapicon" @click="handlemap">汶溪村</div>
             <div class="carousel" v-show="village">
               <div class="carousel2">
-                <h2>汶溪村</h2>
+                <h2>{{ info4.name }}</h2>
                 <el-carousel :interval="5000" arrow="always">
-                  <el-carousel-item v-for="item in 4" :key="item">
-                    <img src="../../images/czimg.jpg" alt="" />
+                  <el-carousel-item
+                    v-for="(item, index) in info4.img
+                      ? info4.img.split(',')
+                      : []"
+                    :key="index"
+                  >
+                    <img :src="item" alt="" />
                   </el-carousel-item>
                 </el-carousel>
                 <div class="close" @click="handleClose">
@@ -380,10 +385,10 @@
         <div class="flbd_box">
           <div class="itembox" @click="chooseTab2(0)">
             <div class="title">法律文书</div>
-            <div class="num">45</div>
+            <div class="num">{{ info5.paperwork }}</div>
             <div class="data">
               <img src="~@/images/download.png" alt="" />
-              <div class="val">45</div>
+              <div class="val">10</div>
             </div>
             <img
               src="~@/images/upArrow.png"
@@ -394,10 +399,10 @@
           </div>
           <div class="itembox" @click="chooseTab2(1)">
             <div class="title">法律故事</div>
-            <div class="num">35</div>
+            <div class="num">{{ info5.story }}</div>
             <div class="data">
               <img src="~@/images/browse.png" alt="" />
-              <div class="val">45</div>
+              <div class="val">20</div>
             </div>
             <img
               src="~@/images/upArrow.png"
@@ -416,10 +421,10 @@
             @click="hanldeClickf(item)"
           >
             <img src="~@/images/wenshu.png" alt="" />
-            <div class="nm">{{ item.nm }}</div>
+            <div class="nm">{{ item.name }}</div>
           </div>
           <!-- 法律文书详情 -->
-          <div class="details" v-show="fws">
+          <div class="details" v-if="fws && list21.length > 0">
             <div class="detailsList wenshu">
               <h2>法律文书详情</h2>
               <!-- pdf文件 -->
@@ -428,8 +433,9 @@
                   <!--使用ifram 显示 pdf文件 获取文件地址 -->
                   <iframe
                     type="application/x-google-chrome-pdf"
-                    src="https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf"
+                    :src="item.url"
                   ></iframe>
+                  <!-- https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf -->
                 </div>
               </div>
               <div class="close" @click="handleClose">
@@ -444,27 +450,26 @@
             class="itembox item2"
             v-for="(item, index) in list22"
             :key="index"
-            @click="bofang(index)"
+            @click="bofang(item.id)"
           >
             <div class="img"><img src="~@/images/fzgs.png" alt="" /></div>
-            <div class="title">{{ item.nm }}</div>
-          </div>
-          <!-- 法律故事视频详情 -->
-          <div class="details viodebox" v-if="isVideo">
-            <div class="detailsList videoList">
-              <h2>法律故事详情</h2>
-              <video
-                width="100%"
-                controls
-                loop
-                id="videoplay"
-                class="video-src"
-                ref="gsDtlVideo"
-                src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
-              >
-              </video>
-              <div class="close" @click="handleClose">
-                <img src="../../images/close1.png" alt="" />
+            <div class="title">{{ item.name }}</div>
+            <!-- 法律故事视频详情 -->
+            <div class="details viodebox" v-if="isVideo && list22.length > 0">
+              <div class="detailsList videoList">
+                <h2>法律故事详情</h2>
+                <video
+                  width="100%"
+                  controls
+                  loop
+                  id="videoplay"
+                  class="video-src"
+                  ref="gsDtlVideo"
+                  :src="item.url"
+                ></video>
+                <div class="close" @click.stop="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
               </div>
             </div>
           </div>
@@ -476,22 +481,22 @@
         </div>
         <div class="gsinfo">
           <div class="itembox">
-            <div class="num">15</div>
+            <div class="num">{{ info6.drugNum }}</div>
             <img src="~@/images/xdry.png" alt="" />
             <div class="desc">吸毒人员</div>
           </div>
           <div class="itembox">
-            <div class="num">65</div>
+            <div class="num">{{ info6.corNum }}</div>
             <img src="~@/images/jzdx.png" alt="" />
             <div class="desc">矫正对象</div>
           </div>
           <div class="itembox">
-            <div class="num">38</div>
+            <div class="num">{{ info6.releaseNum }}</div>
             <img src="~@/images/xsjj.png" alt="" />
             <div class="desc">刑释解矫人员</div>
           </div>
           <div class="itembox">
-            <div class="num">2</div>
+            <div class="num">{{ info6.untrustworthyNum }}</div>
             <img src="~@/images/sxry.png" alt="" />
             <div class="desc">失信人员</div>
           </div>
@@ -502,7 +507,7 @@
         </div>
         <div class="fzxcbox">
           <div class="itembox" @click="chooseTab3(0)">
-            <div class="num">15</div>
+            <div class="num">{{ info7.replied }}</div>
             <div class="content">已回复</div>
             <img
               src="~@/images/upArrow.png"
@@ -512,7 +517,7 @@
             />
           </div>
           <div class="itembox" @click="chooseTab3(1)">
-            <div class="num">12</div>
+            <div class="num">{{ info7.Unanswered }}</div>
             <div class="content">未回复</div>
             <img
               src="~@/images/upArrow.png"
@@ -531,41 +536,19 @@
             class="item3"
             v-for="(item, index) in list3"
             :key="index"
-            @click="handleChanges(index)"
+            @click="handleChanges(item.id)"
           >
-            <div class="leftbox">{{ item.content }}</div>
-            <div class="rightbox">{{ item.date }}</div>
+            <div class="leftbox">{{ item.title }}</div>
+            <div class="rightbox">
+              {{ item.updateTime ? item.updateTime.slice(0, 10) : "" }}
+            </div>
           </div>
         </vue-seamless-scroll>
         <!-- 弹窗详情 -->
         <div class="details" v-show="isShow2">
           <div class="detailsList">
             <h2>法律咨询详情</h2>
-            <div class="flxq">
-              <div class="ft">
-                九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙解答九龙解答解湖法律解答
-              </div>
-              <div class="fl3">
-                <div class="autor">
-                  <div>发起人：胡月华</div>
-                  <div class="ftime3">2021.02.02</div>
-                </div>
-                <div class="ftime1">
-                  <img src="../../images/aixin.png" alt="" />
-                  <div class="ic2">155</div>
-                </div>
-              </div>
-              <div class="flBottom">
-                <div class="fb2">
-                  九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解
-                  答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律
-                  解答九龙湖法律解答九龙湖
-                </div>
-                <div class="fbimg">
-                  <img src="../../images/pope.png" alt="" />
-                </div>
-              </div>
-            </div>
+            <div class="flxq" v-html="info8.details"></div>
             <div class="close" @click="handleClose">
               <img src="../../images/close1.png" alt="" />
             </div>
@@ -584,71 +567,23 @@ export default {
       info1: {}, //法治政府介绍
       info2: {}, //法治队伍人数统计
       info3: {}, //法治乡村统计
+      info4: {}, //法治乡村详情
+      info5: {}, //法治宝典统计
+      info6: {}, //重点人员统计
+      info7: {}, //法律咨询统计
+      info8: {}, //法律咨询详情
       currentIndex11: 0, //法治乡村标题下标
       currentIndex12: -1, //法治乡村内容下标
       choose: -1, // 乡村默认
       // 法治乡村列表
-      list1: [
-        { content: "汶溪村" },
-        { content: "田顾村" },
-        { content: "河头村" },
-        { content: "长石村" },
-        { content: "九龙湖村" },
-        { content: "思源社区" },
-      ],
+      list1: [],
       currentIndex2: 0, //法律宝典下标
 
       fws: false, //显示法律文书详情
       // 法律宝典-法律文书列表
-      list21: [
-        { nm: "民间借贷起诉状" },
-        { nm: "借条" },
-        { nm: "追索劳动报酬仲裁申多好多好东方红" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "民间借贷起诉状" },
-        { nm: "民间借贷起诉状" },
-        { nm: "借条" },
-        { nm: "追索劳动报酬仲裁申多好多好东方红" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "借条" },
-        { nm: "民间借贷起诉状" },
-      ],
+      list21: [],
       // 法律故事列表
-      list22: [
-        {
-          video:
-            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
-          nm: "大成律所新农大成律所新农",
-        },
-        {
-          video:
-            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
-          nm: "大成律所新农",
-        },
-        {
-          video:
-            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
-          nm: "大成律所新农",
-        },
-        {
-          video:
-            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
-          nm: "大成律所新农",
-        },
-        {
-          video:
-            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
-          nm: "大成律所新农",
-        },
-        {
-          video:
-            "https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4",
-          nm: "大成律所新农",
-        },
-      ],
+      list22: [],
       isVideo: false,
       currentIndex3: 0, //法律咨询下标
 
@@ -837,22 +772,66 @@ export default {
     // 右侧-法律宝典
     chooseTab2(index) {
       this.currentIndex2 = index;
+      if (index == 0) {
+        this.api
+          .getFlbdList({ current: 1, size: 20, name: "法律文书" })
+          .then((res) => {
+            this.list21 = res.records;
+          });
+      } else if (index == 1) {
+        this.api
+          .getFlbdList({ current: 1, size: 20, name: "法律故事" })
+          .then((res) => {
+            this.list22 = res.records;
+          });
+      }
     },
     // 右侧-法律咨询
     chooseTab3(index) {
       this.currentIndex3 = index;
+      if (index == 0) {
+        this.api
+          .getFlzxList({ current: 1, size: 10, status: 1 })
+          .then((res) => {
+            this.list3 = res.records;
+          });
+      } else if (index == 1) {
+        this.api
+          .getFlzxList({ current: 1, size: 10, status: 2 })
+          .then((res) => {
+            this.list3 = res.records;
+          });
+      }
     },
     // 法律文书pdf
     hanldeClickf(item) {
       this.fws = true;
     },
     // 法律故事弹窗
-    bofang(index) {
+    async bofang(id) {
       this.isVideo = true;
+      // 浏览量+1
+      // await this.api.AddPageview(id);
     },
     // 法律咨询详情
-    handleChanges(index) {
+    async handleChanges(id) {
       this.isShow2 = true;
+      this.info8 = await this.api.getFlzxDtl(id);
+      this.info8.details = this.info8.details.replace(
+        /<img[^>]*>/gi,
+        function (match, capture) {
+          return match.replace(/(<img[^>]*)(\/?>)/gi, "$1width='100%' $2"); // 添加width="100%"
+        }
+      );
+      this.info8.details = this.info8.details.replace(
+        /<img[^>]*>/gi,
+        function (match, capture) {
+          return match.replace(
+            /style\s*?=\s*?([‘"])[\s\S]*?\1/gi,
+            'style="max-width:100%;height:auto;"'
+          ); // 替换style
+        }
+      );
     },
     // 地图位置轮播详情
     handlemap() {
@@ -860,14 +839,13 @@ export default {
     },
     handleClose() {
       this.isShow2 = false;
-      this.isVideo = false;
       this.fws = false;
       this.village = false;
-      this.$refs.gsDtlVideo.pause(); //暂停
+      this.isVideo = false;
+      if (this.$refs.gsDtlVideo.length > 0) this.$refs.gsDtlVideo[0].pause(); //暂停
     },
   },
-  async mounted() {
-    window.onload = this.roll(80);
+  async created() {
     // 获取法治政府视频、介绍
     this.api.getFzIntro().then((res) => {
       this.info1 = res[0];
@@ -877,9 +855,28 @@ export default {
     // 法治乡村统计
     this.info3 = await this.api.getFzxcStatis();
     // 法治乡村列表
-    this.api.getFzxcList({ current: 1, size: 10 }).then((res) => {
-     this.list1=res.records;
+    this.api.getFzxcList({ current: 1, size: 20, type: 1 }).then((res) => {
+      this.list1 = res.records;
     });
+    // 法治宝典统计
+    this.info5 = await this.api.getFlbdStatis();
+    // 法治宝典列表
+    this.api
+      .getFlbdList({ current: 1, size: 100, name: "法律文书" })
+      .then((res) => {
+        this.list21 = res.records;
+      });
+    // 重点人员统计
+    this.info6 = await this.api.getStatistics();
+    // 法律咨询统计
+    this.info7 = await this.api.getFlbdStatis();
+    // 法律咨询分页
+    this.api.getFlzxList({ current: 1, size: 100, status: 1 }).then((res) => {
+      this.list3 = res.records;
+    });
+  },
+  async mounted() {
+    window.onload = this.roll(80);
   },
 };
 </script>
@@ -1481,7 +1478,7 @@ export default {
         .item2 {
           width: 30.33%;
           margin-top: 8px;
-          flex: 1;
+          // flex: 1;
           cursor: pointer;
           & + .item2 {
             margin-left: 3%;
@@ -1540,7 +1537,7 @@ export default {
           margin-top: 20px;
           cursor: pointer;
           .leftbox {
-            width: 280px;
+            width: 260px;
             // height: 20px;
             font-size: 16px;
             font-weight: 400;
@@ -1551,7 +1548,7 @@ export default {
             white-space: nowrap;
           }
           .rightbox {
-            width: 71px;
+            width: 91px;
             height: 15px;
             font-size: 14px;
             font-weight: 400;

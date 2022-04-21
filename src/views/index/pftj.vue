@@ -13,7 +13,7 @@
             <img class="icon" src="~@/images/fzdt.png" alt="" />
             <div class="rightbox">
               <div class="line1">法治动态</div>
-              <div class="line2">15<span>条</span></div>
+              <div class="line2">{{ info1.dynamicTotal }}<span>条</span></div>
             </div>
             <img
               src="~@/images/upArrow.png"
@@ -42,25 +42,45 @@
           :class-option="flzxOption"
           v-if="currentIndex1 == 0"
         >
-          <div class="item11" v-for="(item, index) in list11" :key="index">
-            <img class="cover" :src="item.pic" alt="" />
+          <div
+            class="item11"
+            @click="getFzdtDtl(item.id)"
+            v-for="(item, index) in list11"
+            :key="index"
+          >
+            <img class="cover" :src="item.banner" alt="" />
             <div class="rightbox">
-              <div class="topbox">{{ item.content }}</div>
+              <div class="topbox">{{ item.title }}</div>
               <div class="bottombox">
                 <div class="leftcontent">
                   <img src="~@/images/browse.png" alt="" />
-                  {{ item.num }}
+                  {{ item.pv }}
                 </div>
-                <div class="rightcontent">{{ item.date }}</div>
+                <div class="rightcontent">
+                  {{ item.updateTime ? item.updateTime.slice(0, 10) : "" }}
+                </div>
               </div>
             </div>
           </div>
         </vue-seamless-scroll>
+        <!-- 法制动态弹窗详情 -->
+        <div class="details" v-show="isShow1">
+          <div
+            class="detailsList"
+            :style="{'height': '735px', 'background': 'url(' + require('../../images/tc2.png') + ')'}"
+          >
+            <h2>法制动态详情</h2>
+            <div class="flxq" v-html="info2.details"></div>
+            <div class="close" @click="handleClose(0)">
+              <img src="../../images/close1.png" alt="" />
+            </div>
+          </div>
+        </div>
         <vue-seamless-scroll
           :data="list12"
           class="list12"
           :class-option="flzxOption"
-          v-else-if="currentIndex1 == 1"
+          v-if="currentIndex1 == 1"
         >
           <div class="item12" v-for="(item, index) in list12" :key="index">
             <div class="ft">
@@ -185,7 +205,7 @@
                     <img src="../../images/czimg.jpg" alt="" />
                   </el-carousel-item>
                 </el-carousel>
-                <div class="close" @click="handleClose">
+                <div class="close" @click="handleClose(0)">
                   <img src="../../images/close1.png" alt="" />
                 </div>
               </div>
@@ -472,7 +492,6 @@
             v-for="(item, index) in list31"
             :key="index"
             @click="hanldeClickf(item)"
-            
           >
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.nm }}</div>
@@ -483,7 +502,7 @@
               <h2>法律文书详情</h2>
               <!-- pdf文件 -->
               <div id="iframe">
-                <div class="pdf" :id="pdfId">
+                <div class="pdf">
                   <!--使用ifram 显示 pdf文件 获取文件地址 -->
                   <iframe
                     style="width: 100%; height: 680px"
@@ -491,7 +510,7 @@
                   ></iframe>
                 </div>
               </div>
-              <div class="close" @click="handleClose">
+              <div class="close" @click="handleClose(0)">
                 <img src="../../images/close1.png" alt="" />
               </div>
             </div>
@@ -510,28 +529,28 @@
           >
             <div class="img"><img src="~@/images/fzgs.png" alt="" /></div>
             <div class="title">{{ item.nm }}</div>
-          </div>
-          <!-- 法律故事视频详情 -->
-          <div class="details viodebox" v-if="isVideo">
-            <div class="detailsList videoList">
-              <h2>法律故事详情</h2>
-              <video
-                width="100%"
-                controls
-                loop
-                id="videoplay"
-                class="video-src"
-                ref="gsDtlVideo"
-                src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
-              >
-                <!-- <source
+            <!-- 法律故事视频详情 -->
+            <div class="details viodebox" v-if="isVideo && list32.length > 0">
+              <div class="detailsList videoList">
+                <h2>法律故事详情</h2>
+                <video
+                  width="100%"
+                  controls
+                  loop
+                  id="videoplay"
+                  class="video-src"
+                  ref="gsDtlVideo"
+                  src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
+                >
+                  <!-- <source
                   src="https://video.ship88.cn/sv/5817a612-17da269cc9d/5817a612-17da269cc9d.mp4"
                   type="video/mp4"
                   data-filtered="filtered"
                 /> -->
-              </video>
-              <div class="close" @click="handleClose">
-                <img src="../../images/close1.png" alt="" />
+                </video>
+                <div class="close" @click.stop="handleClose(index)">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
               </div>
             </div>
           </div>
@@ -711,38 +730,13 @@ import MyHeader from "../../components/MyHeader";
 export default {
   data() {
     return {
-      // percentX: 1, //缩放比列
-      // percentY: 1, //缩放比列
       currentIndex1: 0, //法律服务下标
       choose: -1,
+      info1: {}, //法律服务统计
       //法律服务-法制动态列表
-      list11: [
-        {
-          pic: "https://tse3-mm.cn.bing.net/th/id/OIP-C.xMJSb4rjACfDQgOX_wliAwHaHa?w=195&h=196&c=7&r=0&o=5&pid=1.7",
-          content:
-            "法治动态法治动态法治动态法治态法治动态法治动态法治动态法治动态法治态法治动态法治动态法治动态法治动态法治态法治动态",
-          num: 1540,
-          date: "2021.02.05",
-        },
-        {
-          pic: "https://tse3-mm.cn.bing.net/th/id/OIP-C.xMJSb4rjACfDQgOX_wliAwHaHa?w=195&h=196&c=7&r=0&o=5&pid=1.7",
-          content: "法治动态法治动态法治动态法治态法治动态",
-          num: 1540,
-          date: "2021.02.05",
-        },
-        {
-          pic: "https://tse3-mm.cn.bing.net/th/id/OIP-C.xMJSb4rjACfDQgOX_wliAwHaHa?w=195&h=196&c=7&r=0&o=5&pid=1.7",
-          content: "法治动态法治动态法治动态法治态法治动态",
-          num: 1540,
-          date: "2021.02.05",
-        },
-        {
-          pic: "https://tse3-mm.cn.bing.net/th/id/OIP-C.xMJSb4rjACfDQgOX_wliAwHaHa?w=195&h=196&c=7&r=0&o=5&pid=1.7",
-          content: "法治动态法治动态法治动态法治态法治动态",
-          num: 1540,
-          date: "2021.02.05",
-        },
-      ],
+      list11: [],
+      info2: {}, // 法制动态详情
+      isShow1: false, //法制动态详情显示
       //法律服务-法律咨询列表
       list12: [
         {
@@ -1087,33 +1081,45 @@ export default {
     bofang(index) {
       this.isVideo = true;
     },
-    // 法律咨询详情
-    handleChanges(index) {
-      this.isShow2 = true;
+    // 法治动态详情
+    async getFzdtDtl(id) {
+      this.isShow1 = true;
+      this.info2 = await this.api.getFzdtDtl(id);
+      this.info2.details = this.info2.details.replace(
+        /<img[^>]*>/gi,
+        function (match, capture) {
+          return match.replace(/(<img[^>]*)(\/?>)/gi, "$1width='100%' $2"); // 添加width="100%"
+        }
+      );
+      this.info2.details = this.info2.details.replace(
+        /<img[^>]*>/gi,
+        function (match, capture) {
+          return match.replace(
+            /style\s*?=\s*?([‘"])[\s\S]*?\1/gi,
+            'style="max-width:100%;height:auto;"'
+          ); // 替换style
+        }
+      );
     },
-    handleClose() {
+    handleClose(index) {
+      this.isShow1 = false;
       this.isShow2 = false;
       this.isVideo = false;
       this.fws = false;
       this.village = false;
-      this.$refs.gsDtlVideo.pause(); //暂停
-
+      if (this.$refs.gsDtlVideo.length > 0) this.$refs.gsDtlVideo[0].pause(); //暂停
     },
      // 地图位置轮播详情
     handlemap() {
       this.village = true;
     },
   },
-  created() {
-    window.onresize = () => {
-      // console.log("onresize");
-      // let x = document.body.clientWidth || document.documentElement.clientWidth;
-      // let y =
-      //   document.body.clientHeight || document.documentElement.clientHeight;
-      // this.percentX = x / 1920;
-      // this.percentY = y / 1080;
-      // console.log(x, this.percentX);
-    };
+  async created() {
+    // 法制动态列表
+    this.api.getFzdtList({ current: 1, size: 10 }).then((res) => {
+      this.list11 = res.records;
+      this.info1.dynamicTotal = res.total;
+    });
   },
 };
 </script>
@@ -1152,6 +1158,76 @@ export default {
         font-weight: bold;
         color: #13ecff;
         margin-top: -20px;
+      }
+    }
+    .details {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      .detailsList {
+        width: 783px;
+        height: 445px;
+        position: absolute;
+        z-index: 2000;
+        left: 50%;
+        top: 50%;
+        // margin-left: -391.5px;
+        // margin-top: -267.5px;
+        transform: translate(-50%, -50%);
+        background: url("../../images/tc1.png") no-repeat;
+        background-size: 100%;
+        padding-top: 42px;
+        padding-left: 70px;
+        padding-right: 55px;
+        box-sizing: border-box;
+        h2 {
+          font-weight: bold;
+          font-size: 29px;
+          text-align: center;
+          color: #6cfcff;
+          line-height: 29px;
+          background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-bottom: 38px;
+        }
+        .detail {
+          margin-top: 45px;
+          display: flex;
+          justify-content: center;
+          img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 45px;
+          }
+          .content {
+            .row {
+              display: flex;
+              font-size: 17px;
+              font-family: "PingFang SC";
+              font-weight: 500;
+              color: #ffffff;
+              line-height: 40px;
+              .title {
+                margin-right: 4px;
+              }
+            }
+          }
+        }
+      }
+      .close {
+        position: absolute;
+        right: 60px;
+        top: 40px;
+        cursor: pointer;
       }
     }
     .left {
@@ -1464,7 +1540,7 @@ export default {
           height: auto;
           display: block;
         }
-         // 地图五星
+        // 地图五星
         .xct {
           position: absolute;
           top: 0;
@@ -1568,7 +1644,6 @@ export default {
             }
           }
         .wxc{
-
           position: absolute;
           left: 17px;
           top: 175px;
@@ -1739,7 +1814,7 @@ export default {
             line-height: 55px;
           }
           .data {
-            width: 72px;  
+            width: 72px;
             height: 33px;
             background: rgba(0, 48, 149, 0);
             border: 1px solid #ffffff;
@@ -1956,76 +2031,6 @@ export default {
               }
             }
           }
-        }
-      }
-      .details {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        .detailsList {
-          width: 783px;
-          height: 445px;
-          position: absolute;
-          z-index: 2000;
-          left: 50%;
-          top: 50%;
-          // margin-left: -391.5px;
-          // margin-top: -267.5px;
-          transform: translate(-50%, -50%);
-          background: url("../../images/tc1.png") no-repeat;
-          background-size: 100%;
-          padding-top: 42px;
-          padding-left: 70px;
-          padding-right: 55px;
-          box-sizing: border-box;
-          h2 {
-            font-weight: bold;
-            font-size: 29px;
-            text-align: center;
-            color: #6cfcff;
-            line-height: 29px;
-            background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 38px;
-          }
-          .detail {
-            margin-top: 45px;
-            display: flex;
-            justify-content: center;
-            img {
-              width: 140px;
-              height: 140px;
-              border-radius: 50%;
-              object-fit: cover;
-              margin-right: 45px;
-            }
-            .content {
-              .row {
-                display: flex;
-                font-size: 17px;
-                font-family: "PingFang SC";
-                font-weight: 500;
-                color: #ffffff;
-                line-height: 40px;
-                .title {
-                  margin-right: 4px;
-                }
-              }
-            }
-          }
-        }
-        .close {
-          position: absolute;
-          right: 60px;
-          top: 40px;
-          cursor: pointer;
         }
       }
     }
