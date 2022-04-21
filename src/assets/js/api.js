@@ -212,28 +212,26 @@ class api {
 
         })
     }
-<<<<<<< HEAD
     getAuditDetails(data) {
         return new Promise((resolve, reject) => {
             get('/api/examination/examination/detail?id='+ data, {}, {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {
-=======
-    // 法治队伍分页
-    getFzdwList(data) {
-        return new Promise((resolve, reject) => {
-            get('/api/open/ranks/ranks/page',data).then(res => {
->>>>>>> 2e77dae0c8dfc069a0d92908baa6be4a00bf55be
                 resolve(res.data)
             })
 
         })
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> 2e77dae0c8dfc069a0d92908baa6be4a00bf55be
+    // 法治队伍分页
+    getFzdwList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/ranks/ranks/page',data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
     // 重点人员列表展示
     getKeyPersonnel() {
         return new Promise((resolve, reject) => {
@@ -246,9 +244,6 @@ class api {
 
         })
     }
-<<<<<<< HEAD
-    
-=======
     // 法治队伍详情
     getFzdwDtl(data) {
         return new Promise((resolve, reject) => {
@@ -258,7 +253,6 @@ class api {
 
         })
     }
->>>>>>> 2e77dae0c8dfc069a0d92908baa6be4a00bf55be
     // 重点人员统计
     getStatistics() {
         return new Promise((resolve, reject) => {

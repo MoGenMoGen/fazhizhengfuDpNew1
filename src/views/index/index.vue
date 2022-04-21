@@ -165,15 +165,12 @@
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-=======
           <!-- 地图凸起 -->
           <!-- 汶溪村 -->
           <div class="wxc" v-show="currentIndex12 == 0">
             <img src="~@/images/map/wx.png" alt="" class="wxmap" />
             <div class="mapicon">汶溪村</div>
           </div>
->>>>>>> 2e77dae0c8dfc069a0d92908baa6be4a00bf55be
           <!-- 田顾村 -->
           <div class="wxc left1" v-show="currentIndex12 == 1">
             <img src="~@/images/map/tg.png" alt="" class="wxmap" />
