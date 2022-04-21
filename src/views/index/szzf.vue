@@ -32,22 +32,45 @@
         <!-- 审查列表 -->
         <div class="sclist">
           <ul>
-            <li
-              v-for="(item, index) in sclist"
-              :key="index"
-              :class="{ active: index == currIndex ? true : false }"
-              @click="handleclick(index)"
-            >
-              <h3>{{ item.nm }}</h3>
-              <b
-                :class="{
-                  color1: item.color == 1,
-                  color2: item.color == 2,
-                  color3: item.color == 3,
-                  color4: item.color == 4,
-                }"
-                >{{ item.number }}</b
-              >
+            <li @click="handleclick(0)">
+              <h3>全部</h3>
+              <b class="color1">{{}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 0"
+              />
+            </li>
+            <li @click="handleclick(1)">
+              <h3>已审查</h3>
+              <b class="color2">{{}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 1"
+              />
+            </li>
+            <li @click="handleclick(2)">
+              <h3>未审查</h3>
+              <b class="color3">{{}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 2"
+              />
+            </li>
+            <li @click="handleclick(3)">
+              <h3>逾期</h3>
+              <b class="color4">{{}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 3"
+              />
             </li>
           </ul>
           <!-- 表格列 -->
@@ -75,12 +98,9 @@
                   </div>
                   <div style="width: 90px">{{ item.upTime }}</div>
                   <div style="width: 89px">
-                    <span>{{
-                      item.status == 1
-                        ? "已审查"
-                        : item.status == 2
-                        ? "未审查"
-                        : "逾期"
+                    <span>
+                    {{
+                      item.status == 1? "已审查": item.status == 2? "未审查": "逾期"
                     }}</span>
                     <img
                       src="../../images/wsc.png"
@@ -161,7 +181,7 @@
           <!-- 审查人员列表 -->
           <div class="sclist sclist2">
             <ul>
-              <li :class="{ active: 0 == currIndex }" @click="handleclick2(0)">
+              <li @click="handleclick2(0)">
                 <h3>吸毒人员</h3>
                 <b>{{ info2.drugNum }}</b>
                 <img
@@ -282,11 +302,11 @@
         </div>
       </div>
       <!-- 右边 -->
-     <div class="hfsc">
+      <div class="hfsc">
         <div class="title">合法性审查</div>
         <div class="gaugecontent">
           <!-- 绘制仪表盘 -->
-          <div id="gauge"></div>
+          <div id="gauge2"></div>
           <!-- 合同总数 -->
           <div class="number">
             <p>{{ info1.total }}<span>份</span></p>
@@ -571,53 +591,11 @@ export default {
         { nm: "逾期", number: 38, color: "4" },
       ],
       // 审查人员列表
-      sclist2: [
-        { nm: "吸毒人员", number: 15 },
-        { nm: "矫正人员", number: 65 },
-        { nm: "刑释解矫人员", number: 38 },
-        { nm: "失信人员", number: 2 },
-      ],
+      sclist2: [],
       //
       active: true,
       // 审查列表
-      tableList: [
-        // {
-        //   num: 1,
-        //   ht: "股权质押反担保合同",
-        //   time: "2021-01-05",
-        //   sc: "未审查",
-        // },
-        // {
-        //   num: 2,
-        //   ht: "股权质押反担保合同",
-        //   time: "2021-01-05",
-        //   sc: "已审查",
-        // },
-        // {
-        //   num: 3,
-        //   ht: "股权质押反担保合同",
-        //   time: "2021-01-05",
-        //   sc: "逾期",
-        // },
-        // {
-        //   num: 4,
-        //   ht: "股权质押反担保合同",
-        //   time: "2021-01-05",
-        //   sc: "未审查",
-        // },
-        // {
-        //   num: 5,
-        //   ht: "股权质押反担保合同",
-        //   time: "2021-01-05",
-        //   sc: "未审查",
-        // },
-        // {
-        //   num: 6,
-        //   ht: "股权质押反担保合同",
-        //   time: "2021-01-05",
-        //   sc: "未审查",
-        // },
-      ],
+      tableList: [],
       // 弹窗内容
       // 默认弹窗隐藏
       ifShow2: false,
@@ -631,92 +609,78 @@ export default {
         {
           nm: "汶溪村公共法律服务点",
           pope: "周月华",
-          left: "352px",
-          top: "475px",
+          left: "371px",
+          top: "487px",
         },
         {
           nm: "中心村公共法律服务点",
           pope: "周月华",
-          left: "409px",
-          top: "486px",
+          left: "427px", top: "498px"
         },
         {
           nm: "杜夹岙村公共法律服务点",
           pope: "周月华",
-          left: "540px",
-          top: "381px",
+          left: "561px", top: "393px"
         },
         {
           nm: "河西村公共法律服务点",
           pope: "周月华",
-          left: "627px",
-          top: "490px",
+          left: "647px", top: "501px"
         },
         {
           nm: "长石村公共法律服务点",
           pope: "周月华",
-          left: "645px",
-          top: "616px",
+          left: "664px", top: "628px"
         },
         {
           nm: "长宏村公共法律服务点",
           pope: "周月华",
-          left: "730px",
-          top: "614px",
+          left: "749px", top: "627px"
         },
         {
           nm: "思源社区公共法律服务点",
           pope: "周月华",
-          left: "690.5px",
-          top: "687.5px",
+          left: "712.5px", top: "699.5px"
         },
         {
           nm: "西经堂村公共法律服务点",
           pope: "周月华",
-          left: "795px",
-          top: "456px",
-        },
-        {
-          nm: "天扬陈村公共法律服务点",
-          pope: "周月华",
-          left: "881px",
-          top: "337px",
+          left: "815px", top: "468px"
         },
         {
           nm: "田顾村公共法律服务点",
           pope: "周月华",
-          left: "707px",
-          top: "297px",
+          left: "728px", top: "310px"
         },
         {
           nm: "九龙湖村公共法律服务点",
           pope: "周月华",
-          left: "642px",
-          top: "255px",
+          left: "663px", top: "266px"
         },
         {
           nm: "九龙湖镇人民政府公共法律服务点",
           pope: "周月华",
-          left: "726px",
-          top: "233px",
+          left: "747px", top: "243px"
         },
         {
           nm: "河头村公共法律服务点",
           pope: "周月华",
-          left: "802px",
-          top: "172px",
+          left: "822px", top: "183px"
         },
         {
           nm: "河源社区公共法律服务点",
           pope: "周月华",
-          left: "859px",
-          top: "185px",
+          left: "878px", top: "197px"
         },
         {
           nm: "龙源社区公共法律服务点",
           pope: "周月华",
-          left: "870px",
-          top: "226px",
+          left: "890px", top: "237px"
+        },
+        {
+          nm: "天扬陈村公共法律服务点",
+          pope: "周月华",
+          left: "901px", top: "349px"
         },
       ],
     };
@@ -916,22 +880,30 @@ export default {
       //基于准备好的dom，初始化echarts实例
       var myChart = this.$echarts.init(document.getElementById("pople"));
       let data1 = [
-        { value: 30, name: "长石村" },
-        { value: 15, name: "九龙湖村 " },
-        { value: 18, name: "汶溪村" },
-        { value: 18, name: "秦山村" },
-        { value: 18, name: "西经堂村" },
+        // { value: 30, name: "长石村" },
+        // { value: 15, name: "九龙湖村 " },
+        // { value: 18, name: "汶溪村" },
+        // { value: 18, name: "秦山村" },
+        // { value: 18, name: "西经堂村" },
       ];
+    
+      let newData= (that.info2.groupData).map((item,index) =>{
+          return Object.assign({},{'value':item.rate},{'name':item.villageName})
+      })
+      data1=newData
+      data1.push({ value: 25, name: "长石村" },{ value: 25, name: "九龙湖村 " },{ value: 25, name: "汶溪村" })
+
+   
       // 绘制饼图
       myChart.setOption({
         tooltip: {
           trigger: "item",
-          formatter: " {b}<br/> 总人数: {c} (%)",
+          formatter: " {b}<br/> 总人数: {c} %",
         },
         legend: {
           right: "right",
           orient: "vertical",
-          itemGap: 18,
+          itemGap: 16,
           textStyle: {
             color: "#fff",
             fontSize: 14,
@@ -943,7 +915,7 @@ export default {
             const val = data1.filter((item) => {
               return item.name === name;
             });
-            return name + "  " + (val[0].value / count).toFixed(4) * 100 + "%";
+            return name + "  " + (val[0].value / count).toFixed(2) * 100 + "%";
           },
         },
         toolbox: {
@@ -956,7 +928,7 @@ export default {
           {
             name: "Nightingale Chart",
             type: "pie",
-            radius: [20, 100],
+            radius: [16, 90],
             center: ["22%", "50%"],
             roseType: "radius",
             itemStyle: {
@@ -997,6 +969,7 @@ export default {
           },
         },
       ];
+      gaugeData[0].value = this.info1.passRate;
       // 绘制仪表盘
       myChart.setOption({
         series: [
@@ -1092,7 +1065,7 @@ export default {
               // 里面的文字样式
               width: 55,
               height: 25,
-              fontSize: 28,
+              fontSize: 20,
               color: "#fff",
               borderColor: "none",
               formatter: "{value}%",
@@ -1137,15 +1110,25 @@ export default {
   },
   created() {},
   mounted() {
-    // 获取法治政府视频、介绍
+    // 合法审查率
     this.api.getCensorshipRate().then((res) => {
       this.info1 = res;
       this.gauge();
+      this.gauge2();
     });
+    // 合法审查列表
     this.api.getContractList().then((res) => {
       this.tableList = res;
       console.log("2222", this.tableList);
     });
+
+    // 审查列表详情
+    this.api.getAuditDetails("1515954588748046337").then((res) => {
+      // this.tableList = res;
+      console.log("8888", res);
+    });
+
+    // 重点人员统计列表
     this.api.getKeyPersonnel().then((res) => {
       this.tableList2 = res;
       console.log("33333", res);
@@ -1154,11 +1137,10 @@ export default {
     this.api.getStatistics().then((res) => {
       this.info2 = res;
       console.log("4444", res);
+      this.drawChart();
     });
 
-    this.drawChart();
     // this.drawChart2();
-    this.gauge2();
   },
 };
 </script>
@@ -1459,7 +1441,7 @@ export default {
         // 饼图
         #pople {
           width: 350px;
-          height: 200px;
+          height: 180px;
           margin: 0 auto;
           margin-top: 30px;
           margin-bottom: -20px;
@@ -1553,6 +1535,7 @@ export default {
             cursor: pointer;
             background: none;
             border: none;
+            padding: 0;
           }
         }
       }
@@ -1566,8 +1549,8 @@ export default {
   background: rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
   position: absolute;
-  top: -130px;
-  left: -15px;
+  top: -120px;
+  left: 0px;
   font-family: "Source Han Sans CN";
   .xcbox-top {
     font-size: 14px;

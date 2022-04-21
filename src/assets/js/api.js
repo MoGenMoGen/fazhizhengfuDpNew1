@@ -204,6 +204,18 @@ class api {
 
         })
     }
+    getAuditDetails(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/examination/examination/detail?id='+ data, {}, {
+                'Content-Type': 'multipart/form-data',
+                'Connection': 'keep-alive',
+            }).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    
     // 重点人员列表展示
     getKeyPersonnel() {
         return new Promise((resolve, reject) => {
@@ -216,6 +228,7 @@ class api {
 
         })
     }
+    
     // 重点人员统计
     getStatistics() {
         return new Promise((resolve, reject) => {

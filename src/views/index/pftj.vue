@@ -136,6 +136,7 @@
           </div>
         </div>
       </div>
+      <!-- 中间地图 -->
       <div class="center">
         <div class="title">
           <img src="~@/images/servicePoint.png" alt="" />
@@ -146,14 +147,36 @@
         </div>
         <div class="mapbox">
           <img src="~@/images/map.png" alt="" class="map" />
-          <!-- 地图点击五星 -->
+          <!-- 乡村点击星弹窗 -->
           <div class="xct">
-            <div class="popover" v-for="(item,index) in wxList" :key="index"
-            @click="handleVill(index)"
-            :style="{left:item.left,top:item.top}"
+            <el-popover
+              placement="right"
+              width="400"
+              trigger="click"
+              class="popover"
+              v-for="(item, index) in xcList"
+              :key="index"
+              :style="{ left: item.left, top: item.top }"
             >
-              <img src="../../images/wxing.png" alt="" />
-            </div>
+              <div class="xcbox">
+                <div class="xcbox-top">
+                  <h2>{{ item.nm }}</h2>
+                  <p>负责人：{{ item.pope }}</p>
+                </div>
+                <div class="xcbox-bottom">
+                  <img src="../../images/erweima.png" alt="" />
+                </div>
+              </div>
+
+              <el-button slot="reference" class="wx">
+                <img src="../../images/wxing.png" alt="" />
+              </el-button>
+            </el-popover>
+          </div>
+          <!-- 汶溪村 -->
+          <div class="wxc" v-show="choose == 0">
+            <img src="~@/images/map/wx.png" alt="" class="wxmap" />
+            <div class="mapicon" @click="handlemap">汶溪村</div>
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>汶溪村</h2>
@@ -168,69 +191,207 @@
               </div>
             </div>
           </div>
-          <!-- 地图凸起 -->
-          <!-- 汶溪村 -->
-          <div class="wxc" v-show="choose == 0">
-            <img src="~@/images/map/wx.png" alt="" class="wxmap" />
-            <div class="mapicon">汶溪村</div>
-          </div>
           <!-- 田顾村 -->
           <div class="wxc left1" v-show="choose == 1">
             <img src="~@/images/map/tg.png" alt="" class="wxmap" />
-            <div class="mapicon">田顾村</div>
+            <div class="mapicon" @click="handlemap">田顾村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>田顾村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 河头村 -->
           <div class="wxc left2" v-show="choose == 2">
             <img src="~@/images/map/ht.png" alt="" class="wxmap" />
-            <div class="mapicon">河头村</div>
+            <div class="mapicon" @click="handlemap">河头村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>河头村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 长石村 -->
           <div class="wxc left3" v-show="choose == 3">
             <img src="~@/images/map/cs.png" alt="" class="wxmap" />
-            <div class="mapicon">长石村</div>
+            <div class="mapicon" @click="handlemap">长石村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>长石村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 九龙湖村 -->
           <div class="wxc left4" v-show="choose == 4">
             <img src="~@/images/map/jlh.png" alt="" class="wxmap" />
-            <div class="mapicon">九龙湖村</div>
+            <div class="mapicon" @click="handlemap">九龙湖村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>九龙湖村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 长石村 -->
           <div class="wxc left3" v-show="choose == 5">
             <img src="~@/images/map/cs.png" alt="" class="wxmap" />
-            <div class="mapicon">思源社区</div>
+            <div class="mapicon" @click="handlemap">思源社区</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>思源社区</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 杜夹岙村 -->
           <div class="wxc left5" v-show="choose == 6">
             <img src="~@/images/map/sj.png" alt="" class="wxmap" />
-            <div class="mapicon">杜夹岙村</div>
+            <div class="mapicon" @click="handlemap">杜夹岙村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>杜夹岙村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 田杨陈村 -->
           <div class="wxc left6" v-show="choose == 7">
             <img src="~@/images/map/tyc.png" alt="" class="wxmap" />
-            <div class="mapicon">田杨陈村</div>
+            <div class="mapicon" @click="handlemap">田杨陈村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>田杨陈村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 西河村 -->
           <div class="wxc left7" v-show="choose == 8">
             <img src="~@/images/map/sh.png" alt="" class="wxmap" />
-            <div class="mapicon">西河村</div>
+            <div class="mapicon" @click="handlemap">西河村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>西河村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 西经堂村 -->
           <div class="wxc left8" v-show="choose == 9">
             <img src="~@/images/map/xjt.png" alt="" class="wxmap" />
-            <div class="mapicon">西经堂村</div>
+            <div class="mapicon" @click="handlemap">西经堂村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>西经堂村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 长宏村 -->
           <div class="wxc left9" v-show="choose == 10">
             <img src="~@/images/map/ch.png" alt="" class="wxmap" />
-            <div class="mapicon">长宏村</div>
+            <div class="mapicon" @click="handlemap">长宏村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>长宏村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 中心村 -->
           <div class="wxc left10" v-show="choose == 11">
             <img src="~@/images/map/zx.png" alt="" class="wxmap" />
-            <div class="mapicon">中心村</div>
+            <div class="mapicon" @click="handlemap">中心村</div>
+            <div class="carousel" v-show="village">
+              <div class="carousel2">
+                <h2>中心村</h2>
+                <el-carousel :interval="5000" arrow="always">
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <img src="../../images/czimg.jpg" alt="" />
+                  </el-carousel-item>
+                </el-carousel>
+                <div class="close" @click="handleClose">
+                  <img src="../../images/close1.png" alt="" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="right">
         <div class="titlebox">
           <img src="~@/images/subtitle.png" alt="" />
@@ -710,22 +871,84 @@ export default {
       ],
       // 地图五星图标
       village: false,
-      wxList: [
-        {left: "371px", top: "487px",},
-        {left: "427px", top: "498px",},
-        {left: "561px", top: "393px",},
-        {left: "647px", top: "501px",},
-        {left: "664px", top: "628px",},
-        {left: "749px", top: "627px",},
-        {left: "712.5px", top: "699.5px"},
-        {left: "815px", top: "468px"},
-        {left: "728px", top: "310px"},
-        {left: "663px", top: "266px"},
-        {left: "747px", top: "243px"},
-        {left: "822px", top: "183px"},
-        {left: "878px", top: "197px"},
-        {left: "890px", top: "237px"},
-        {left: "901px", top: "349px"},
+      // 查看村庄
+      xcList: [
+        {
+          nm: "汶溪村公共法律服务点",
+          pope: "周月华",
+          left: "371px",
+          top: "487px",
+        },
+        {
+          nm: "中心村公共法律服务点",
+          pope: "周月华",
+          left: "427px", top: "498px"
+        },
+        {
+          nm: "杜夹岙村公共法律服务点",
+          pope: "周月华",
+          left: "561px", top: "393px"
+        },
+        {
+          nm: "河西村公共法律服务点",
+          pope: "周月华",
+          left: "647px", top: "501px"
+        },
+        {
+          nm: "长石村公共法律服务点",
+          pope: "周月华",
+          left: "664px", top: "628px"
+        },
+        {
+          nm: "长宏村公共法律服务点",
+          pope: "周月华",
+          left: "749px", top: "627px"
+        },
+        {
+          nm: "思源社区公共法律服务点",
+          pope: "周月华",
+          left: "712.5px", top: "699.5px"
+        },
+        {
+          nm: "西经堂村公共法律服务点",
+          pope: "周月华",
+          left: "815px", top: "468px"
+        },
+        {
+          nm: "田顾村公共法律服务点",
+          pope: "周月华",
+          left: "728px", top: "310px"
+        },
+        {
+          nm: "九龙湖村公共法律服务点",
+          pope: "周月华",
+          left: "663px", top: "266px"
+        },
+        {
+          nm: "九龙湖镇人民政府公共法律服务点",
+          pope: "周月华",
+          left: "747px", top: "243px"
+        },
+        {
+          nm: "河头村公共法律服务点",
+          pope: "周月华",
+          left: "822px", top: "183px"
+        },
+        {
+          nm: "河源社区公共法律服务点",
+          pope: "周月华",
+          left: "878px", top: "197px"
+        },
+        {
+          nm: "龙源社区公共法律服务点",
+          pope: "周月华",
+          left: "890px", top: "237px"
+        },
+        {
+          nm: "天扬陈村公共法律服务点",
+          pope: "周月华",
+          left: "901px", top: "349px"
+        },
       ],
       // 显示片区民警详情
       showMjdDetail: false,
@@ -876,12 +1099,8 @@ export default {
       this.$refs.gsDtlVideo.pause(); //暂停
 
     },
-    // 地图星轮播详情
-    handleVill() {
-      this.village = true;
-    },
-    // 地图星轮播详情
-    handleVill() {
+     // 地图位置轮播详情
+    handlemap() {
       this.village = true;
     },
   },
@@ -1253,14 +1472,26 @@ export default {
           .popover {
             display: block;
             position: absolute;
-            left: 371px;
-            top: 487px;
+            left: 352px;
+            top: 475px;
             z-index: 99;
-            cursor: pointer;
             &:nth-child(7) {
               transform: rotate(350deg);
             }
           }
+          .fl1 {
+            left: 409px;
+            top: 486px;
+          }
+
+          /deep/.el-button {
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+          }
+        }
+        // 地图浮起弹窗轮播
           .carousel {
             position: fixed;
             width: 100%;
@@ -1329,13 +1560,12 @@ export default {
             }
             /deep/.el-carousel__arrow {
               width: 30px;
-              height: 30px;
+              height: 35px;
               border-radius: 50%;
               border: 1px solid #fff;
               background-color: none;
             }
           }
-        }
         .wxc{
 
           position: absolute;
@@ -1799,6 +2029,51 @@ export default {
       }
     }
   }
+}
+
+.xcbox {
+  width: 262px;
+  min-height: 249px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  position: absolute;
+  top: -120px;
+  left: 0px;
+  font-family: "Source Han Sans CN";
+  .xcbox-top {
+    font-size: 14px;
+    color: #fff;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    h2 {
+      font-size: 19px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }
+  .xcbox-bottom {
+    width: 110px;
+    height: 110px;
+    padding: 20px;
+    img {
+      border: 3px solid #ffffff;
+      border-radius: 5px;
+    }
+  }
+}
+</style>
+<style lang="less">
+.el-popover {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  min-width: auto;
+  padding: 0;
+}
+.el-popper .popper__arrow {
+  display: none !important;
 }
 </style>
 
