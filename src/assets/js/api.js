@@ -191,6 +191,18 @@ class api {
 
         })
     }
+    // 获取审查人数统计
+    getReviewCount(query) {
+        return new Promise((resolve, reject) => {
+            get('/api/examination/examination/scope?query='+query, {}, {
+                'Content-Type': 'multipart/form-data',
+                'Connection': 'keep-alive',
+            }).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
     // 获取法治队伍人数统计
     getFzdwStatis() {
         return new Promise((resolve, reject) => {

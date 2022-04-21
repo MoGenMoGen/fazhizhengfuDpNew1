@@ -147,8 +147,9 @@
               </el-button>
             </el-popover>
           </div>
+          <!-- 地图凸起 -->
           <!-- 汶溪村 -->
-          <div class="wxc" v-show="choose == 0">
+          <div class="wxc" v-show="currentIndex12 == 0">
             <img src="~@/images/map/wx.png" alt="" class="wxmap" />
             <div class="mapicon" @click="handlemap">汶溪村</div>
             <div class="carousel" v-show="village">
@@ -169,12 +170,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <!-- 地图凸起 -->
-          <!-- 汶溪村 -->
-          <div class="wxc" v-show="currentIndex12 == 0">
-            <img src="~@/images/map/wx.png" alt="" class="wxmap" />
-            <div class="mapicon">汶溪村</div>
           </div>
           <!-- 田顾村 -->
           <div class="wxc left1" v-show="currentIndex12 == 1">

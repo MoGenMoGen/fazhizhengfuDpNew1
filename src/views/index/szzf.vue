@@ -25,6 +25,7 @@
             range-separator="~"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            @change="handleChanges"
           >
           </el-date-picker>
           <span class="el-icon-arrow-up el-input__icon jt"></span>
@@ -34,7 +35,7 @@
           <ul>
             <li @click="handleclick(0)">
               <h3>全部</h3>
-              <b class="color1">{{}}</b>
+              <b class="color1">{{info3.totalNum}}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -44,7 +45,7 @@
             </li>
             <li @click="handleclick(1)">
               <h3>已审查</h3>
-              <b class="color2">{{}}</b>
+              <b class="color2">{{info3.passNum}}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -54,7 +55,7 @@
             </li>
             <li @click="handleclick(2)">
               <h3>未审查</h3>
-              <b class="color3">{{}}</b>
+              <b class="color3">{{info3.unPassNum}}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -64,7 +65,7 @@
             </li>
             <li @click="handleclick(3)">
               <h3>逾期</h3>
-              <b class="color4">{{}}</b>
+              <b class="color4">{{info3.overDate}}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -90,7 +91,7 @@
                   class="blist"
                   v-for="(item, index) in tableList"
                   :key="index"
-                  @click="handleTable(index)"
+                  @click.stop="handleTable(item.id)"
                 >
                   <div style="width: 56px">{{ index + 1 }}</div>
                   <div style="width: 140px" class="listName">
@@ -99,9 +100,14 @@
                   <div style="width: 90px">{{ item.upTime }}</div>
                   <div style="width: 89px">
                     <span>
-                    {{
-                      item.status == 1? "已审查": item.status == 2? "未审查": "逾期"
-                    }}</span>
+                      {{
+                        item.status == 1
+                          ? "已审查"
+                          : item.status == 2
+                          ? "未审查"
+                          : "逾期"
+                      }}</span
+                    >
                     <img
                       src="../../images/wsc.png"
                       alt=""
@@ -127,15 +133,15 @@
                   <div class="details2">
                     <div>
                       <span>合同名称：</span>
-                      <p>股权质押反担保合同</p>
+                      <p>{{ details.name }}</p>
                     </div>
                     <div>
                       <span>上传部门：</span>
-                      <p>综治</p>
+                      <p>{{ details.deptName }}</p>
                     </div>
                     <div>
                       <span>上传时间：</span>
-                      <p>2021-01-05</p>
+                      <p>{{ details.createTime }}</p>
                     </div>
                     <div>
                       <span>审查结果：</span>
@@ -144,24 +150,43 @@
                     <div>
                       <span>审查状态：</span>
                       <p>
-                        已审查
-                        <img src="../../images/ysc.png" alt="" />
+                        {{
+                          details.status == 1
+                            ? "已审查"
+                            : details.status == 2
+                            ? "未审查"
+                            : "逾期"
+                        }}
+                        <img
+                          src="../../images/wsc.png"
+                          alt=""
+                          v-if="details.status == 2 ? show1 : show2"
+                        />
+                        <img
+                          src="../../images/ysc.png"
+                          alt=""
+                          v-if="details.status == 1 ? show1 : show2"
+                        />
+                        <img
+                          src="../../images/yq.png"
+                          alt=""
+                          v-if="details.status == 3 ? show1 : show2"
+                        />
                       </p>
                     </div>
                     <div>
                       <span>审核时间：</span>
-                      <p>2021-02-05</p>
+                      <p>{{ details.auditTime }}</p>
                     </div>
                     <div>
                       <span>律师意见/司法所意见：</span>
                       <p>
-                        企业所得税汇算清缴纳税申报鉴证报告说明
-                        我们接受委托,对被鉴证单位
+                        {{ details.suggestion }}
                       </p>
                     </div>
                     <div>
                       <span>所属律师：</span>
-                      <p>王小毛</p>
+                      <p>{{ details.lawyer }}</p>
                     </div>
                   </div>
                   <div class="close" @click="handleClose">
@@ -396,55 +421,6 @@
                   </div>
                 </div>
               </vue-seamless-scroll>
-              <!-- 弹窗详情 -->
-              <div class="details" v-if="ifShow2">
-                <div class="detailsList">
-                  <h2>合法性审查详情</h2>
-                  <div class="details2">
-                    <div>
-                      <span>合同名称：</span>
-                      <p>股权质押反担保合同</p>
-                    </div>
-                    <div>
-                      <span>上传部门：</span>
-                      <p>综治</p>
-                    </div>
-                    <div>
-                      <span>上传时间：</span>
-                      <p>2021-01-05</p>
-                    </div>
-                    <div>
-                      <span>审查结果：</span>
-                      <p>审查通过</p>
-                    </div>
-                    <div>
-                      <span>审查状态：</span>
-                      <p>
-                        已审查
-                        <img src="../../images/ysc.png" alt="" />
-                      </p>
-                    </div>
-                    <div>
-                      <span>审核时间：</span>
-                      <p>2021-02-05</p>
-                    </div>
-                    <div>
-                      <span>律师意见/司法所意见：</span>
-                      <p>
-                        企业所得税汇算清缴纳税申报鉴证报告说明
-                        我们接受委托,对被鉴证单位
-                      </p>
-                    </div>
-                    <div>
-                      <span>所属律师：</span>
-                      <p>王小毛</p>
-                    </div>
-                  </div>
-                  <div class="close" @click="handleClose">
-                    <img src="../../images/close1.png" alt="" />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -550,6 +526,8 @@ export default {
     return {
       info1: {}, //审查统计
       info2: {}, //重点人员统计
+      info3: {}, //重点人员统计
+      details: {}, //审查列表详情
       currIndex: 0, // 审查列表当前选中下标
       pickerOptions: {
         shortcuts: [
@@ -615,72 +593,86 @@ export default {
         {
           nm: "中心村公共法律服务点",
           pope: "周月华",
-          left: "427px", top: "498px"
+          left: "427px",
+          top: "498px",
         },
         {
           nm: "杜夹岙村公共法律服务点",
           pope: "周月华",
-          left: "561px", top: "393px"
+          left: "561px",
+          top: "393px",
         },
         {
           nm: "河西村公共法律服务点",
           pope: "周月华",
-          left: "647px", top: "501px"
+          left: "647px",
+          top: "501px",
         },
         {
           nm: "长石村公共法律服务点",
           pope: "周月华",
-          left: "664px", top: "628px"
+          left: "664px",
+          top: "628px",
         },
         {
           nm: "长宏村公共法律服务点",
           pope: "周月华",
-          left: "749px", top: "627px"
+          left: "749px",
+          top: "627px",
         },
         {
           nm: "思源社区公共法律服务点",
           pope: "周月华",
-          left: "712.5px", top: "699.5px"
+          left: "712.5px",
+          top: "699.5px",
         },
         {
           nm: "西经堂村公共法律服务点",
           pope: "周月华",
-          left: "815px", top: "468px"
+          left: "815px",
+          top: "468px",
         },
         {
           nm: "田顾村公共法律服务点",
           pope: "周月华",
-          left: "728px", top: "310px"
+          left: "728px",
+          top: "310px",
         },
         {
           nm: "九龙湖村公共法律服务点",
           pope: "周月华",
-          left: "663px", top: "266px"
+          left: "663px",
+          top: "266px",
         },
         {
           nm: "九龙湖镇人民政府公共法律服务点",
           pope: "周月华",
-          left: "747px", top: "243px"
+          left: "747px",
+          top: "243px",
         },
         {
           nm: "河头村公共法律服务点",
           pope: "周月华",
-          left: "822px", top: "183px"
+          left: "822px",
+          top: "183px",
         },
         {
           nm: "河源社区公共法律服务点",
           pope: "周月华",
-          left: "878px", top: "197px"
+          left: "878px",
+          top: "197px",
         },
         {
           nm: "龙源社区公共法律服务点",
           pope: "周月华",
-          left: "890px", top: "237px"
+          left: "890px",
+          top: "237px",
         },
         {
           nm: "天扬陈村公共法律服务点",
           pope: "周月华",
-          left: "901px", top: "349px"
+          left: "901px",
+          top: "349px",
         },
       ],
     };
@@ -886,14 +878,21 @@ export default {
         // { value: 18, name: "秦山村" },
         // { value: 18, name: "西经堂村" },
       ];
-    
-      let newData= (that.info2.groupData).map((item,index) =>{
-          return Object.assign({},{'value':item.rate},{'name':item.villageName})
-      })
-      data1=newData
-      data1.push({ value: 25, name: "长石村" },{ value: 25, name: "九龙湖村 " },{ value: 25, name: "汶溪村" })
 
-   
+      let newData = that.info2.groupData.map((item, index) => {
+        return Object.assign(
+          {},
+          { value: item.rate },
+          { name: item.villageName }
+        );
+      });
+      data1 = newData;
+      data1.push(
+        { value: 25, name: "长石村" },
+        { value: 25, name: "九龙湖村 " },
+        { value: 25, name: "汶溪村" }
+      );
+
       // 绘制饼图
       myChart.setOption({
         tooltip: {
@@ -1094,11 +1093,33 @@ export default {
     handleclick(index) {
       this.currIndex = index;
     },
-    handleTable(index) {
-      this.ifShow2 = true;
-      console.log("555");
+    handleTable(id) {
+      // this.ifShow2 = true;
+      // 审查列表详情
+      this.api.getAuditDetails(id).then((res) => {
+        this.details = res;
+        console.log("8888", res);
+      });
       // this.ifShow2=index
     },
+    // 根据时间选定
+    handleChanges() {
+      // 合法审查人数统计
+      let qry = this.query.new();
+      this.query.toW(qry, "startTime", "2022-04", "ge");
+      this.query.toW(qry, "endTime", "2022-05", "le");
+      this.api.getReviewCount(this.query.toEncode(qry)).then((resp) => {
+        this.info3 = resp;
+        console.log("44", resp);
+      });
+
+      // 合法审查列表
+      this.api.getContractList().then((res) => {
+        this.tableList = res;
+        console.log("2222", this.tableList);
+      });
+    },
+    // 关闭弹窗
     handleClose() {
       this.ifShow2 = false;
       console.log("ccccc");
@@ -1116,16 +1137,20 @@ export default {
       this.gauge();
       this.gauge2();
     });
+    // 合法审查人数统计
+    let qry = this.query.new();
+    this.query.toW(qry, "startTime", "2022-04", "ge");
+    this.query.toW(qry, "endTime", "2022-05", "le");
+    this.api.getReviewCount(this.query.toEncode(qry)).then((resp) => {
+      this.info3 = resp;
+      console.log("44", resp);
+    });
+    // this.details = res;
+
     // 合法审查列表
     this.api.getContractList().then((res) => {
       this.tableList = res;
       console.log("2222", this.tableList);
-    });
-
-    // 审查列表详情
-    this.api.getAuditDetails("1515954588748046337").then((res) => {
-      // this.tableList = res;
-      console.log("8888", res);
     });
 
     // 重点人员统计列表
