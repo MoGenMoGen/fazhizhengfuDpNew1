@@ -25,6 +25,7 @@
             range-separator="~"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
             @change="handleChanges"
           >
           </el-date-picker>
@@ -35,7 +36,7 @@
           <ul>
             <li @click="handleclick(0)">
               <h3>全部</h3>
-              <b class="color1">{{info3.totalNum}}</b>
+              <b class="color1">{{ info3.totalNum }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -45,7 +46,7 @@
             </li>
             <li @click="handleclick(1)">
               <h3>已审查</h3>
-              <b class="color2">{{info3.passNum}}</b>
+              <b class="color2">{{ info3.passNum }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -55,7 +56,7 @@
             </li>
             <li @click="handleclick(2)">
               <h3>未审查</h3>
-              <b class="color3">{{info3.unPassNum}}</b>
+              <b class="color3">{{ info3.unPassNum }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -65,7 +66,7 @@
             </li>
             <li @click="handleclick(3)">
               <h3>逾期</h3>
-              <b class="color4">{{info3.overDate}}</b>
+              <b class="color4">{{ info3.overDate }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -315,7 +316,10 @@
               class="popover"
               v-for="(item, index) in xcList"
               :key="index"
-              :style="{ left: item.position.split(',')[0], top: item.position.split(',')[1]}"
+              :style="{
+                left: item.position.split(',')[0],
+                top: item.position.split(',')[1],
+              }"
             >
               <div class="xcbox">
                 <div class="xcbox-top">
@@ -355,6 +359,7 @@
             range-separator="~"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
             @change="handleChanges"
           >
           </el-date-picker>
@@ -365,7 +370,7 @@
           <ul>
             <li @click="handleclick(0)">
               <h3>全部</h3>
-              <b class="color1">{{info3.totalNum}}</b>
+              <b class="color1">{{ info3.totalNum }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -375,7 +380,7 @@
             </li>
             <li @click="handleclick(1)">
               <h3>已审查</h3>
-              <b class="color2">{{info3.passNum}}</b>
+              <b class="color2">{{ info3.passNum }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -385,7 +390,7 @@
             </li>
             <li @click="handleclick(2)">
               <h3>未审查</h3>
-              <b class="color3">{{info3.unPassNum}}</b>
+              <b class="color3">{{ info3.unPassNum }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -395,7 +400,7 @@
             </li>
             <li @click="handleclick(3)">
               <h3>逾期</h3>
-              <b class="color4">{{info3.overDate}}</b>
+              <b class="color4">{{ info3.overDate }}</b>
               <img
                 src="~@/images/upArrow.png"
                 alt=""
@@ -624,7 +629,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -688,98 +692,7 @@ export default {
       show1: true,
       show2: false,
       // 查看村庄
-      xcList: [
-        // {
-        //   nm: "汶溪村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "371px",
-        //   top: "487px",
-        // },
-        // {
-        //   nm: "中心村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "427px",
-        //   top: "498px",
-        // },
-        // {
-        //   nm: "杜夹岙村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "561px",
-        //   top: "393px",
-        // },
-        // {
-        //   nm: "河西村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "647px",
-        //   top: "501px",
-        // },
-        // {
-        //   nm: "长石村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "664px",
-        //   top: "628px",
-        // },
-        // {
-        //   nm: "长宏村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "749px",
-        //   top: "627px",
-        // },
-        // {
-        //   nm: "思源社区公共法律服务点",
-        //   pope: "周月华",
-        //   left: "712.5px",
-        //   top: "699.5px",
-        // },
-        // {
-        //   nm: "西经堂村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "815px",
-        //   top: "468px",
-        // },
-        // {
-        //   nm: "田顾村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "728px",
-        //   top: "310px",
-        // },
-        // {
-        //   nm: "九龙湖村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "663px",
-        //   top: "266px",
-        // },
-        // {
-        //   nm: "九龙湖镇人民政府公共法律服务点",
-        //   pope: "周月华",
-        //   left: "747px",
-        //   top: "243px",
-        // },
-        // {
-        //   nm: "河头村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "822px",
-        //   top: "183px",
-        // },
-        // {
-        //   nm: "河源社区公共法律服务点",
-        //   pope: "周月华",
-        //   left: "878px",
-        //   top: "197px",
-        // },
-        // {
-        //   nm: "龙源社区公共法律服务点",
-        //   pope: "周月华",
-        //   left: "890px",
-        //   top: "237px",
-        // },
-        // {
-        //   nm: "天扬陈村公共法律服务点",
-        //   pope: "周月华",
-        //   left: "901px",
-        //   top: "349px",
-        // },
-      ],
+      xcList: [],
     };
   },
   computed: {
@@ -1208,20 +1121,19 @@ export default {
       // this.ifShow2=index
     },
     // 根据时间选定
-    handleChanges() {
+    handleChanges(e) {
       // 合法审查人数统计
-      let qry = this.query.new();
-      this.query.toW(qry, "startTime", "2022-04", "ge");
-      this.query.toW(qry, "endTime", "2022-05", "le");
-      this.api.getReviewCount(this.query.toEncode(qry)).then((resp) => {
+      // let qry = this.query.new();
+      // this.query.toW(qry, "startTime", e[0], "ge");
+      // this.query.toW(qry, "endTime", e[1], "le");
+      // this.query.toEncode(qry)
+      this.api.getReviewCount({startTime:e[0],endTime:e[1]}).then((resp) => {
         this.info3 = resp;
-        console.log("44", resp);
       });
 
       // 合法审查列表
-      this.api.getContractList().then((res) => {
+      this.api.getContractList({startTime:e[0],endTime:e[1]}).then((res) => {
         this.tableList = res;
-        console.log("2222", this.tableList);
       });
     },
     // 关闭弹窗
@@ -1244,29 +1156,26 @@ export default {
     });
     // 合法审查人数统计
     let qry = this.query.new();
-    this.query.toW(qry, "startTime", "2022-04", "ge");
-    this.query.toW(qry, "endTime", "2022-05", "le");
-    this.api.getReviewCount(this.query.toEncode(qry)).then((resp) => {
+    // this.query.toW(qry, "startTime", "2022-04", "ge");
+    // this.query.toW(qry, "endTime", "2022-05", "le");
+    // this.query.toEncode(qry)
+    this.api.getReviewCount().then((resp) => {
       this.info3 = resp;
-      console.log("44", resp);
     });
     // this.details = res;
 
     // 合法审查列表
     this.api.getContractList().then((res) => {
       this.tableList = res;
-      console.log("2222", this.tableList);
     });
 
     // 重点人员统计列表
     this.api.getKeyPersonnel().then((res) => {
       this.tableList2 = res;
-      console.log("33333", res);
     });
     // 重点人员统计
     this.api.getStatistics().then((res) => {
       this.info2 = res;
-      console.log("4444", res);
       this.drawChart();
     });
 
@@ -1274,7 +1183,6 @@ export default {
     this.api.getFzxcList({ current: 1, size: 20, type: 2 }).then((res) => {
       this.xcList = res.records;
 
-      console.log("xxxxx",this.xcList);
     });
 
     // this.drawChart2();
@@ -1388,7 +1296,9 @@ export default {
         }
         /deep/.el-date-editor .el-range__close-icon {
           //   margin-left: 60px;
-          display: none;
+          // display: none;
+          line-height: 26px;
+
         }
       }
       .sclist {

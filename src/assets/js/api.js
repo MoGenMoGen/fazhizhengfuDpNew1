@@ -192,9 +192,9 @@ class api {
         })
     }
     // 获取审查人数统计
-    getReviewCount(query) {
+    getReviewCount(data) {
         return new Promise((resolve, reject) => {
-            get('/api/examination/examination/scope?query=' + query, {}, {
+            get('/api/examination/examination/scope', data, {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {
@@ -204,9 +204,9 @@ class api {
         })
     }
     // 审查合同展示列表
-    getContractList() {
+    getContractList(data) {
         return new Promise((resolve, reject) => {
-            get('/api/examination/examination/frontShow', {}, {
+            get('/api/examination/examination/frontShow', data, {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {

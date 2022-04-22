@@ -791,14 +791,14 @@ export default {
       if (index == 0) {
         // 已回复
         this.api
-          .getFlzxList({ current: 1, size: 10, status: 1 })
+          .getFlzxList({ current: 1, size: 10, isReply: 1 })
           .then((res) => {
             this.list3 = res.records;
           });
       } else if (index == 1) {
         // 未回复
         this.api
-          .getFlzxList({ current: 1, size: 10, status: 2 })
+          .getFlzxList({ current: 1, size: 10, isReply: 2 })
           .then((res) => {
             this.list3 = res.records;
           });
@@ -880,7 +880,7 @@ export default {
     // 法律咨询统计
     this.info7 = await this.api.getFlzxStatis();
     // 法律咨询分页
-    this.api.getFlzxList({ current: 1, size: 100, status: 1 }).then((res) => {
+    this.api.getFlzxList({ current: 1, size: 100, isReply: 1 }).then((res) => {
       this.list3 = res.records;
     });
   },
