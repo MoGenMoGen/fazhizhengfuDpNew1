@@ -859,7 +859,7 @@ export default {
     this.api.getFzxcList({ current: 1, size: 20, type: 1 }).then((res) => {
       this.list1 = res.records;
       
-      // console.log("sssss",list1);
+      console.log("sssss",list1);
     });
     // 地图五星服务点
     this.api.getFzxcList({ current: 1, size: 20, type: 2 }).then((res) => {
