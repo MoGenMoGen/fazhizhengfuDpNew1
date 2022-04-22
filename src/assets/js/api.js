@@ -194,7 +194,7 @@ class api {
     // 获取审查人数统计
     getReviewCount(query) {
         return new Promise((resolve, reject) => {
-            get('/api/examination/examination/scope?query='+query, {}, {
+            get('/api/examination/examination/scope?query=' + query, {}, {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {
@@ -226,7 +226,7 @@ class api {
     }
     getAuditDetails(data) {
         return new Promise((resolve, reject) => {
-            get('/api/examination/examination/detail?id='+ data, {}, {
+            get('/api/examination/examination/detail?id=' + data, {}, {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {
@@ -288,7 +288,7 @@ class api {
     // 法治乡村分页
     getFzxcList(data) {
         return new Promise((resolve, reject) => {
-            get('/api/open/village/village/list', data).then(res => {
+            get('/api/open/village/village/list?', data).then(res => {
                 resolve(res.data)
             })
 
@@ -366,8 +366,8 @@ class api {
 
         })
     }
-     // 法律咨询详情
-     getFlzxDtl(data) {
+    // 法律咨询详情
+    getFlzxDtl(data) {
         return new Promise((resolve, reject) => {
             get('/api/open/consult/consult/detail?id=' + data).then(res => {
                 resolve(res.data)
@@ -375,8 +375,8 @@ class api {
 
         })
     }
-     // 法制动态分页
-     getFzdtList(data) {
+    // 法制动态分页
+    getFzdtList(data) {
         return new Promise((resolve, reject) => {
             get('/api/open/dynamic/dynamic/list', data).then(res => {
                 resolve(res.data)
@@ -384,8 +384,8 @@ class api {
 
         })
     }
-      // 法制动态详情
-      getFzdtDtl(data) {
+    // 法制动态详情
+    getFzdtDtl(data) {
         return new Promise((resolve, reject) => {
             get('/api/open/dynamic/dynamic/detail?id=' + data).then(res => {
                 resolve(res.data)
@@ -393,6 +393,7 @@ class api {
 
         })
     }
+
 
 }
 

@@ -91,7 +91,7 @@
                   class="blist"
                   v-for="(item, index) in tableList"
                   :key="index"
-                  @click.stop="handleTable(item.id)"
+                  @click="handleTable(item.id)"
                 >
                   <div style="width: 56px">{{ index + 1 }}</div>
                   <div style="width: 140px" class="listName">
@@ -145,7 +145,15 @@
                     </div>
                     <div>
                       <span>审查结果：</span>
-                      <p>审查通过</p>
+                      <p>
+                        {{
+                          details.status == 1
+                            ? "已审查"
+                            : details.status == 2
+                            ? "未审查"
+                            : "逾期"
+                        }}
+                      </p>
                     </div>
                     <div>
                       <span>审查状态：</span>
@@ -213,7 +221,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 0"
+                  v-show="currIndex2 == 0"
                 />
               </li>
               <li @click="handleclick2(1)">
@@ -223,7 +231,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 1"
+                  v-show="currIndex2 == 1"
                 />
               </li>
               <li @click="handleclick2(2)">
@@ -233,7 +241,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 2"
+                  v-show="currIndex2 == 2"
                 />
               </li>
               <li @click="handleclick2(3)">
@@ -243,7 +251,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 3"
+                  v-show="currIndex2 == 3"
                 />
               </li>
             </ul>
@@ -307,15 +315,15 @@
               class="popover"
               v-for="(item, index) in xcList"
               :key="index"
-              :style="{ left: item.left, top: item.top }"
+              :style="{ left: item.position.split(',')[0], top: item.position.split(',')[1]}"
             >
               <div class="xcbox">
                 <div class="xcbox-top">
-                  <h2>{{ item.nm }}</h2>
+                  <h2>{{ item.name }}</h2>
                   <p>负责人：{{ item.pope }}</p>
                 </div>
                 <div class="xcbox-bottom">
-                  <img src="../../images/erweima.png" alt="" />
+                  <img :src="item.qr" alt="" />
                 </div>
               </div>
 
@@ -326,6 +334,7 @@
           </div>
         </div>
       </div>
+
       <!-- 右边 -->
       <div class="hfsc">
         <div class="title">合法性审查</div>
@@ -346,6 +355,7 @@
             range-separator="~"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            @change="handleChanges"
           >
           </el-date-picker>
           <span class="el-icon-arrow-up el-input__icon jt"></span>
@@ -353,22 +363,45 @@
         <!-- 审查列表 -->
         <div class="sclist">
           <ul>
-            <li
-              v-for="(item, index) in sclist"
-              :key="index"
-              :class="{ active: index == currIndex ? true : false }"
-              @click="handleclick(index)"
-            >
-              <h3>{{ item.nm }}</h3>
-              <b
-                :class="{
-                  color1: item.color == 1,
-                  color2: item.color == 2,
-                  color3: item.color == 3,
-                  color4: item.color == 4,
-                }"
-                >{{ item.number }}</b
-              >
+            <li @click="handleclick(0)">
+              <h3>全部</h3>
+              <b class="color1">{{info3.totalNum}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 0"
+              />
+            </li>
+            <li @click="handleclick(1)">
+              <h3>已审查</h3>
+              <b class="color2">{{info3.passNum}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 1"
+              />
+            </li>
+            <li @click="handleclick(2)">
+              <h3>未审查</h3>
+              <b class="color3">{{info3.unPassNum}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 2"
+              />
+            </li>
+            <li @click="handleclick(3)">
+              <h3>逾期</h3>
+              <b class="color4">{{info3.overDate}}</b>
+              <img
+                src="~@/images/upArrow.png"
+                alt=""
+                class="select"
+                v-show="currIndex == 3"
+              />
             </li>
           </ul>
           <!-- 表格列 -->
@@ -388,7 +421,7 @@
                   class="blist"
                   v-for="(item, index) in tableList"
                   :key="index"
-                  @click="handleTable(index)"
+                  @click="handleTable(item.id)"
                 >
                   <div style="width: 56px">{{ index + 1 }}</div>
                   <div style="width: 140px" class="listName">
@@ -396,13 +429,15 @@
                   </div>
                   <div style="width: 90px">{{ item.upTime }}</div>
                   <div style="width: 89px">
-                    <span>{{
-                      item.status == 1
-                        ? "已审查"
-                        : item.status == 2
-                        ? "未审查"
-                        : "逾期"
-                    }}</span>
+                    <span>
+                      {{
+                        item.status == 1
+                          ? "已审查"
+                          : item.status == 2
+                          ? "未审查"
+                          : "逾期"
+                      }}</span
+                    >
                     <img
                       src="../../images/wsc.png"
                       alt=""
@@ -421,6 +456,82 @@
                   </div>
                 </div>
               </vue-seamless-scroll>
+              <!-- 弹窗详情 -->
+              <div class="details" v-if="ifShow2">
+                <div class="detailsList">
+                  <h2>合法性审查详情</h2>
+                  <div class="details2">
+                    <div>
+                      <span>合同名称：</span>
+                      <p>{{ details.name }}</p>
+                    </div>
+                    <div>
+                      <span>上传部门：</span>
+                      <p>{{ details.deptName }}</p>
+                    </div>
+                    <div>
+                      <span>上传时间：</span>
+                      <p>{{ details.createTime }}</p>
+                    </div>
+                    <div>
+                      <span>审查结果：</span>
+                      <p>
+                        {{
+                          details.status == 1
+                            ? "已审查"
+                            : details.status == 2
+                            ? "未审查"
+                            : "逾期"
+                        }}
+                      </p>
+                    </div>
+                    <div>
+                      <span>审查状态：</span>
+                      <p>
+                        {{
+                          details.status == 1
+                            ? "已审查"
+                            : details.status == 2
+                            ? "未审查"
+                            : "逾期"
+                        }}
+                        <img
+                          src="../../images/wsc.png"
+                          alt=""
+                          v-if="details.status == 2 ? show1 : show2"
+                        />
+                        <img
+                          src="../../images/ysc.png"
+                          alt=""
+                          v-if="details.status == 1 ? show1 : show2"
+                        />
+                        <img
+                          src="../../images/yq.png"
+                          alt=""
+                          v-if="details.status == 3 ? show1 : show2"
+                        />
+                      </p>
+                    </div>
+                    <div>
+                      <span>审核时间：</span>
+                      <p>{{ details.auditTime }}</p>
+                    </div>
+                    <div>
+                      <span>律师意见/司法所意见：</span>
+                      <p>
+                        {{ details.suggestion }}
+                      </p>
+                    </div>
+                    <div>
+                      <span>所属律师：</span>
+                      <p>{{ details.lawyer }}</p>
+                    </div>
+                  </div>
+                  <div class="close" @click="handleClose">
+                    <img src="../../images/close1.png" alt="" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -433,14 +544,14 @@
           <!-- 审查人员列表 -->
           <div class="sclist sclist2">
             <ul>
-              <li :class="{ active: 0 == currIndex }" @click="handleclick2(0)">
+              <li @click="handleclick2(0)">
                 <h3>吸毒人员</h3>
                 <b>{{ info2.drugNum }}</b>
                 <img
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 0"
+                  v-show="currIndex2 == 0"
                 />
               </li>
               <li @click="handleclick2(1)">
@@ -450,7 +561,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 1"
+                  v-show="currIndex2 == 1"
                 />
               </li>
               <li @click="handleclick2(2)">
@@ -460,7 +571,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 2"
+                  v-show="currIndex2 == 2"
                 />
               </li>
               <li @click="handleclick2(3)">
@@ -470,7 +581,7 @@
                   src="~@/images/upArrow.png"
                   alt=""
                   class="select"
-                  v-show="currIndex == 3"
+                  v-show="currIndex2 == 3"
                 />
               </li>
             </ul>
@@ -513,6 +624,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -526,9 +638,10 @@ export default {
     return {
       info1: {}, //审查统计
       info2: {}, //重点人员统计
-      info3: {}, //重点人员统计
+      info3: {}, //审查列表人员统计
       details: {}, //审查列表详情
       currIndex: 0, // 审查列表当前选中下标
+      currIndex2: 0, // 重点人员列表当前选中下标
       pickerOptions: {
         shortcuts: [
           {
@@ -561,20 +674,12 @@ export default {
         ],
       },
       value1: "",
-      // 审查列表
-      sclist: [
-        { nm: "全部", number: 118, color: "1" },
-        { nm: "已审查", number: 15, color: "2" },
-        { nm: "未审查", number: 65, color: "3" },
-        { nm: "逾期", number: 38, color: "4" },
-      ],
       // 审查人员列表
       sclist2: [],
       //
       active: true,
       // 审查列表
       tableList: [],
-      // 弹窗内容
       // 默认弹窗隐藏
       ifShow2: false,
 
@@ -584,96 +689,96 @@ export default {
       show2: false,
       // 查看村庄
       xcList: [
-        {
-          nm: "汶溪村公共法律服务点",
-          pope: "周月华",
-          left: "371px",
-          top: "487px",
-        },
-        {
-          nm: "中心村公共法律服务点",
-          pope: "周月华",
-          left: "427px",
-          top: "498px",
-        },
-        {
-          nm: "杜夹岙村公共法律服务点",
-          pope: "周月华",
-          left: "561px",
-          top: "393px",
-        },
-        {
-          nm: "河西村公共法律服务点",
-          pope: "周月华",
-          left: "647px",
-          top: "501px",
-        },
-        {
-          nm: "长石村公共法律服务点",
-          pope: "周月华",
-          left: "664px",
-          top: "628px",
-        },
-        {
-          nm: "长宏村公共法律服务点",
-          pope: "周月华",
-          left: "749px",
-          top: "627px",
-        },
-        {
-          nm: "思源社区公共法律服务点",
-          pope: "周月华",
-          left: "712.5px",
-          top: "699.5px",
-        },
-        {
-          nm: "西经堂村公共法律服务点",
-          pope: "周月华",
-          left: "815px",
-          top: "468px",
-        },
-        {
-          nm: "田顾村公共法律服务点",
-          pope: "周月华",
-          left: "728px",
-          top: "310px",
-        },
-        {
-          nm: "九龙湖村公共法律服务点",
-          pope: "周月华",
-          left: "663px",
-          top: "266px",
-        },
-        {
-          nm: "九龙湖镇人民政府公共法律服务点",
-          pope: "周月华",
-          left: "747px",
-          top: "243px",
-        },
-        {
-          nm: "河头村公共法律服务点",
-          pope: "周月华",
-          left: "822px",
-          top: "183px",
-        },
-        {
-          nm: "河源社区公共法律服务点",
-          pope: "周月华",
-          left: "878px",
-          top: "197px",
-        },
-        {
-          nm: "龙源社区公共法律服务点",
-          pope: "周月华",
-          left: "890px",
-          top: "237px",
-        },
-        {
-          nm: "天扬陈村公共法律服务点",
-          pope: "周月华",
-          left: "901px",
-          top: "349px",
-        },
+        // {
+        //   nm: "汶溪村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "371px",
+        //   top: "487px",
+        // },
+        // {
+        //   nm: "中心村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "427px",
+        //   top: "498px",
+        // },
+        // {
+        //   nm: "杜夹岙村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "561px",
+        //   top: "393px",
+        // },
+        // {
+        //   nm: "河西村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "647px",
+        //   top: "501px",
+        // },
+        // {
+        //   nm: "长石村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "664px",
+        //   top: "628px",
+        // },
+        // {
+        //   nm: "长宏村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "749px",
+        //   top: "627px",
+        // },
+        // {
+        //   nm: "思源社区公共法律服务点",
+        //   pope: "周月华",
+        //   left: "712.5px",
+        //   top: "699.5px",
+        // },
+        // {
+        //   nm: "西经堂村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "815px",
+        //   top: "468px",
+        // },
+        // {
+        //   nm: "田顾村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "728px",
+        //   top: "310px",
+        // },
+        // {
+        //   nm: "九龙湖村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "663px",
+        //   top: "266px",
+        // },
+        // {
+        //   nm: "九龙湖镇人民政府公共法律服务点",
+        //   pope: "周月华",
+        //   left: "747px",
+        //   top: "243px",
+        // },
+        // {
+        //   nm: "河头村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "822px",
+        //   top: "183px",
+        // },
+        // {
+        //   nm: "河源社区公共法律服务点",
+        //   pope: "周月华",
+        //   left: "878px",
+        //   top: "197px",
+        // },
+        // {
+        //   nm: "龙源社区公共法律服务点",
+        //   pope: "周月华",
+        //   left: "890px",
+        //   top: "237px",
+        // },
+        // {
+        //   nm: "天扬陈村公共法律服务点",
+        //   pope: "周月华",
+        //   left: "901px",
+        //   top: "349px",
+        // },
       ],
     };
   },
@@ -1094,7 +1199,7 @@ export default {
       this.currIndex = index;
     },
     handleTable(id) {
-      // this.ifShow2 = true;
+      this.ifShow2 = true;
       // 审查列表详情
       this.api.getAuditDetails(id).then((res) => {
         this.details = res;
@@ -1126,7 +1231,7 @@ export default {
     },
     // 审查人员
     handleclick2(index) {
-      this.currIndex = index;
+      this.currIndex2 = index;
     },
   },
   created() {},
@@ -1163,6 +1268,13 @@ export default {
       this.info2 = res;
       console.log("4444", res);
       this.drawChart();
+    });
+
+    // 乡村服务点列表
+    this.api.getFzxcList({ current: 1, size: 20, type: 2 }).then((res) => {
+      this.xcList = res.records;
+
+      console.log("xxxxx",this.xcList);
     });
 
     // this.drawChart2();
