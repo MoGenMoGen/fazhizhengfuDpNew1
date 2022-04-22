@@ -468,8 +468,7 @@
           >
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.name }}</div>
-          </div>
-          <!-- 法律文书详情 -->
+            <!-- 法律文书详情 -->
           <div class="details" v-if="fws && list21.length > 0">
             <div class="detailsList wenshu">
               <h2>法律文书详情</h2>
@@ -489,6 +488,8 @@
               </div>
             </div>
           </div>
+          </div>
+          
         </div>
         <!-- 法律故事列表 -->
         <div class="list21 list22" v-show="currentIndex2 == 1">
@@ -592,9 +593,41 @@
         </vue-seamless-scroll>
         <!-- 弹窗详情 -->
         <div class="details" v-show="isShow2">
-          <div class="detailsList">
+          <div
+            class="detailsList"
+            :style="{
+              height: '735px',
+              background: 'url(' + require('../../images/tc2.png') + ')',
+            }"
+          >
             <h2>法律咨询详情</h2>
-            <div class="flxq" v-html="info8.details"></div>
+            <div class="flxq">
+              <div class="ft">
+                {{ info8.title }}
+              </div>
+              <div class="fl3">
+                <div class="autor">
+                  <div>发起人：{{ info8.author }}</div>
+                  <div class="ftime3">
+                    {{ info8.updateTime ? info8.updateTime.slice(0, 10) : "" }}
+                  </div>
+                </div>
+                <div class="ftime1">
+                  <img src="~@/images/aixin.png" alt="" />
+                  <div class="ic2">155</div>
+                </div>
+              </div>
+              <div class="flBottom" v-html="info8.details">
+                <!-- <div class="fb2">
+                  九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解
+                  答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律解答九龙湖法律
+                  解答九龙湖法律解答九龙湖
+                </div>
+                <div class="fbimg">
+                  <img src="../../images/pope.png" alt="" />
+                </div> -->
+              </div>
+            </div>
             <div class="close" @click="handleClose">
               <img src="../../images/close1.png" alt="" />
             </div>
@@ -635,26 +668,6 @@ export default {
 
       // 法律咨询列表
       list3: [
-        {
-          content:
-            "九龙湖法律解答九龙湖法律解答九见识到了规划见识到了感觉哦十几个",
-          date: "2021.02.03",
-        },
-        {
-          content:
-            "九龙湖法律解答九龙湖法律解答九见识到了规划见识到了感觉哦十几个",
-          date: "2021.02.03",
-        },
-        {
-          content:
-            "九龙湖法律解答九龙湖法律解答九见识到了规划见识到了感觉哦十几个",
-          date: "2021.02.03",
-        },
-        {
-          content:
-            "九龙湖法律解答九龙湖法律解答九见识到了规划见识到了感觉哦十几个",
-          date: "2021.02.03",
-        },
       ],
       isShow2: false,
       // 地图五星图标
@@ -776,12 +789,14 @@ export default {
     chooseTab3(index) {
       this.currentIndex3 = index;
       if (index == 0) {
+        // 已回复
         this.api
           .getFlzxList({ current: 1, size: 10, status: 1 })
           .then((res) => {
             this.list3 = res.records;
           });
       } else if (index == 1) {
+        // 未回复
         this.api
           .getFlzxList({ current: 1, size: 10, status: 2 })
           .then((res) => {
@@ -863,7 +878,7 @@ export default {
     // 重点人员统计
     this.info6 = await this.api.getStatistics();
     // 法律咨询统计
-    this.info7 = await this.api.getFlbdStatis();
+    this.info7 = await this.api.getFlzxStatis();
     // 法律咨询分页
     this.api.getFlzxList({ current: 1, size: 100, status: 1 }).then((res) => {
       this.list3 = res.records;
@@ -1145,7 +1160,7 @@ export default {
           height: auto;
           display: block;
         }
-         .xct {
+        .xct {
           position: absolute;
           top: 0;
           width: 100%;
@@ -1173,81 +1188,80 @@ export default {
           }
         }
         // 地图浮起弹窗轮播
-          .carousel {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            .carousel2 {
-              width: 783px;
-              height: 689px;
-              background: url("../../images/cz.png") no-repeat;
-              background-size: 100% 100%;
+        .carousel {
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 999;
+          .carousel2 {
+            width: 783px;
+            height: 689px;
+            background: url("../../images/cz.png") no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -391.5px;
+            margin-top: -344.5px;
+            padding-top: 42px;
+            box-sizing: border-box;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+            .close {
               position: absolute;
-              left: 50%;
-              top: 50%;
-              margin-left: -391.5px;
-              margin-top: -344.5px;
-              padding-top: 42px;
-              box-sizing: border-box;
-              img {
-                width: 100%;
-                height: 100%;
-              }
-              .close {
-                position: absolute;
-                right: 60px;
-                top: 40px;
-                cursor: pointer;
-              }
-            }
-            h2 {
-              font-weight: bold;
-              font-size: 29px;
-              text-align: center;
-              color: #6cfcff;
-              line-height: 29px;
-              background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
-              background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin-bottom: 30px;
-            }
-            /deep/.el-carousel__container {
-              height: 535px;
-            }
-            /deep/.el-carousel--horizontal {
-              overflow: hidden;
-              height: 530px;
-              padding-left: 55px;
-              padding-right: 55px;
-              margin-left: 24px;
-              margin-right: 24px;
-            }
-            /deep/.el-carousel__indicators {
-              display: none;
-            }
-            /deep/.el-carousel__arrow--left {
-              left: 0;
-              margin-left: -50px;
-            }
-            /deep/.el-carousel__arrow--right {
-              right: 0;
-              margin-right: -50px;
-            }
-            /deep/.el-carousel__arrow {
-              width: 30px;
-              height: 35px;
-              border-radius: 50%;
-              border: 1px solid #fff;
-              background-color: none;
+              right: 60px;
+              top: 40px;
+              cursor: pointer;
             }
           }
-        
+          h2 {
+            font-weight: bold;
+            font-size: 29px;
+            text-align: center;
+            color: #6cfcff;
+            line-height: 29px;
+            background: linear-gradient(0deg, #41c3f5 0%, #cfe7ff 100%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+          }
+          /deep/.el-carousel__container {
+            height: 535px;
+          }
+          /deep/.el-carousel--horizontal {
+            overflow: hidden;
+            height: 530px;
+            padding-left: 55px;
+            padding-right: 55px;
+            margin-left: 24px;
+            margin-right: 24px;
+          }
+          /deep/.el-carousel__indicators {
+            display: none;
+          }
+          /deep/.el-carousel__arrow--left {
+            left: 0;
+            margin-left: -50px;
+          }
+          /deep/.el-carousel__arrow--right {
+            right: 0;
+            margin-right: -50px;
+          }
+          /deep/.el-carousel__arrow {
+            width: 30px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            background-color: none;
+          }
+        }
 
         // 地图突起
         .wxc {
@@ -1583,6 +1597,7 @@ export default {
           padding-left: 70px;
           padding-right: 55px;
           box-sizing: border-box;
+
           h2 {
             font-weight: bold;
             font-size: 29px;
@@ -1627,6 +1642,11 @@ export default {
             font-size: 16px;
             color: #fff;
             line-height: 26px;
+            height: 494px;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+              display: none;
+            }
             .fb2 {
               margin: 16px 0;
             }

@@ -203,15 +203,6 @@ class api {
 
         })
     }
-    // 获取法治队伍人数统计
-    getFzdwStatis() {
-        return new Promise((resolve, reject) => {
-            get('/api/open/ranks/ranks/count').then(res => {
-                resolve(res.data)
-            })
-
-        })
-    }
     // 审查合同展示列表
     getContractList() {
         return new Promise((resolve, reject) => {
@@ -235,10 +226,28 @@ class api {
 
         })
     }
+    // 获取法治队伍人数统计
+    getFzdwStatis() {
+        return new Promise((resolve, reject) => {
+            get('/api/open/ranks/ranks/count').then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
     // 法治队伍分页
     getFzdwList(data) {
         return new Promise((resolve, reject) => {
             get('/api/open/ranks/ranks/page', data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+     // 法治队伍详情
+     getFzdwDtl(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/ranks/ranks/detail?id=' + data).then(res => {
                 resolve(res.data)
             })
 
@@ -256,15 +265,7 @@ class api {
 
         })
     }
-    // 法治队伍详情
-    getFzdwDtl(data) {
-        return new Promise((resolve, reject) => {
-            get('/api/open/ranks/ranks/detail?id=' + data).then(res => {
-                resolve(res.data)
-            })
-
-        })
-    }
+   
     // 重点人员统计
     getStatistics() {
         return new Promise((resolve, reject) => {
@@ -349,7 +350,7 @@ class api {
         })
     }
     // 法律咨询统计
-    getFlbdStatis() {
+    getFlzxStatis() {
         return new Promise((resolve, reject) => {
             get('/api/open/consult/consult/getConsultCount').then(res => {
                 resolve(res.data)
@@ -388,6 +389,15 @@ class api {
     getFzdtDtl(data) {
         return new Promise((resolve, reject) => {
             get('/api/open/dynamic/dynamic/detail?id=' + data).then(res => {
+                resolve(res.data)
+            })
+
+        })
+    }
+    // 共享法庭分页
+    getGxftList(data) {
+        return new Promise((resolve, reject) => {
+            get('/api/open/court/court/list', data).then(res => {
                 resolve(res.data)
             })
 
