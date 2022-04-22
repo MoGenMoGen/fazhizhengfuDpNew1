@@ -56,10 +56,10 @@ export default {
         window.location.href = "/";
         },
         topc() {
-        window.location.href = "/pftj";
+        window.location.href = "./pftj";
         },
         topr() {
-        window.location.href = "/szzf";
+        window.location.href = "./szzf";
         },
         toPage(){},
         
