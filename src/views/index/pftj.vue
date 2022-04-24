@@ -208,6 +208,7 @@
               v-for="(item, index) in xcList"
               :key="index"
               :style="{ left: item.position.split(',')[0], top: item.position.split(',')[1] }"
+             
             >
               <div class="xcbox">
                 <div class="xcbox-top">
@@ -301,7 +302,8 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>长石村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -341,8 +343,7 @@
               </div>
             </div>
           </div>
-          <!-- 长石村 -->
-       
+
           <!-- 杜夹岙村 -->
           <div class="wxc left5" v-show="currentchoice == 2">
             <img src="~@/images/map/sj.png" alt="" class="wxmap" />
@@ -908,6 +909,7 @@ export default {
       })[0]
       console.log("info4",this.info4);
 
+
       // this.choose = index;
     },
     // 右侧-法律宝典
@@ -997,7 +999,6 @@ export default {
       this.isVideo = false;
       this.fws = false;
       this.village = false;
-
       // if (this.$refs.gsDtlVideo.length > 0) this.$refs.gsDtlVideo[0].pause(); //暂停
     },
     // 地图位置轮播详情
@@ -1013,6 +1014,7 @@ export default {
       this.list11 = res.records;
       this.info1.dynamicTotal = res.total;
     });
+
     // 法律咨询分页
     this.api.getFlzxList({ current: 1, size: 10 }).then((res) => {
       this.list12 = res.records;
@@ -1423,7 +1425,6 @@ export default {
         justify-content: space-between;
         height: 222px;
         &::-webkit-scrollbar {
-
           display: none;
         }
         overflow-y: scroll;
