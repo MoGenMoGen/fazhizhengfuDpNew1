@@ -13,7 +13,7 @@
             <img class="icon" src="~@/images/fzdt.png" alt="" />
             <div class="rightbox">
               <div class="line1">法治动态</div>
-              <div class="line2">{{ info1.dynamicTotal }}<span>条</span></div>
+              <div class="line2">{{ info1.dynamicTotal }}<span style="margin-left:3px;">条</span></div>
             </div>
             <img
               src="~@/images/upArrow.png"
@@ -27,7 +27,7 @@
             <div class="rightbox">
               <div class="line1">法律咨询</div>
               <div class="line2">
-                {{ info1.replied + info1.Unanswered }}<span>条</span>
+                {{ info1.replied + info1.Unanswered }}<span style="margin-left:3px;">条</span>
               </div>
             </div>
             <img
@@ -575,7 +575,7 @@
                 <pdf :pdfurl="item.url"></pdf>
 
                 <div class="close" @click.stop="handleClose(0)">
-                  <img src="../../images/close1.png" alt="" />
+                  <img src="../../images/close1.png" style="width: 19px;height: 19px;" alt="" />
                 </div>
               </div>
             </div>

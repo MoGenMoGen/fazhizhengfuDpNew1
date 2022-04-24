@@ -141,12 +141,12 @@ export default {
 .cpdf {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 67px;
   // width: 683px !important;
   // height: 850px !important;
   width: 650px !important;
   height: 620px !important;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   // margin-top: -425px !important;
   // margin-left: -342.5px !important;
   // background: url("../images/flws.png") no-repeat !important;
@@ -177,7 +177,7 @@ export default {
         cursor: pointer;
         margin-right: 5px;
         &:hover {
-          color: #6cfcff;
+          color: #3498db;
         }
       }
       span{
@@ -186,7 +186,7 @@ export default {
     }
     .canvasbox {
       width: 650px;
-      height: 595px;
+      height: 690px;
       overflow-y: scroll;
       overflow-x: hidden;
       &::-webkit-scrollbar {

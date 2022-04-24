@@ -476,11 +476,11 @@
               class="details"
               v-if="fws && list21.length > 0 && currentIndex21 == index"
             >
-              <div class="detailsList">
+              <div class="detailsList wenshu">
                 <h2>法律文书详情</h2>
                 <pdf :pdfurl="item.url"></pdf>
                 <div class="close" @click.stop="handleClose">
-                  <img src="../../images/close1.png" alt="" />
+                  <img src="../../images/close1.png" style="width: 19px;height: 19px;" alt="" />
                 </div>
               </div>
             </div>
