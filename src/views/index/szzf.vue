@@ -142,7 +142,7 @@
                     </div>
                     <div>
                       <span>上传时间：</span>
-                      <p>{{ details.createTime }}</p>
+                      <p>{{ details.upTime }}</p>
                     </div>
                     <div>
                       <span>审查结果：</span>

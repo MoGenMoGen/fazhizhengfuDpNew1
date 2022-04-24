@@ -469,25 +469,16 @@
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.name }}</div>
             <!-- 法律文书详情 -->
-          <div class="details" v-if="fws && list21.length > 0">
-            <div class="detailsList wenshu">
-              <h2>法律文书详情</h2>
-              <!-- pdf文件 -->
-              <div id="iframe">
-                <div class="pdf" id="pdfId">
-                  <!--使用ifram 显示 pdf文件 获取文件地址 -->
-                  <iframe
-                    type="application/x-google-chrome-pdf"
-                    :src="item.url"
-                  ></iframe>
-                  <!-- https://sinovat.oss-cn-shanghai.aliyuncs.com/5813366ac2e944ca98dc4b4db036c297_2201073-1.pdf -->
+            <div class="details" v-if="fws && list21.length > 0">
+              <div >
+                <h2>法律文书详情</h2>
+                <pdf :pdfurl="pdfUrl"></pdf>
+              
+                <div class="close" @click.stop="handleClose">
+                  <img src="../../images/close1.png" alt="" />
                 </div>
               </div>
-              <div class="close" @click="handleClose">
-                <img src="../../images/close1.png" alt="" />
-              </div>
             </div>
-          </div>
           </div>
           
         </div>
@@ -499,7 +490,11 @@
             :key="index"
             @click="bofang(item.id)"
           >
-            <div class="img"><img src="~@/images/fzgs.png" alt="" /></div>
+            <div class="img">
+              <img :src="item.img" class="gsimg" alt="" />
+              <div class="zzc"></div>
+              <img src="~@/images/vimg.png" class="anbutton" alt="">
+            </div>
             <div class="title">{{ item.name }}</div>
             <!-- 法律故事视频详情 -->
             <div class="details viodebox" v-if="isVideo && list22.length > 0">
@@ -597,7 +592,6 @@
             class="detailsList"
             :style="{
               height: '735px',
-              background: 'url(' + require('../../images/tc2.png') + ')',
             }"
           >
             <h2>法律咨询详情</h2>
@@ -640,6 +634,7 @@
 
 <script>
 import MyHeader from "../../components/MyHeader";
+import  pdf from "../../components/pdf";
 export default {
   data() {
     return {
@@ -659,6 +654,7 @@ export default {
       currentIndex2: 0, //法律宝典下标
 
       fws: false, //显示法律文书详情
+      pdfUrl:"http://111.2.2.159:9000/fsd/upload/20220424/2486ddcfa4b91d1201fe1788074fa912.pdf",
       // 法律宝典-法律文书列表
       list21: [],
       // 法律故事列表
@@ -677,7 +673,7 @@ export default {
       xcList: [ ],
     };
   },
-  components: { MyHeader },
+  components: { MyHeader,pdf },
   computed: {
     //滚动配置
     defaultOption() {
@@ -773,13 +769,13 @@ export default {
       this.currentIndex2 = index;
       if (index == 0) {
         this.api
-          .getFlbdList({ current: 1, size: 20, name: "法律文书" })
+          .getFlbdList({ current: 1, size: 20, type:1 })
           .then((res) => {
             this.list21 = res.records;
           });
       } else if (index == 1) {
         this.api
-          .getFlbdList({ current: 1, size: 20, name: "法律故事" })
+          .getFlbdList({ current: 1, size: 20, type:2 })
           .then((res) => {
             this.list22 = res.records;
           });
@@ -871,7 +867,7 @@ export default {
     this.info5 = await this.api.getFlbdStatis();
     // 法治宝典列表
     this.api
-      .getFlbdList({ current: 1, size: 100, name: "法律文书" })
+      .getFlbdList({ current: 1, size: 100, type:1 })
       .then((res) => {
         this.list21 = res.records;
       });
@@ -1062,7 +1058,7 @@ export default {
           }
           overflow-y: scroll;
         .itembox {
-          width: 141px;
+          width: 142px;
           position: relative;
           margin-top: 30px;
           height: 41px;
@@ -1286,6 +1282,7 @@ export default {
             font-size: 14px;
             font-weight: 500;
             color: #ea0015;
+            cursor: pointer;
             // margin-left: -33px;
           }
           &.left1 {
@@ -1497,11 +1494,30 @@ export default {
             margin-left: 3%;
           }
           .img {
+            width: 100%;
             height: 65px;
+            position: relative;
             img {
               width: 100%;
               height: 100%;
               display: block;
+            }
+            .zzc{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0,0,0,.55);
+            }
+            img.anbutton{
+              width: 28px;
+              height: 28px;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              margin-left: -14.5px;
+              margin-top: -14.5px;
             }
           }
         }
