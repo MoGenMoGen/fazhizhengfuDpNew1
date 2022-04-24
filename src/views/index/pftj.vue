@@ -608,7 +608,11 @@
             :key="index"
             @click="bofang(item.id)"
           >
-            <div class="img"><img src="~@/images/fzgs.png" alt="" /></div>
+            <div class="img">
+              <img :src="item.img" class="gsimg" alt="" />
+              <div class="zzc"></div>
+              <img src="~@/images/vimg.png" class="anbutton" alt="">
+            </div>
             <div class="title">{{ item.name }}</div>
             <!-- 法律故事视频详情 -->
             <div class="details viodebox" v-if="isVideo && list32.length > 0">
@@ -921,19 +925,19 @@ export default {
       this.currentIndex3 = index;
       if (index == 0) {
         this.api
-          .getFlbdList({ current: 1, size: 20, name: "法律文书" })
+          .getFlbdList({ current: 1, size: 20, type:1 })
           .then((res) => {
             this.list31 = res.records;
           });
       } else if (index == 1) {
         this.api
-          .getFlbdList({ current: 1, size: 20, name: "法律故事" })
+          .getFlbdList({ current: 1, size: 20, type:2 })
           .then((res) => {
             this.list32 = res.records;
           });
       } else if (index == 2) {
         this.api
-          .getFlbdList({ current: 1, size: 20, name: "普法宣传" })
+          .getFlbdList({ current: 1, size: 20, type:3 })
           .then((res) => {
             this.list32 = res.records;
           });
@@ -1042,7 +1046,7 @@ export default {
     this.info5 = await this.api.getFlbdStatis();
     // 法治宝典列表
     this.api
-      .getFlbdList({ current: 1, size: 100, name: "法律文书" })
+      .getFlbdList({ current: 1, size: 100, type:1 })
       .then((res) => {
         this.list31 = res.records;
       });
@@ -1906,10 +1910,29 @@ export default {
           }
           .img {
             height: 65px;
-            img {
+            width: 100%;
+            position: relative;
+             img {
               width: 100%;
               height: 100%;
               display: block;
+            }
+            .zzc{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0,0,0,.55);
+            }
+            img.anbutton{
+              width: 28px;
+              height: 28px;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              margin-left: -14.5px;
+              margin-top: -14.5px;
             }
           }
         }
