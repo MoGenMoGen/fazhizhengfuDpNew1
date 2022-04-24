@@ -158,7 +158,7 @@
         <div class="rural_list">
           <div
             class="itembox"
-            v-for="(item, index) in list2"
+            v-for="(item, index) in list1"
             :key="index"
             @click="chooseTab12(item.choice)"
           >
@@ -278,7 +278,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>河头村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -324,7 +324,8 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>九龙湖村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -341,23 +342,7 @@
             </div>
           </div>
           <!-- 长石村 -->
-          <!-- <div class="wxc left3" v-show="currentchoice == 4">
-            <img src="~@/images/map/cs.png" alt="" class="wxmap" />
-            <div class="mapicon" @click="handlemap">思源社区</div>
-            <div class="carousel" v-show="village">
-              <div class="carousel2">
-                <h2>思源社区</h2>
-                <el-carousel :interval="5000" arrow="always">
-                  <el-carousel-item v-for="item in 4" :key="item">
-                    <img src="../../images/czimg.jpg" alt="" />
-                  </el-carousel-item>
-                </el-carousel>
-                <div class="close" @click="handleClose">
-                  <img src="../../images/close1.png" alt="" />
-                </div>
-              </div>
-            </div>
-          </div> -->
+       
           <!-- 杜夹岙村 -->
           <div class="wxc left5" v-show="currentchoice == 2">
             <img src="~@/images/map/sj.png" alt="" class="wxmap" />
@@ -365,7 +350,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>杜夹岙村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -434,7 +419,8 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>西经堂村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -480,7 +466,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>中心村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -814,6 +800,7 @@ export default {
       currentIndex1: 0, //法律服务下标
       choose: -1,
       info1: {}, //法律服务统计
+      info4: {}, // 乡村
       //法律服务-法制动态列表
       list11: [],
       info2: {}, // 法制动态详情
@@ -828,6 +815,7 @@ export default {
       list2: [],
       info4: {}, //共享法庭信息
       info5: {}, //法律宝典统计
+
       currentIndex3: 0, //法律宝典下标
       // 法律文书列表
       list31: [],
@@ -845,6 +833,7 @@ export default {
       // 查看村庄
       xcList: [],
       info7: {}, //片区民警详情
+
       // 显示片区民警详情
       showMjdDetail: false,
     };
@@ -918,6 +907,7 @@ export default {
         return this.currentchoice==item.choice
       })[0]
       console.log("info4",this.info4);
+
       // this.choose = index;
     },
     // 右侧-法律宝典
@@ -1007,7 +997,7 @@ export default {
       this.isVideo = false;
       this.fws = false;
       this.village = false;
-      // console.log(1111111111111,this.$refs.gsDtlVideo);
+
       // if (this.$refs.gsDtlVideo.length > 0) this.$refs.gsDtlVideo[0].pause(); //暂停
     },
     // 地图位置轮播详情
@@ -1055,6 +1045,7 @@ export default {
     // 法治队伍列表
     this.api.getFzdwList({ current: 1, size: 10, type: 1 }).then((res) => {
       this.list4 = res.records;
+
     });
   },
 };
@@ -1432,9 +1423,10 @@ export default {
         justify-content: space-between;
         height: 222px;
         &::-webkit-scrollbar {
-            display: none;
-          }
-          overflow-y: scroll;
+
+          display: none;
+        }
+        overflow-y: scroll;
         .itembox {
           width: 142px;
           position: relative;
@@ -1653,7 +1645,8 @@ export default {
             position: absolute;
             top: 50%;
             left: 50%;
-            margin-top: -60px;
+            margin-top: -100px;
+            margin-left: -20px;
             line-height: 80px;
             text-align: center;
             font-size: 14px;
