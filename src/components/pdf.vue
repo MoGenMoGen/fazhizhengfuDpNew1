@@ -2,16 +2,21 @@
   <div class="cpdf" id="cpdf">
     <!-- <top-normal-bar normalTitle="法律文书详情"></top-normal-bar> -->
     <div class="center">
-      <!-- <div class="contor">
-          <button @click="prev">上一页</button>
-          <button @click="next">下一页</button>
-          <span>Page: <span v-text="page_num"></span> / <span v-text="page_count"></span></span>
-   
-          <button @click="addscale" >加</button>
+      <div class="contor">
+        <button @click="prev">上一页</button>
+        <button @click="next">下一页</button>
+        <span
+          >Page: <span v-text="page_num"></span> /
+          <span v-text="page_count"></span
+        ></span>
+
+        <!-- <button @click="addscale" >加</button>
           <button @click="minus" >减</button>
-          <button id="prev" @click="closepdf">关闭</button>
-        </div> -->
-      <canvas class="canvasstyle" id="the-canvas"></canvas>
+          <button id="prev" @click="closepdf">关闭</button> -->
+      </div>
+      <div class="canvasbox">
+        <canvas class="canvasstyle" id="the-canvas"></canvas>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +48,8 @@ export default {
       // Using promise to fetch the page
       this.pdfDoc.getPage(num).then(function (page) {
         var viewport = page.getViewport(vm.scale);
+        viewport.width = 600;
+        // viewport.height=700;
         //alert(vm.canvas.height)
         canvas.height = viewport.height;
         canvas.width = viewport.width;
@@ -82,17 +89,20 @@ export default {
       this.scale -= 0.1;
       this.queueRenderPage(this.pageNum);
     },
-    prev() {//上一页
-      let vm = this
-      if(vm.pageNum <= 1) {
+    prev() {
+      //上一页
+      let vm = this;
+      if (vm.pageNum <= 1) {
         return;
       }
       vm.pageNum--;
       vm.queueRenderPage(vm.pageNum);
     },
-    next() {//下一页
+    next() {
+      //下一页
       let vm = this;
-      if(vm.pageNum >= vm.page_count) {
+      console.log(111, vm.pageNum, vm.page_count);
+      if (vm.pageNum >= vm.page_count) {
         return;
       }
       vm.pageNum++;
@@ -128,28 +138,61 @@ export default {
 };
 </script>
   <style type="text/less" lang="less" scoped>
-    .cpdf {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 683px !important;
-        height: 850px !important;
-        margin-top: -425px !important;
-        margin-left: -342.5px !important;
-        // background: url("../images/flws.png") no-repeat !important;
-        background-size: 100% 100% !important;
-        z-index: 99999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .center {
-            text-align: center;
-            height: 100%;
-            overflow: auto;
-            padding-top: 20px;
-            .contor {
-            margin-bottom: 10px;
-            }
+.cpdf {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  // width: 683px !important;
+  // height: 850px !important;
+  width: 650px !important;
+  height: 620px !important;
+  transform: translate(-50%, -50%);
+  // margin-top: -425px !important;
+  // margin-left: -342.5px !important;
+  // background: url("../images/flws.png") no-repeat !important;
+  background-size: 100% 100% !important;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
+  margin: 20px 0;
+  .center {
+    // overflow-y: scroll;
+    // overflow-x: hidden;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    // overflow: auto;
+    // padding-top: 20px;
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
+    .contor {
+      margin-bottom: 10px;
+      // position: sticky;
+      // top: 0px;
+      button {
+        cursor: pointer;
+        margin-right: 5px;
+        &:hover {
+          color: #6cfcff;
         }
+      }
+      span{
+        color: #fff;
+      }
     }
+    .canvasbox {
+      width: 650px;
+      height: 595px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
 </style>

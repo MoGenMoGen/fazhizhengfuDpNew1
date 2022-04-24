@@ -26,7 +26,6 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             value-format="yyyy-MM-dd"
-            @change="handleChanges"
           >
           </el-date-picker>
           <span class="el-icon-arrow-up el-input__icon jt"></span>
@@ -360,7 +359,6 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             value-format="yyyy-MM-dd"
-            @change="handleChanges"
           >
           </el-date-picker>
           <span class="el-icon-arrow-up el-input__icon jt"></span>
@@ -739,6 +737,24 @@ export default {
         return y / 1080;
       },
       set() {},
+    },
+  },
+  watch: {
+    value1(newVal, oldVal) {
+      let st = "";
+      let et = "";
+      if (newVal&&newVal.length > 0) {
+        st = newVal[0];
+        et = newVal[1];
+      }
+      // 合法审查人数统计
+      this.api.getReviewCount({ startTime: st, endTime: et }).then((resp) => {
+        this.info3 = resp;
+      });
+      // 合法审查列表
+      this.api.getContractList({ startTime: st, endTime: et }).then((res) => {
+        this.tableList = res;
+      });
     },
   },
   components: {
@@ -1120,22 +1136,6 @@ export default {
       });
       // this.ifShow2=index
     },
-    // 根据时间选定
-    handleChanges(e) {
-      // 合法审查人数统计
-      // let qry = this.query.new();
-      // this.query.toW(qry, "startTime", e[0], "ge");
-      // this.query.toW(qry, "endTime", e[1], "le");
-      // this.query.toEncode(qry)
-      this.api.getReviewCount({startTime:e[0],endTime:e[1]}).then((resp) => {
-        this.info3 = resp;
-      });
-
-      // 合法审查列表
-      this.api.getContractList({startTime:e[0],endTime:e[1]}).then((res) => {
-        this.tableList = res;
-      });
-    },
     // 关闭弹窗
     handleClose() {
       this.ifShow2 = false;
@@ -1182,7 +1182,6 @@ export default {
     // 乡村服务点列表
     this.api.getFzxcList({ current: 1, size: 20, type: 2 }).then((res) => {
       this.xcList = res.records;
-
     });
 
     // this.drawChart2();
@@ -1298,7 +1297,6 @@ export default {
           //   margin-left: 60px;
           // display: none;
           line-height: 26px;
-
 
           display: block;
         }

@@ -158,7 +158,7 @@
         <div class="rural_list">
           <div
             class="itembox"
-            v-for="(item, index) in list1"
+            v-for="(item, index) in list2"
             :key="index"
             @click="chooseTab12(item.choice)"
           >
@@ -207,8 +207,10 @@
               class="popover"
               v-for="(item, index) in xcList"
               :key="index"
-              :style="{ left: item.position.split(',')[0], top: item.position.split(',')[1] }"
-             
+              :style="{
+                left: item.position.split(',')[0],
+                top: item.position.split(',')[1],
+              }"
             >
               <div class="xcbox">
                 <div class="xcbox-top">
@@ -559,25 +561,20 @@
             class="itembox"
             v-for="(item, index) in list31"
             :key="index"
-            @click="hanldeClickf(item)"
+            @click="hanldeClickf(index)"
           >
             <img src="~@/images/wenshu.png" alt="" />
-            <div class="nm">{{ item.nm }}</div>
+            <div class="nm">{{ item.name }}</div>
             <!-- 法律文书详情 -->
-            <div class="details" v-show="fws && list21.length > 0">
+            <div
+              class="details"
+              v-if="fws && list31.length > 0 && currentIndex31 == index"
+            >
               <div class="detailsList wenshu">
                 <h2>法律文书详情</h2>
-                <!-- pdf文件 -->
-                <div id="iframe">
-                  <div class="pdf">
-                    <!--使用ifram 显示 pdf文件 获取文件地址 -->
-                    <iframe
-                      style="width: 100%; height: 680px"
-                      :src="item.url"
-                    ></iframe>
-                  </div>
-                </div>
-                <div class="close" @click="handleClose(0)">
+                <pdf :pdfurl="item.url"></pdf>
+
+                <div class="close" @click.stop="handleClose(0)">
                   <img src="../../images/close1.png" alt="" />
                 </div>
               </div>
@@ -598,7 +595,7 @@
             <div class="img">
               <img :src="item.img" class="gsimg" alt="" />
               <div class="zzc"></div>
-              <img src="~@/images/vimg.png" class="anbutton" alt="">
+              <img src="~@/images/vimg.png" class="anbutton" alt="" />
             </div>
             <div class="title">{{ item.name }}</div>
             <!-- 法律故事视频详情 -->
@@ -732,7 +729,7 @@
                     {{ item.name }}
                   </div>
                   <div class="row" style="width: 60px">
-                    {{ item.sex==0?'女':'男' }}
+                    {{ item.sex == 0 ? "女" : "男" }}
                   </div>
                   <div class="row" style="width: 109px">
                     {{ item.qualifications }}
@@ -795,6 +792,7 @@
 
 <script>
 import MyHeader from "../../components/MyHeader";
+import pdf from "../../components/pdf";
 export default {
   data() {
     return {
@@ -811,7 +809,7 @@ export default {
       info3: {}, //法治乡村统计
       currentIndex21: 0, //法治乡村标题下标
       // currentIndex22: -1, //法治乡村内容下标
-      currentchoice:0,
+      currentchoice: 0,
       // 法治乡村列表
       list2: [],
       info4: {}, //共享法庭信息
@@ -821,14 +819,14 @@ export default {
       // 法律文书列表
       list31: [],
       fws: false, //法律文书详情
+      currentIndex31: -1, //选中文书下标
       // 法律故事、普法宣传列表
       list32: [],
       isVideo: false,
       info6: {}, //法治队伍人数统计
       currentIndex4: 0, //法治队伍下标
       // 法治队伍列表
-      list4: [
-      ],
+      list4: [],
       // 地图五星图标
       village: false,
       // 查看村庄
@@ -839,7 +837,7 @@ export default {
       showMjdDetail: false,
     };
   },
-  components: { MyHeader },
+  components: { MyHeader, pdf },
   computed: {
     //滚动配置
     defaultOption() {
@@ -901,14 +899,13 @@ export default {
     //   this.choose = index;
     //   console.log(this.choose);
     // },
-     // 左侧-村庄选择
+    // 左侧-村庄选择
     chooseTab12(index) {
       this.currentchoice = index;
-      this.info4=this.list2.filter(item=>{
-        return this.currentchoice==item.choice
-      })[0]
-      console.log("info4",this.info4);
-
+      this.info4 = this.list2.filter((item) => {
+        return this.currentchoice == item.choice;
+      })[0];
+      console.log("info4", this.info4);
 
       // this.choose = index;
     },
@@ -916,23 +913,17 @@ export default {
     chooseTab3(index) {
       this.currentIndex3 = index;
       if (index == 0) {
-        this.api
-          .getFlbdList({ current: 1, size: 20, type:1 })
-          .then((res) => {
-            this.list31 = res.records;
-          });
+        this.api.getFlbdList({ current: 1, size: 20, type: 1 }).then((res) => {
+          this.list31 = res.records;
+        });
       } else if (index == 1) {
-        this.api
-          .getFlbdList({ current: 1, size: 20, type:2 })
-          .then((res) => {
-            this.list32 = res.records;
-          });
+        this.api.getFlbdList({ current: 1, size: 20, type: 2 }).then((res) => {
+          this.list32 = res.records;
+        });
       } else if (index == 2) {
-        this.api
-          .getFlbdList({ current: 1, size: 20, type:3 })
-          .then((res) => {
-            this.list32 = res.records;
-          });
+        this.api.getFlbdList({ current: 1, size: 20, type: 3 }).then((res) => {
+          this.list32 = res.records;
+        });
       }
     },
     // 右侧-法治队伍
@@ -966,8 +957,9 @@ export default {
       this.showMjdDetail = false;
     },
     // 法律文书pdf
-    hanldeClickf(item) {
+    hanldeClickf(index) {
       this.fws = true;
+      this.currentIndex31 = index;
     },
     // 法律故事弹窗
     bofang(id) {
@@ -1025,10 +1017,9 @@ export default {
     this.api.getFzxcList({ current: 1, size: 20, type: 1 }).then((res) => {
       this.list2 = res.records;
     });
-     // 地图五星服务点
+    // 地图五星服务点
     this.api.getFzxcList({ current: 1, size: 20, type: 2 }).then((res) => {
       this.xcList = res.records;
-      
     });
     // 共享法庭列表
     this.api.getGxftList({ current: 1, size: 1 }).then((res) => {
@@ -1037,17 +1028,14 @@ export default {
     // 法治宝典统计
     this.info5 = await this.api.getFlbdStatis();
     // 法治宝典列表
-    this.api
-      .getFlbdList({ current: 1, size: 100, type:1 })
-      .then((res) => {
-        this.list31 = res.records;
-      });
+    this.api.getFlbdList({ current: 1, size: 100, type: 1 }).then((res) => {
+      this.list31 = res.records;
+    });
     // 法治队伍统计
     this.info6 = await this.api.getFzdwStatis();
     // 法治队伍列表
     this.api.getFzdwList({ current: 1, size: 10, type: 1 }).then((res) => {
       this.list4 = res.records;
-
     });
   },
 };
@@ -1906,20 +1894,20 @@ export default {
             height: 65px;
             width: 100%;
             position: relative;
-             img {
+            img {
               width: 100%;
               height: 100%;
               display: block;
             }
-            .zzc{
+            .zzc {
               position: absolute;
               top: 0;
               left: 0;
               width: 100%;
               height: 100%;
-              background-color: rgba(0,0,0,.55);
+              background-color: rgba(0, 0, 0, 0.55);
             }
-            img.anbutton{
+            img.anbutton {
               width: 28px;
               height: 28px;
               position: absolute;

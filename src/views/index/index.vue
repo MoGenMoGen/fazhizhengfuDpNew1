@@ -14,7 +14,7 @@
               ref="video"
               controls
               style="width: 100%; height: 100%; object-fit: fill"
-              :src="info1.video"
+              :src="info1.video ? info1.video : ''"
             ></video>
           </div>
           <div id="text" ref="text" @click="roll">
@@ -80,35 +80,35 @@
         </div>
         <!-- 示范村 -->
         <div class="rural_list">
+          <div
+            class="itembox"
+            v-for="(item, index) in list1"
+            :key="index"
+            @click="chooseTab12(item.choice)"
+          >
             <div
-              class="itembox"
-              v-for="(item, index) in list1"
-              :key="index"
-              @click="chooseTab12(item.choice)"
+              class="content"
+              :class="{ active_content: currentchoice == item.choice }"
             >
               <div
-                class="content"
-                :class="{ active_content: currentchoice == item.choice }"
+                class="icon"
+                :class="{ active_icon: currentchoice == item.choice }"
               >
-                <div
-                  class="icon"
-                  :class="{ active_icon: currentchoice == item.choice }"
-                >
-                  <img
-                    v-if="currentchoice != item.choice"
-                    src="~@/images/badge1.png"
-                    alt=""
-                  />
-                  <img v-else src="~@/images/badge2.png" alt="" />
-                </div>
-                <div
-                  class="text"
-                  :class="{ active_text: currentchoice == item.choice }"
-                >
-                  {{ item.name }}
-                </div>
+                <img
+                  v-if="currentchoice != item.choice"
+                  src="~@/images/badge1.png"
+                  alt=""
+                />
+                <img v-else src="~@/images/badge2.png" alt="" />
+              </div>
+              <div
+                class="text"
+                :class="{ active_text: currentchoice == item.choice }"
+              >
+                {{ item.name }}
               </div>
             </div>
+          </div>
         </div>
       </div>
       <!-- 中间地图 -->
@@ -131,7 +131,10 @@
               class="popover"
               v-for="(item, index) in xcList"
               :key="index"
-              :style="{ left: item.position.split(',')[0], top: item.position.split(',')[1] }"
+              :style="{
+                left: item.position.split(',')[0],
+                top: item.position.split(',')[1],
+              }"
             >
               <div class="xcbox">
                 <div class="xcbox-top">
@@ -202,7 +205,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>河头村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -225,7 +228,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>长石村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -248,7 +251,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>九龙湖村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -289,7 +292,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>杜夹岙村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -358,7 +361,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>西经堂村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -404,7 +407,7 @@
             <div class="carousel" v-show="village">
               <div class="carousel2">
                 <h2>中心村</h2>
-                 <el-carousel :interval="5000" arrow="always">
+                <el-carousel :interval="5000" arrow="always">
                   <el-carousel-item
                     v-for="(item, index) in info4.img
                       ? info4.img.split(',')
@@ -464,23 +467,24 @@
             class="itembox"
             v-for="(item, index) in list21"
             :key="index"
-            @click="hanldeClickf(item)"
+            @click="hanldeClickf(index)"
           >
             <img src="~@/images/wenshu.png" alt="" />
             <div class="nm">{{ item.name }}</div>
             <!-- 法律文书详情 -->
-            <div class="details" v-if="fws && list21.length > 0">
-              <div >
+            <div
+              class="details"
+              v-if="fws && list21.length > 0 && currentIndex21 == index"
+            >
+              <div class="detailsList">
                 <h2>法律文书详情</h2>
-                <pdf :pdfurl="pdfUrl"></pdf>
-              
+                <pdf :pdfurl="item.url"></pdf>
                 <div class="close" @click.stop="handleClose">
                   <img src="../../images/close1.png" alt="" />
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
         <!-- 法律故事列表 -->
         <div class="list21 list22" v-show="currentIndex2 == 1">
@@ -493,7 +497,7 @@
             <div class="img">
               <img :src="item.img" class="gsimg" alt="" />
               <div class="zzc"></div>
-              <img src="~@/images/vimg.png" class="anbutton" alt="">
+              <img src="~@/images/vimg.png" class="anbutton" alt="" />
             </div>
             <div class="title">{{ item.name }}</div>
             <!-- 法律故事视频详情 -->
@@ -634,7 +638,7 @@
 
 <script>
 import MyHeader from "../../components/MyHeader";
-import  pdf from "../../components/pdf";
+import pdf from "../../components/pdf";
 export default {
   data() {
     return {
@@ -654,7 +658,7 @@ export default {
       currentIndex2: 0, //法律宝典下标
 
       fws: false, //显示法律文书详情
-      pdfUrl:"http://111.2.2.159:9000/fsd/upload/20220424/2486ddcfa4b91d1201fe1788074fa912.pdf",
+      currentIndex21: -1, //选中文书下标
       // 法律宝典-法律文书列表
       list21: [],
       // 法律故事列表
@@ -663,17 +667,16 @@ export default {
       currentIndex3: 0, //法律咨询下标
 
       // 法律咨询列表
-      list3: [
-      ],
+      list3: [],
       isShow2: false,
       // 地图五星图标
       village: false,
-      mapList:{},
+      mapList: {},
       // 查看村庄
-      xcList: [ ],
+      xcList: [],
     };
   },
-  components: { MyHeader,pdf },
+  components: { MyHeader, pdf },
   computed: {
     //滚动配置
     defaultOption() {
@@ -746,27 +749,23 @@ export default {
     // 左侧-村庄选择
     chooseTab12(index) {
       this.currentchoice = index;
-      this.info4=this.list1.filter(item=>{
-        return this.currentchoice==item.choice
-      })[0]
-      console.log("info4",this.info4);
+      this.info4 = this.list1.filter((item) => {
+        return this.currentchoice == item.choice;
+      })[0];
+      console.log("info4", this.info4);
       // this.choose = index;
     },
     // 右侧-法律宝典
     chooseTab2(index) {
       this.currentIndex2 = index;
       if (index == 0) {
-        this.api
-          .getFlbdList({ current: 1, size: 20, type:1 })
-          .then((res) => {
-            this.list21 = res.records;
-          });
+        this.api.getFlbdList({ current: 1, size: 20, type: 1 }).then((res) => {
+          this.list21 = res.records;
+        });
       } else if (index == 1) {
-        this.api
-          .getFlbdList({ current: 1, size: 20, type:2 })
-          .then((res) => {
-            this.list22 = res.records;
-          });
+        this.api.getFlbdList({ current: 1, size: 20, type: 2 }).then((res) => {
+          this.list22 = res.records;
+        });
       }
     },
     // 右侧-法律咨询
@@ -789,8 +788,9 @@ export default {
       }
     },
     // 法律文书pdf
-    hanldeClickf(item) {
+    hanldeClickf(index) {
       this.fws = true;
+      this.currentIndex21 = index;
     },
     // 法律故事弹窗
     async bofang(id) {
@@ -833,7 +833,7 @@ export default {
   async created() {
     // 获取法治政府视频、介绍
     this.api.getFzIntro().then((res) => {
-      this.info1 = res[0];
+      this.info1 = res[0] || "";
     });
     // 法治队伍人数统计
     this.info2 = await this.api.getFzdwStatis();
@@ -842,23 +842,19 @@ export default {
     // 法治乡村列表
     this.api.getFzxcList({ current: 1, size: 20, type: 1 }).then((res) => {
       this.list1 = res.records;
-      
-      console.log("sssss",list1);
     });
     // 地图五星服务点
     this.api.getFzxcList({ current: 1, size: 20, type: 2 }).then((res) => {
       this.xcList = res.records;
-      
     });
 
     // 法治宝典统计
     this.info5 = await this.api.getFlbdStatis();
     // 法治宝典列表
-    this.api
-      .getFlbdList({ current: 1, size: 100, type:1 })
-      .then((res) => {
-        this.list21 = res.records;
-      });
+    this.api.getFlbdList({ current: 1, size: 100, type: 1 }).then((res) => {
+      this.list21 = res.records;
+    });
+
     // 重点人员统计
     this.info6 = await this.api.getStatistics();
     // 法律咨询统计
@@ -1041,10 +1037,10 @@ export default {
         flex-wrap: wrap;
         justify-content: space-between;
         height: 222px;
-         &::-webkit-scrollbar {
-            display: none;
-          }
-          overflow-y: scroll;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        overflow-y: scroll;
         .itembox {
           width: 142px;
           position: relative;
@@ -1491,15 +1487,15 @@ export default {
               height: 100%;
               display: block;
             }
-            .zzc{
+            .zzc {
               position: absolute;
               top: 0;
               left: 0;
               width: 100%;
               height: 100%;
-              background-color: rgba(0,0,0,.55);
+              background-color: rgba(0, 0, 0, 0.55);
             }
-            img.anbutton{
+            img.anbutton {
               width: 28px;
               height: 28px;
               position: absolute;
