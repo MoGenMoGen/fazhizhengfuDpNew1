@@ -921,11 +921,11 @@ export default {
         );
       });
       data1 = newData;
-      data1.push(
-        { value: 25, name: "长石村" },
-        { value: 25, name: "九龙湖村 " },
-        { value: 25, name: "汶溪村" }
-      );
+      // data1.push(
+      //   { value: 25, name: "长石村" },
+      //   { value: 25, name: "九龙湖村 " },
+      //   { value: 25, name: "汶溪村" }
+      // );
 
       // 绘制饼图
       myChart.setOption({
@@ -961,11 +961,11 @@ export default {
           {
             name: "Nightingale Chart",
             type: "pie",
-            radius: [16, 90],
-            center: ["22%", "50%"],
+            radius: [30, 78],
+            center: ["26%", "45%"],
             roseType: "radius",
             itemStyle: {
-              borderRadius: 5,
+              borderRadius: 3,
             },
             label: {
               show: false,
@@ -1123,10 +1123,28 @@ export default {
       // }, 2000);
     },
 
-    // 审查列表
+    // 审查列表 点击切换
     handleclick(index) {
       this.currIndex = index;
+      let st = "";
+      let et = "";
+      let status = "";
+      if (this.value1) {
+        st = this.value1[0];
+        et = this.value1[1];
+      }
+      if (index == 0) {
+      } else {
+        status = index;
+      }
+      // 合法审查列表
+      this.api
+        .getContractList({ startTime: st, endTime: et, status })
+        .then((res) => {
+          this.tableList = res;
+        });
     },
+
     handleTable(id) {
       this.ifShow2 = true;
       // 审查列表详情
@@ -1136,6 +1154,7 @@ export default {
       });
       // this.ifShow2=index
     },
+
     // 关闭弹窗
     handleClose() {
       this.ifShow2 = false;
@@ -1144,6 +1163,28 @@ export default {
     // 审查人员
     handleclick2(index) {
       this.currIndex2 = index;
+      
+      if (index == 0) {
+        // 重点人员统计列表
+        this.api.getKeyPersonnel({status: 0}).then((res) => {
+          this.tableList2 = res;
+        });
+      } else if (index == 1) {
+        // 重点人员统计列表
+        this.api.getKeyPersonnel({status: 1}).then((res) => {
+          this.tableList2 = res;
+        });
+      } else if (index == 2) {
+        // 重点人员统计列表
+        this.api.getKeyPersonnel({status: 2}).then((res) => {
+          this.tableList2 = res;
+        });
+      } else if (index == 3) {
+        // 重点人员统计列表
+        this.api.getKeyPersonnel({status: 3}).then((res) => {
+          this.tableList2 = res;
+        });
+      }
     },
   },
   created() {},
@@ -1376,6 +1417,11 @@ export default {
           .bottom {
             max-height: 140px;
             overflow: hidden;
+            div {
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
             .blist {
               display: flex;
               justify-content: space-between;
@@ -1490,8 +1536,8 @@ export default {
           width: 350px;
           height: 180px;
           margin: 0 auto;
-          margin-top: 30px;
-          margin-bottom: -20px;
+          margin-top: 25px;
+          margin-bottom: -12px;
         }
         #pople2 {
           width: 300px;

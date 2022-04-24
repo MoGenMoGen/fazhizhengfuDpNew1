@@ -254,9 +254,9 @@ class api {
         })
     }
     // 重点人员列表展示
-    getKeyPersonnel() {
+    getKeyPersonnel(data) {
         return new Promise((resolve, reject) => {
-            get('/api/keyuser/keyuser/frontShow', {}, {
+            get('/api/keyuser/keyuser/frontShow', data, {
                 'Content-Type': 'multipart/form-data',
                 'Connection': 'keep-alive',
             }).then(res => {

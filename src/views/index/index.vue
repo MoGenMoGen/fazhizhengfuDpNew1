@@ -595,7 +595,7 @@
           <div
             class="detailsList"
             :style="{
-              height: '735px',
+              height: '750px',
             }"
           >
             <h2>法律咨询详情</h2>
@@ -1621,6 +1621,7 @@ export default {
             justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 10px;
+            margin-bottom: 10px;
             .autor {
               font-size: 18px;
               color: #fff;
