@@ -88,10 +88,11 @@
                 :class-option="defaultOption"
               >
                 <div
-                  class="blist"
+                  class="blist status1"
                   v-for="(item, index) in tableList"
                   :key="index"
-                  @click="handleTable(item.id)"
+                  :data-id="item.id"
+                 
                 >
                   <div style="width: 56px">{{ index + 1 }}</div>
                   <div style="width: 140px" class="listName">
@@ -421,10 +422,11 @@
                 :class-option="defaultOption"
               >
                 <div
-                  class="blist"
+                  class="blist status1"
                   v-for="(item, index) in tableList"
                   :key="index"
-                  @click="handleTable(item.id)"
+                  :data-id="item.id"
+                  
                 >
                   <div style="width: 56px">{{ index + 1 }}</div>
                   <div style="width: 140px" class="listName">
@@ -754,6 +756,8 @@ export default {
       // 合法审查列表
       this.api.getContractList({ startTime: st, endTime: et }).then((res) => {
         this.tableList = res;
+        this.trime()
+        
       });
     },
   },
@@ -1124,6 +1128,16 @@ export default {
       // }, 2000);
     },
 
+    trime(){
+      setTimeout(() => {
+        let status1 = document.getElementsByClassName("status1");
+        console.log("lll",status1);
+        for (let i = 0; i < status1.length; i++) {
+          console.log("oooo",i);
+          status1[i].addEventListener("click", this.handleTable, true);
+        }
+      }, 100);
+    },
     // 审查列表 点击切换
     handleclick(index) {
       this.currIndex = index;
@@ -1143,15 +1157,16 @@ export default {
         .getContractList({ startTime: st, endTime: et, status })
         .then((res) => {
           this.tableList = res;
+          this.trime()
         });
     },
 
-    handleTable(id) {
+    handleTable(e) {
       this.ifShow2 = true;
       // 审查列表详情
-      this.api.getAuditDetails(id).then((res) => {
+      console.log(e.currentTarget.dataset.id);
+      this.api.getAuditDetails(e.currentTarget.dataset.id).then((res) => {
         this.details = res;
-        console.log("8888", res);
       });
       // this.ifShow2=index
     },
@@ -1159,7 +1174,6 @@ export default {
     // 关闭弹窗
     handleClose() {
       this.ifShow2 = false;
-      console.log("ccccc");
     },
     // 审查人员
     handleclick2(index) {
@@ -1209,6 +1223,7 @@ export default {
     // 合法审查列表
     this.api.getContractList().then((res) => {
       this.tableList = res;
+      this.trime()
     });
 
     // 重点人员统计列表
@@ -1532,8 +1547,8 @@ export default {
       }
       .j1 {
         .select {
-          background-color: #030c2f  !important;
-          border-bottom: 2px solid #07082e  !important;
+          background-color: #030c2f !important;
+          border-bottom: 2px solid #07082e !important;
         }
       }
       .sclist2 {

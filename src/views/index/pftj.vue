@@ -13,7 +13,9 @@
             <img class="icon" src="~@/images/fzdt.png" alt="" />
             <div class="rightbox">
               <div class="line1">法治动态</div>
-              <div class="line2">{{ info1.dynamicTotal }}<span style="margin-left:3px;">条</span></div>
+              <div class="line2">
+                {{ info1.dynamicTotal }}<span style="margin-left: 3px">条</span>
+              </div>
             </div>
             <img
               src="~@/images/upArrow.png"
@@ -27,7 +29,8 @@
             <div class="rightbox">
               <div class="line1">法律咨询</div>
               <div class="line2">
-                {{ info1.replied + info1.Unanswered }}<span style="margin-left:3px;">条</span>
+                {{ info1.replied + info1.Unanswered
+                }}<span style="margin-left: 3px">条</span>
               </div>
             </div>
             <img
@@ -38,6 +41,7 @@
             />
           </div>
         </div>
+
         <vue-seamless-scroll
           :data="list11"
           class="list11"
@@ -46,11 +50,11 @@
         >
           <div
             class="item11"
-            @click="getFzdtDtl(item.id)"
             v-for="(item, index) in list11"
+            :data-id="item.id"
             :key="index"
           >
-            <img class="cover" :src="item.banner" alt="" />
+            <img class="cover" :src="item.banner" alt=""/>
             <div class="rightbox">
               <div class="topbox">{{ item.title }}</div>
               <div class="bottombox">
@@ -65,6 +69,7 @@
             </div>
           </div>
         </vue-seamless-scroll>
+
         <!-- 法制动态弹窗详情 -->
         <div class="details" v-show="isShow1">
           <div
@@ -575,7 +580,11 @@
                 <pdf :pdfurl="item.url"></pdf>
 
                 <div class="close" @click.stop="handleClose(0)">
-                  <img src="../../images/close1.png" style="width: 19px;height: 19px;" alt="" />
+                  <img
+                    src="../../images/close1.png"
+                    style="width: 19px; height: 19px"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
@@ -612,7 +621,7 @@
                   ref="gsDtlVideo"
                   :src="item.url"
                 ></video>
-                <div class="close" @click.stop="handleClose(index)">
+                <div class="close" @click.stop="handleClose(index)" style="width:20px;height:20px">
                   <img src="../../images/close1.png" alt="" />
                 </div>
               </div>
@@ -687,7 +696,10 @@
           </div>
           <div class="bottom">
             <vue-seamless-scroll :data="list4" :class-option="defaultOption">
-              <div class="blist" v-for="(item, index) in list4" :key="index">
+              <div class="blist" 
+              v-for="(item, index) in list4" :key="index"
+              :data-id="item.id"
+              >
                 <div
                   class="blistbox"
                   v-if="currentIndex4 == 1 || currentIndex4 == 0"
@@ -709,7 +721,7 @@
                 <div
                   class="blistbox"
                   v-else-if="currentIndex4 == 2"
-                  @click="handleMjdDetail(item.id)"
+                 
                 >
                   <div class="row" style="width: 110px">
                     {{ item.name }}
@@ -835,6 +847,7 @@ export default {
 
       // 显示片区民警详情
       showMjdDetail: false,
+      
     };
   },
   components: { MyHeader, pdf },
@@ -885,6 +898,17 @@ export default {
     },
   },
   methods: {
+    // 
+    trime(){
+      setTimeout(() => {
+        let blist = document.getElementsByClassName("blist");
+        console.log("lll", blist);
+        for (let i = 0; i < blist.length; i++) {
+          console.log("ooooo", i);
+          blist[i].addEventListener("click", this.handleMjdDetail, true);
+        }
+      }, 100)
+    },
     // 左侧-法律服务
     chooseTab1(index) {
       this.currentIndex1 = index;
@@ -932,25 +956,30 @@ export default {
       if (index == 0) {
         this.api.getFzdwList({ current: 1, size: 10, type: 1 }).then((res) => {
           this.list4 = res.records;
+          this.trime()
         });
       } else if (index == 1) {
         this.api.getFzdwList({ current: 1, size: 10, type: 2 }).then((res) => {
           this.list4 = res.records;
+          this.trime()
         });
       } else if (index == 2) {
         this.api.getFzdwList({ current: 1, size: 10, type: 3 }).then((res) => {
           this.list4 = res.records;
+          this.trime()
         });
       } else if (index == 3) {
         this.api.getFzdwList({ current: 1, size: 10, type: 4 }).then((res) => {
           this.list4 = res.records;
+          this.trime()
         });
       }
     },
     // 民警详情
-    async handleMjdDetail(id) {
+    async handleMjdDetail(e) {
       this.showMjdDetail = true;
-      this.info7 = await this.api.getFzdwDtl(id);
+      console.log(e.currentTarget.dataset.id);
+      this.info7 = await this.api.getFzdwDtl(e.currentTarget.dataset.id);
     },
     // 关闭民警详情
     CloseMjDtl() {
@@ -966,9 +995,10 @@ export default {
       this.isVideo = true;
     },
     // 法治动态详情
-    async getFzdtDtl(id) {
+    async getFzdtDtl(e) {
       this.isShow1 = true;
-      this.info2 = await this.api.getFzdtDtl(id);
+      console.log(e.currentTarget.dataset.id);
+      this.info2 = await this.api.getFzdtDtl(e.currentTarget.dataset.id);
       this.info2.details = this.info2.details.replace(
         /<img[^>]*>/gi,
         function (match, capture) {
@@ -984,7 +1014,9 @@ export default {
           ); // 替换style
         }
       );
+      
     },
+
     handleClose(index) {
       this.isShow1 = false;
       this.isShow2 = false;
@@ -1004,6 +1036,12 @@ export default {
     // 法制动态列表
     this.api.getFzdtList({ current: 1, size: 10 }).then((res) => {
       this.list11 = res.records;
+      setTimeout(() => {
+        let item11 = document.getElementsByClassName("item11");
+        for (let i = 0; i < item11.length; i++) {
+          item11[i].addEventListener("click", this.getFzdtDtl, true);
+        }
+      }, 100);
       this.info1.dynamicTotal = res.total;
     });
 
@@ -1036,7 +1074,11 @@ export default {
     // 法治队伍列表
     this.api.getFzdwList({ current: 1, size: 10, type: 1 }).then((res) => {
       this.list4 = res.records;
+      this.trime()
     });
+  },
+  mounted() {
+    
   },
 };
 </script>

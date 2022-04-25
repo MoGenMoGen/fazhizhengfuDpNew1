@@ -513,7 +513,7 @@
                   ref="gsDtlVideo"
                   :src="item.url"
                 ></video>
-                <div class="close" @click.stop="handleClose">
+                <div class="close" @click.stop="handleClose" style="width: 20px;height: 20px;">
                   <img src="../../images/close1.png" alt="" />
                 </div>
               </div>
@@ -582,7 +582,7 @@
             class="item3"
             v-for="(item, index) in list3"
             :key="index"
-            @click="handleChanges(item.id)"
+            :data-id="item.id"
           >
             <div class="leftbox">{{ item.title }}</div>
             <div class="rightbox">
@@ -711,6 +711,18 @@ export default {
     },
   },
   methods: {
+
+    trime(){
+      setTimeout(() => {
+        let item3 = document.getElementsByClassName("item3");
+        console.log("lll",item3);
+        for (let i = 0; i < item3.length; i++) {
+          console.log("oooo",i);
+          item3[i].addEventListener("click", this.handleChanges, true);
+        }
+      }, 100);
+    },
+
     roll(t) {
       let ul1 = this.$refs.ul1;
       let ul2 = this.$refs.ul2;
@@ -777,6 +789,7 @@ export default {
           .getFlzxList({ current: 1, size: 10, isReply: 1 })
           .then((res) => {
             this.list3 = res.records;
+            this.trime()
           });
       } else if (index == 1) {
         // 未回复
@@ -784,6 +797,7 @@ export default {
           .getFlzxList({ current: 1, size: 10, isReply: 2 })
           .then((res) => {
             this.list3 = res.records;
+            this.trime()
           });
       }
     },
@@ -799,9 +813,10 @@ export default {
       // await this.api.AddPageview(id);
     },
     // 法律咨询详情
-    async handleChanges(id) {
+    async handleChanges(e,id) {
       this.isShow2 = true;
-      this.info8 = await this.api.getFlzxDtl(id);
+      console.log(e.currentTarget.dataset.id);
+      this.info8 = await this.api.getFlzxDtl(e.currentTarget.dataset.id);
       this.info8.details = this.info8.details.replace(
         /<img[^>]*>/gi,
         function (match, capture) {
@@ -862,6 +877,7 @@ export default {
     // 法律咨询分页
     this.api.getFlzxList({ current: 1, size: 100, isReply: 1 }).then((res) => {
       this.list3 = res.records;
+      this.trime()
     });
   },
   async mounted() {
