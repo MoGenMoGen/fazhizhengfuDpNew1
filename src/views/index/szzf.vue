@@ -1166,22 +1166,22 @@ export default {
       
       if (index == 0) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({status: 0}).then((res) => {
+        this.api.getKeyPersonnel({type:1}).then((res) => {
           this.tableList2 = res;
         });
       } else if (index == 1) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({status: 1}).then((res) => {
+        this.api.getKeyPersonnel({type:2}).then((res) => {
           this.tableList2 = res;
         });
       } else if (index == 2) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({status: 2}).then((res) => {
+        this.api.getKeyPersonnel({type:3}).then((res) => {
           this.tableList2 = res;
         });
       } else if (index == 3) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({status: 3}).then((res) => {
+        this.api.getKeyPersonnel({type:4}).then((res) => {
           this.tableList2 = res;
         });
       }
