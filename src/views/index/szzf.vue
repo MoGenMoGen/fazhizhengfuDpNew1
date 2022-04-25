@@ -545,7 +545,7 @@
           <!-- 饼图 -->
           <div id="pople2"><img src="../../images/yuebao.png" alt="" /></div>
           <!-- 审查人员列表 -->
-          <div class="sclist sclist2">
+          <div class="sclist sclist2 j1">
             <ul>
               <li @click="handleclick2(0)">
                 <h3>吸毒人员</h3>
@@ -743,7 +743,7 @@ export default {
     value1(newVal, oldVal) {
       let st = "";
       let et = "";
-      if (newVal&&newVal.length > 0) {
+      if (newVal && newVal.length > 0) {
         st = newVal[0];
         et = newVal[1];
       }
@@ -931,7 +931,7 @@ export default {
       myChart.setOption({
         tooltip: {
           trigger: "item",
-          formatter: " {b}<br/> 总人数: {c} %",
+          formatter: " {b}<br/> 总人数: {c} 人",
         },
         legend: {
           right: "right",
@@ -962,10 +962,11 @@ export default {
             name: "Nightingale Chart",
             type: "pie",
             radius: [30, 78],
-            center: ["26%", "45%"],
+            center: ["28%", "45%"],
             roseType: "radius",
             itemStyle: {
-              borderRadius: 3,
+              shadowBlur: 30,
+              shadowColor: "rgba(0, 0, 0, 0.8)",
             },
             label: {
               show: false,
@@ -1163,25 +1164,25 @@ export default {
     // 审查人员
     handleclick2(index) {
       this.currIndex2 = index;
-      
+
       if (index == 0) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({type:1}).then((res) => {
+        this.api.getKeyPersonnel({ type: 1 }).then((res) => {
           this.tableList2 = res;
         });
       } else if (index == 1) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({type:2}).then((res) => {
+        this.api.getKeyPersonnel({ type: 2 }).then((res) => {
           this.tableList2 = res;
         });
       } else if (index == 2) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({type:3}).then((res) => {
+        this.api.getKeyPersonnel({ type: 3 }).then((res) => {
           this.tableList2 = res;
         });
       } else if (index == 3) {
         // 重点人员统计列表
-        this.api.getKeyPersonnel({type:4}).then((res) => {
+        this.api.getKeyPersonnel({ type: 4 }).then((res) => {
           this.tableList2 = res;
         });
       }
@@ -1385,9 +1386,11 @@ export default {
             }
             .select {
               position: absolute;
-              bottom: 0px;
+              bottom: -3.3px;
               left: 50%;
               transform: translateX(-50%);
+              background-color: #040420;
+              border-bottom: 2px solid #040420;
             }
             // &.active::after {
             //   content: "";
@@ -1527,9 +1530,16 @@ export default {
           }
         }
       }
+      .j1 {
+        .select {
+          background-color: #030c2f  !important;
+          border-bottom: 2px solid #07082e  !important;
+        }
+      }
       .sclist2 {
         margin-bottom: 0;
       }
+
       .scpople {
         // 饼图
         #pople {

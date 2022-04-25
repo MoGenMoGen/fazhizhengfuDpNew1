@@ -974,9 +974,11 @@ export default {
         }
         .select {
           position: absolute;
-          bottom: -10px;
+          bottom: -13px;
           left: 50%;
           transform: translateX(-50%);
+          background-color: #080930;
+          border-bottom: 2px solid #080930;
         }
       }
     }
@@ -1390,9 +1392,11 @@ export default {
           }
           .select {
             position: absolute;
-            bottom: -20px;
+            bottom: -23px;
             left: 50%;
             transform: translateX(-50%);
+            background-color: #040420;
+              border-bottom: 2px solid #040420;
           }
         }
       }

@@ -493,18 +493,18 @@
           <img src="~@/images/subtitle.png" alt="" />
           <div class="title">共享法庭</div>
         </div>
-        <div class="subtitle">{{ info4.title }}</div>
+        <div class="subtitle">{{ info66.title }}</div>
         <div class="ftbox">
           <div class="leftbox">
-            <div class="fg">法官：{{ info4.judge }}</div>
-            <img :src="info4.img1" alt="" />
+            <div class="fg">法官：{{ info66.judge }}</div>
+            <img :src="info66.img1" alt="" />
           </div>
           <div class="rightbox">
             <div class="people">
-              <div class="bg">被告：{{ info4.defendant }}</div>
-              <div class="bg">原告：{{ info4.plaintiff }}</div>
+              <div class="bg">被告：{{ info66.defendant }}</div>
+              <div class="bg">原告：{{ info66.plaintiff }}</div>
             </div>
-            <img :src="info4.img2" alt="" />
+            <img :src="info66.img2" alt="" />
           </div>
         </div>
         <div class="titlebox">
@@ -812,7 +812,7 @@ export default {
       currentchoice: 0,
       // 法治乡村列表
       list2: [],
-      info4: {}, //共享法庭信息
+      info66: {}, //共享法庭信息
       info5: {}, //法律宝典统计
 
       currentIndex3: 0, //法律宝典下标
@@ -1023,7 +1023,7 @@ export default {
     });
     // 共享法庭列表
     this.api.getGxftList({ current: 1, size: 1 }).then((res) => {
-      if (res.records.length > 0) this.info4 = res.records[0];
+      if (res.records.length > 0) this.info66 = res.records[0];
     });
     // 法治宝典统计
     this.info5 = await this.api.getFlbdStatis();
@@ -1219,6 +1219,7 @@ export default {
           display: flex;
           align-items: center;
           position: relative;
+          padding-left: 15px;
           cursor: pointer;
           .icon {
             width: 51px;
@@ -1248,8 +1249,10 @@ export default {
           }
           .select {
             position: absolute;
-            bottom: -25px;
-            left: 16px;
+            bottom: -28px;
+            left: 30px;
+            background-color: #040420;
+            border-bottom: 2px solid #040420;
           }
         }
       }
@@ -1400,9 +1403,11 @@ export default {
           }
           .select {
             position: absolute;
-            bottom: -10px;
+            bottom: -13px;
             left: 50%;
             transform: translateX(-50%);
+            background-color: #040420;
+            border-bottom: 2px solid #040420;
           }
         }
       }
@@ -1812,9 +1817,11 @@ export default {
           }
           .select {
             position: absolute;
-            bottom: -30px;
+            bottom: -33px;
             left: 50%;
             transform: translateX(-50%);
+            background-color: #040420;
+            border-bottom: 2px solid #040420;
           }
         }
       }
@@ -1980,9 +1987,11 @@ export default {
           }
           .select {
             position: absolute;
-            bottom: -15px;
+            bottom: -18px;
             left: 50%;
             transform: translateX(-50%);
+            background-color: #060729;
+            border-bottom: 2px solid #060729;
           }
         }
       }
