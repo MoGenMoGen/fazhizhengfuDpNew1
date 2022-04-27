@@ -1,5 +1,5 @@
 <template>
-  <div id="page_gl" :style="{ transform: `scale(${percentX},${percentY})` }">
+  <div id="page_gl" :style="{ transform: `scale(${percentX},${percentY}) rotate(0.1deg)` }">
     <MyHeader cur="0"></MyHeader>
     <div class="container">
       <div class="left">
@@ -17,7 +17,7 @@
               :src="info1.video ? info1.video : ''"
             ></video>
           </div>
-          <div id="text" ref="text" @click="roll">
+          <div id="text" ref="text" >
             <ul id="ul1" ref="ul1">
               <li>
                 {{ info1.details }}

@@ -46,7 +46,7 @@
           :data="list11"
           class="list11"
           :class-option="flzxOption"
-          v-if="currentIndex1 == 0"
+          v-show="currentIndex1 == 0"
         >
           <div
             class="item11"
@@ -116,7 +116,7 @@
           :data="list12"
           class="list12"
           :class-option="flzxOption"
-          v-if="currentIndex1 == 1"
+          v-show="currentIndex1 == 1"
         >
           <div class="item12" v-for="(item, index) in list12" :key="index">
             <div class="ft">{{ item.title }}</div>
@@ -1029,6 +1029,9 @@ export default {
     handlemap() {
       this.village = true;
     },
+    test(){
+      console.log('test');
+    }
   },
   async created() {
     //  法律咨询统计
@@ -1039,7 +1042,9 @@ export default {
       setTimeout(() => {
         let item11 = document.getElementsByClassName("item11");
         for (let i = 0; i < item11.length; i++) {
+          console.log(item11);
           item11[i].addEventListener("click", this.getFzdtDtl, true);
+          // item11[i].addEventListener("click", this.test, true);
         }
       }, 100);
       this.info1.dynamicTotal = res.total;
